@@ -3,6 +3,11 @@
 # suggested that you use the "grails integrate-with --git" command
 # to generate your .gitignore file.
 
+.slcache/*
+.asscache
+web-app/WEB-INF/tld/c.tld
+web-app/WEB-INF/tld/fmt.tld
+
 # web application files
 /web-app/WEB-INF/classes
 
