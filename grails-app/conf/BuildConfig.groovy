@@ -67,6 +67,7 @@ grails.project.dependency.resolution = {
         runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
+        runtime ':twitter-bootstrap:3.3.5'
 
         test ":funky-spock:0.2.2"
 
