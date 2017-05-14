@@ -118,5 +118,10 @@
 				</ul>
 			</div>
 		</div>
+
+		<div>
+			<h1>Testing bootstrap classes</h1>
+			<span class="glyphicon glyphicon-asterisk"></span>
+		</div>
 	</body>
 </html>
