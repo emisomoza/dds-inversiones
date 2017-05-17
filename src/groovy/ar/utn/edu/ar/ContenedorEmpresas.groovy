@@ -10,11 +10,20 @@ import java.text.SimpleDateFormat
  * Created by esomoza on 5/13/17.
  */
 
+//Utilizamos el patrón singleton
 public class ContenedorEmpresas {
     private ArrayList<Empresa> empresas
+    private static ContenedorEmpresas instance = null
 
-    public ContenedorEmpresas() {
+    private ContenedorEmpresas() {
         empresas = new ArrayList<ContenedorEmpresas>()
+    }
+
+    public static ContenedorEmpresas getInstance() {
+        if(instance == null) {
+            instance = new ContenedorEmpresas()
+        }
+        return instance
     }
 
     public List<ContenedorEmpresas> getEmpresas() {
