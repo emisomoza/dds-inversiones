@@ -1,2 +1,3 @@
-Apple;01/01/2015;01/01/2016;mac;1000
-windows;01/01/2016;01/01/2016;win;7979
+NombreEmpresa,FechaDesde,FechaHasta,NombreCuenta,Valor
+Apple,01/01/2015,01/01/2016,mac,1000
+windows,01/01/2016,01/01/2016,win,7979

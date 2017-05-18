@@ -1,10 +1,6 @@
 package ar.utn.edu.ar
 
-import ar.utn.edu.ar.exceptions.CuentaNoExisteException
-import ar.utn.edu.ar.exceptions.PeriodoNoExisteException
-
-import java.text.ParseException
-import java.text.SimpleDateFormat
+import static com.xlson.groovycsv.CsvParser.parseCsv
 
 /**
  * Created by esomoza on 5/13/17.
@@ -79,14 +75,24 @@ public class ContenedorEmpresas {
         String[] arraySubstrings;
 
         try {
-            new File(pathArchivo).eachLine { linea ->
+            def data = parseCsv(new File(pathArchivo).text.toString())/*.eachLine { linea ->
                 arraySubstrings = linea.split(";");
                 Empresa empresa = this.obtenerEmpresaConNombre(arraySubstrings[0]);
+
                 if(empresa == null) {
                     empresa = new Empresa(arraySubstrings[0]);
                     this.empresas.add(empresa)
                 }
                 empresa.importarCuenta(arraySubstrings[1], arraySubstrings[2], arraySubstrings[3], arraySubstrings[4]);
+            }*/
+            for(linea in data) {
+                Empresa empresa = this.obtenerEmpresaConNombre(linea.NombreEmpresa)
+
+                if(empresa == null) {
+                    empresa = new Empresa(linea.NombreEmpresa);
+                    this.empresas.add(empresa)
+                }
+                empresa.importarCuenta(linea.FechaDesde, linea.FechaHasta, linea.NombreCuenta, linea.Valor);
             }
 
         } catch (Exception e) {
