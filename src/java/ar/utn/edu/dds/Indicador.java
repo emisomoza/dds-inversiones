@@ -1,10 +1,8 @@
-package ar.utn.edu.ar;
+package ar.utn.edu.dds;
 
-import ar.utn.edu.ar.expresion.IExpresion;
+import ar.utn.edu.dds.expresion.IExpresion;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.List;
 
 /**
  * Created by andres on 21/05/17.

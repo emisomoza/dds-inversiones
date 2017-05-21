@@ -1,4 +1,4 @@
-package ar.utn.edu.ar.exceptions
+package ar.utn.edu.dds.exceptions
 
 /**
  * Created by esomoza on 5/13/17.

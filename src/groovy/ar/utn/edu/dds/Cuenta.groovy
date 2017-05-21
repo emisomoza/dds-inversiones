@@ -1,4 +1,4 @@
-package ar.utn.edu.ar
+package ar.utn.edu.dds
 
 /**
  * Created by esomoza on 5/13/17.

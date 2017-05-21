@@ -1,4 +1,4 @@
-package ar.utn.edu.ar
+package ar.utn.edu.dds
 
 import static com.xlson.groovycsv.CsvParser.parseCsv
 

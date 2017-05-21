@@ -52,6 +52,7 @@ grails.project.dependency.resolution = {
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
+        compile 'org.antlr:antlr4-maven-plugin:4.3'
 
     }
 

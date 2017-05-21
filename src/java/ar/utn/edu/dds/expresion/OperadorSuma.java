@@ -1,18 +1,18 @@
-package ar.utn.edu.ar.expresion;
+package ar.utn.edu.dds.expresion;
 
 /**
  * Created by andres on 21/05/17.
  */
-public class OperadorDivicion implements IOperador {
+public class OperadorSuma implements IOperador {
 
     @Override
     public String getSimbolo() {
-        return "/";
+        return "+";
     }
 
     @Override
     public Double operar(IExpresion lExpresion, IExpresion rExpresion) {
-        return lExpresion.getResultado() / rExpresion.getResultado();
+        return lExpresion.getResultado() + rExpresion.getResultado();
     }
 
 }

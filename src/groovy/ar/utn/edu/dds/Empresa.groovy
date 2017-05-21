@@ -1,7 +1,8 @@
-package ar.utn.edu.ar
+package ar.utn.edu.dds
 
-import ar.utn.edu.ar.exceptions.CuentaNoExisteException
-import ar.utn.edu.ar.exceptions.PeriodoNoExisteException
+import ar.utn.edu.dds.exceptions.CuentaNoExisteException
+import ar.utn.edu.dds.exceptions.PeriodoNoExisteException
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

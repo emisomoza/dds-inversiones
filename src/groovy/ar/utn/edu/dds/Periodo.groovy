@@ -1,12 +1,10 @@
-package ar.utn.edu.ar
+package ar.utn.edu.dds
 
-import ar.utn.edu.ar.exceptions.CuentaNoExisteException
+import ar.utn.edu.dds.exceptions.CuentaNoExisteException
 
 /**
  * Created by esomoza on 5/13/17.
  */
-import java.util.stream.Collectors;
-
 public class Periodo {
 
     private List<Cuenta> cuentas

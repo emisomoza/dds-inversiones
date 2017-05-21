@@ -1,4 +1,4 @@
-package ar.utn.edu.ar.expresion;
+package ar.utn.edu.dds.expresion;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;

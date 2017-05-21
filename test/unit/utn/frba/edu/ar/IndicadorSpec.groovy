@@ -1,6 +1,6 @@
 package utn.frba.edu.ar
 
-import ar.utn.edu.ar.Indicador
+import ar.utn.edu.dds.Indicador
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
 
