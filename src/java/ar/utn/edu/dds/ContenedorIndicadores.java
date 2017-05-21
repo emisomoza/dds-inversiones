@@ -13,8 +13,12 @@ public class ContenedorIndicadores {
 
     private List<Indicador> indicadores;
 
+    /*
+     * Grails 2.5.4 (the version that we are using) does not suport de diamond operator (<>).
+     * Even in java it's not necesary we need to specify the ArrayList type.
+     */
     ContenedorIndicadores() {
-        indicadores = new ArrayList<>();
+        indicadores = new ArrayList<Indicador>();
     }
 
     public List<Indicador> getIndicadores() {
