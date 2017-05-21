@@ -11,10 +11,6 @@ import java.text.SimpleDateFormat;
  */
 class CargarDatosSpec extends Specification{
 
-    /*
-     * TODO Los archivos deberian usar path relativos, no absolutos. No podemos forzar
-     * a todos a tener los archivos en el mismo lugar, ni a usar el mismo OS
-     */
     void "insertar 2 empresas nuevas"(){
         setup:
         ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
