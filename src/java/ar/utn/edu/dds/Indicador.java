@@ -1,6 +1,6 @@
 package ar.utn.edu.dds;
 
-import ar.utn.edu.dds.expresion.IExpresion;
+import ar.utn.edu.dds.expresion.Expresion;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -13,7 +13,7 @@ public class Indicador {
     @JsonProperty("nombre")
     private String nombre;
     @JsonProperty("expresion")
-    private IExpresion expresion;
+    private Expresion expresion;
 
     public String getNombre() {
         return nombre;
@@ -23,11 +23,11 @@ public class Indicador {
         this.nombre = nombre;
     }
 
-    public IExpresion getExpresion() {
+    public Expresion getExpresion() {
         return expresion;
     }
 
-    public void setExpresion(IExpresion expresion) {
+    public void setExpresion(Expresion expresion) {
         this.expresion = expresion;
     }
 
