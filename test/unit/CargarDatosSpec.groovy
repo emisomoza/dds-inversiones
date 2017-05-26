@@ -1,7 +1,7 @@
-import ar.utn.edu.dds.ContenedorEmpresas
-import ar.utn.edu.dds.Empresa
-import ar.utn.edu.dds.exceptions.CuentaNoExisteException
-import ar.utn.edu.dds.exceptions.PeriodoNoExisteException
+import ar.edu.utn.dds.ContenedorEmpresas
+import ar.edu.utn.dds.Empresa
+import ar.edu.utn.dds.exceptions.CuentaNoExisteException
+import ar.edu.utn.dds.exceptions.PeriodoNoExisteException
 import spock.lang.Specification
 
 import java.text.SimpleDateFormat;

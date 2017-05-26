@@ -17,27 +17,41 @@ grammar Indicador;
 
 //Rules (parser)
 expression
-    : LPAR expression RPAR #between_parenthesis
-    | signed_primary ADDITIVE_OP expression #additive_operation
-    | ADDITIVE_OP expression RAISE_OP expression #signed_raise_operation
-    | signed_expression #signed_exp
-    | expression RAISE_OP expression #raise_operation
-    | expression MULTIPLICATIVE_OP expression #multiplicative_operation
+    : termino #term
+    | expression MULTIPLICATIVE_OP  expression #multiplicative_operation
     | expression ADDITIVE_OP expression #additive_operation
-    | function #func
-    | signed_primary #signed_prim
-    | primary #prim
     ;
 
-signed_primary: ADDITIVE_OP primary;
-//signed_raise_operation: ADDITIVE_OP expression RAISE_OP expression;
-signed_expression: ADDITIVE_OP expression;
+between_parenthesis: LPAR expression RPAR;
+
+signed_termino
+    : ADDITIVE_OP terminal
+    | ADDITIVE_OP raise_operation
+    ;
+termino
+    : terminal
+    | raise_operation
+    | signed_termino
+    ;
+
+terminal
+    : between_parenthesis
+    | function
+    | primary
+    ;
+
+raise_operation
+    : terminal RAISE_OP terminal
+    | terminal RAISE_OP raise_operation
+    | terminal RAISE_OP expression
+    ;
 
 function
     : function_static
     | function_unary
     | function_binary
     ;
+
 function_static: FUNC_STATIC LPAR RPAR;
 function_unary: FUNC_UNARY LPAR expression RPAR;
 function_binary: FUNC_BINARY LPAR expression COMMA expression RPAR;
