@@ -1,0 +1,7 @@
+{
+	"nombre": "Id Test 1",
+	"expresion": {
+		"@type": "ter",
+		"valor": 3
+	}
+}
