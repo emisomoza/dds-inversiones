@@ -1,7 +1,14 @@
 package ar.edu.utn.dds.expresion;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("fes")
 public class FuncionEstatica extends Funcion {
-    public FuncionEstatica(String nombre) {
+
+    @JsonCreator
+    public FuncionEstatica(@JsonProperty("nombre") String nombre) {
         super(nombre);
     }
 

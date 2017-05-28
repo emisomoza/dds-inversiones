@@ -1,6 +1,5 @@
 package ar.edu.utn.dds
 
-import ar.edu.utn.dds.Indicador
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
 
@@ -9,16 +8,16 @@ import spock.lang.Specification
  */
 class IndicadorSpec extends Specification {
 
-    void "crear nuevo indiador"(){
+    void "deserializar indiador"(){
         setup:
         ObjectMapper objectMapper = new ObjectMapper()
         Indicador indicador;
 
         objectMapper.enableDefaultTyping()
-        indicador = objectMapper.readValue(new File("./indicadorTest1.json"), Indicador.class)
+        indicador = objectMapper.readValue(this.getClass().getResource("/indicadorTest1.json").text, Indicador.class)
 
         expect:
-        indicador.aplicar() == 3
+        indicador.aplicar() == 41
 
     }
 }
