@@ -1,14 +1,20 @@
 package ar.edu.utn.dds.expresion;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("num")
 public class PrimariaNumero extends Primaria {
     private Double valor;
 
-    public PrimariaNumero(Double valor) {
+    @JsonCreator
+    public PrimariaNumero(@JsonProperty("valor") Double valor) {
         this.valor = valor;
     }
 
     @Override
-    protected Double getValor() {
+    public Double getValor() {
         return valor;
     }
 

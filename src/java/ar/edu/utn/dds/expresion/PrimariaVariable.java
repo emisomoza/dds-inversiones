@@ -1,9 +1,15 @@
 package ar.edu.utn.dds.expresion;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("var")
 public class PrimariaVariable extends Primaria {
     private String nombre;
 
-    public PrimariaVariable(String nombre) {
+    @JsonCreator
+    public PrimariaVariable(@JsonProperty("nombre") String nombre) {
         this.nombre = nombre;
     }
 
