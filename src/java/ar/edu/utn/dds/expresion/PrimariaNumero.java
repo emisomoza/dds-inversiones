@@ -14,7 +14,7 @@ public class PrimariaNumero extends Primaria {
     }
 
     @Override
-    protected Double getValor() {
+    public Double getValor() {
         return valor;
     }
 

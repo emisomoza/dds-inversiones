@@ -16,6 +16,14 @@ public class FuncionBinaria extends Funcion {
         this.segundoParametro = segundoParametro;
     }
 
+    public Expresion getPrimerParametro() {
+        return primerParametro;
+    }
+
+    public Expresion getSegundoParametro() {
+        return segundoParametro;
+    }
+
     @Override
     protected Double getValor() {
         switch (nombre) {

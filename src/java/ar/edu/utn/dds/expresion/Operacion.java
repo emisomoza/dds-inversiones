@@ -19,6 +19,14 @@ public abstract class Operacion extends Expresion {
         this.expresionDerecha = expresionDerecha;
     }
 
+    public Expresion getExpresionIzquierda() {
+        return expresionIzquierda;
+    }
+
+    public Expresion getExpresionDerecha() {
+        return expresionDerecha;
+    }
+
     @Override
     protected abstract Double getValor();
 }

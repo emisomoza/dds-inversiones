@@ -16,6 +16,10 @@ public class FuncionUnaria extends Funcion {
         this.expresion = expresion;
     }
 
+    public Expresion getExpresion() {
+        return expresion;
+    }
+
     @Override
     protected Double getValor() {
         switch (nombre) {

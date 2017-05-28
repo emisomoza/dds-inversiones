@@ -1,0 +1,28 @@
+{
+  "nombre": "Ind1",
+  "expresion": {
+    "tipo": "mult",
+    "expresionIzquierda": {
+      "tipo": "suma",
+      "expresionIzquierda": {
+        "tipo": "num",
+        "valor": 3
+      },
+      "expresionDerecha": {
+        "tipo": "num",
+        "valor": 4
+      }
+    },
+    "expresionDerecha": {
+      "tipo": "resta",
+      "expresionIzquierda": {
+        "tipo": "num",
+        "valor": 20
+      },
+      "expresionDerecha": {
+        "tipo": "num",
+        "valor": 10
+      }
+    }
+  }
+}
