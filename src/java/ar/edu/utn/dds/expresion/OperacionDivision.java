@@ -13,7 +13,7 @@ public class OperacionDivision extends Operacion {
     }
 
     @Override
-    protected Double getValor() {
-        return expresionIzquierda.getResultado() / expresionDerecha.getResultado();
+    protected Double getValorSinSigno() {
+        return expresionIzquierda.getValor() / expresionDerecha.getValor();
     }
 }

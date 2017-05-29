@@ -5,9 +5,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by andres on 21/05/17.
- */
 @Component
 public class ContenedorIndicadores {
 

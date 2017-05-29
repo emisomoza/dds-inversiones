@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipo")
 @JsonSubTypes({
@@ -13,17 +16,18 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(Primaria.class)
 })
 public abstract class Expresion {
+	protected List<Expresion> children;
     protected boolean negado = false;
 
-    @JsonIgnore
-    public Double getResultado() {
-        if(esNegado()) {
-            return -1 * getValor();
-        }
-        return getValor();
-    }
+	public List<Expresion> getChildren() {
+		return children;
+	}
 
-    public boolean esNegado() {
+	public void setChildren(List<Expresion> children) {
+		this.children = children;
+	}
+
+	public boolean esNegado() {
         return negado;
     }
 
@@ -31,6 +35,13 @@ public abstract class Expresion {
         this.negado = negado;
     }
 
-    protected abstract Double getValor();
+	public Double getValor() {
+		if(esNegado()) {
+			return -1 * getValorSinSigno();
+		}
+		return getValorSinSigno();
+	}
+
+    protected abstract Double getValorSinSigno();
 }
 

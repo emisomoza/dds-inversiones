@@ -8,9 +8,6 @@ import ar.edu.utn.dds.expresion.PrimariaNumero
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
 
-/**
- * Created by andres on 21/05/17.
- */
 class IndicadorSpec extends Specification {
 
     void "deserializar indiador"() {

@@ -16,7 +16,7 @@ class IndicadorCustomVisitorSpec extends Specification {
         IndicadorParser.ExpressionContext context = parser.expression()
         IndicadorCustomVisitor visitor = new IndicadorCustomVisitor()
         Expresion expression = visitor.visit(context)
-        expression.getResultado() == resultado
+        expression.getValor() == resultado
 
         where:
         ecuacion                       | resultado

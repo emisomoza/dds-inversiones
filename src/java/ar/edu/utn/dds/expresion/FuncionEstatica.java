@@ -13,7 +13,7 @@ public class FuncionEstatica extends Funcion {
     }
 
     @Override
-    protected Double getValor() {
+    protected Double getValorSinSigno() {
         switch (nombre) {
             case "pi":
                 return Math.PI;

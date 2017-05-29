@@ -2,17 +2,13 @@ package ar.edu.utn.dds
 
 import static com.xlson.groovycsv.CsvParser.parseCsv
 
-/**
- * Created by esomoza on 5/13/17.
- */
-
 //Utilizamos el patrón singleton
 public class ContenedorEmpresas {
     private ArrayList<Empresa> empresas
     private static ContenedorEmpresas instance = null
 
     private ContenedorEmpresas() {
-        empresas = new ArrayList<ContenedorEmpresas>()
+        empresas = new ArrayList<Empresa>()
     }
 
     public static ContenedorEmpresas getInstance() {
@@ -22,7 +18,7 @@ public class ContenedorEmpresas {
         return instance
     }
 
-    public List<ContenedorEmpresas> getEmpresas() {
+    public List<Empresa> getEmpresas() {
         return empresas;
     }
 

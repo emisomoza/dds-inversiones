@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.expresion;
 
+import ar.edu.utn.dds.ContenedorCalculablesEnUso;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -22,7 +23,8 @@ public class PrimariaVariable extends Primaria {
     }
 
     @Override
-    protected Double getValor() {
-        return 0D;
+    protected Double getValorSinSigno() {
+	    ContenedorCalculablesEnUso contenedor = ContenedorCalculablesEnUso.getInstance();
+        return contenedor.getCalculable(nombre).getValor();
     }
 }

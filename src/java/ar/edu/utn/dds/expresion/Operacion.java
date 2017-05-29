@@ -28,5 +28,5 @@ public abstract class Operacion extends Expresion {
     }
 
     @Override
-    protected abstract Double getValor();
+    protected abstract Double getValorSinSigno();
 }

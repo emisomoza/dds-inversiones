@@ -21,10 +21,10 @@ public class FuncionUnaria extends Funcion {
     }
 
     @Override
-    protected Double getValor() {
+    protected Double getValorSinSigno() {
         switch (nombre) {
             case "sqrt":
-                return sqrt(expresion.getResultado());
+                return sqrt(expresion.getValor());
             default:
                 return null;
         }

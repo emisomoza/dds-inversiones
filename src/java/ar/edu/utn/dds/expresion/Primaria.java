@@ -8,5 +8,5 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 })
 public abstract class Primaria extends Expresion {
     @Override
-    protected abstract Double getValor();
+    protected abstract Double getValorSinSigno();
 }
