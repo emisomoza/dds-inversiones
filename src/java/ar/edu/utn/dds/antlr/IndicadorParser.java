@@ -1,10 +1,13 @@
-// Generated from /home/rodrigo/repository/dds-inversiones/src/antlr4/ar.edu.utn.antlr/Indicador.g4 by ANTLR 4.7
+// Generated from /home/andres/dev/utn/dds/dds-inversiones/src/antlr4/ar.edu.utn.antlr/Indicador.g4 by ANTLR 4.7
 package ar.edu.utn.dds.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class IndicadorParser extends Parser {
@@ -15,9 +18,9 @@ public class IndicadorParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		FUNC_STATIC=1, PI_FUNC=2, FUNC_UNARY=3, SQRT_FUNC=4, FUNC_BINARY=5, ROOT_FUNC=6, 
-		VAR=7, DOUBLE=8, NUMBER=9, DIGIT=10, WORD=11, LETTER=12, ASSIGN=13, LPAR=14, 
-		RPAR=15, COMMA=16, RAISE_OP=17, MULTIPLICATIVE_OP=18, ADDITIVE_OP=19, 
-		WS=20;
+		IND=7, CUE=8, VAR=9, DOUBLE=10, NUMBER=11, DIGIT=12, WORD=13, LETTER=14, 
+		ASSIGN=15, LPAR=16, RPAR=17, COMMA=18, RAISE_OP=19, MULTIPLICATIVE_OP=20, 
+		ADDITIVE_OP=21, WS=22;
 	public static final int
 		RULE_expression = 0, RULE_between_parenthesis = 1, RULE_signed_termino = 2, 
 		RULE_termino = 3, RULE_terminal = 4, RULE_raise_operation = 5, RULE_function = 6, 
@@ -30,14 +33,14 @@ public class IndicadorParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, null, "'pi'", null, "'sqrt'", null, "'root'", null, null, null, 
-		null, null, null, "'='", "'('", "')'", "','", "'^'"
+		null, null, "'pi'", null, "'sqrt'", null, "'root'", "'ind'", "'cue'", 
+		null, null, null, null, null, null, "'='", "'('", "')'", "','", "'^'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, "FUNC_STATIC", "PI_FUNC", "FUNC_UNARY", "SQRT_FUNC", "FUNC_BINARY", 
-		"ROOT_FUNC", "VAR", "DOUBLE", "NUMBER", "DIGIT", "WORD", "LETTER", "ASSIGN", 
-		"LPAR", "RPAR", "COMMA", "RAISE_OP", "MULTIPLICATIVE_OP", "ADDITIVE_OP", 
-		"WS"
+		"ROOT_FUNC", "IND", "CUE", "VAR", "DOUBLE", "NUMBER", "DIGIT", "WORD", 
+		"LETTER", "ASSIGN", "LPAR", "RPAR", "COMMA", "RAISE_OP", "MULTIPLICATIVE_OP", 
+		"ADDITIVE_OP", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -425,7 +428,8 @@ public class IndicadorParser extends Parser {
 				function();
 				}
 				break;
-			case VAR:
+			case IND:
+			case CUE:
 			case DOUBLE:
 				enterOuterAlt(_localctx, 3);
 				{
@@ -729,7 +733,11 @@ public class IndicadorParser extends Parser {
 	}
 
 	public static class PrimaryContext extends ParserRuleContext {
+		public TerminalNode IND() { return getToken(IndicadorParser.IND, 0); }
+		public TerminalNode LPAR() { return getToken(IndicadorParser.LPAR, 0); }
 		public TerminalNode VAR() { return getToken(IndicadorParser.VAR, 0); }
+		public TerminalNode RPAR() { return getToken(IndicadorParser.RPAR, 0); }
+		public TerminalNode CUE() { return getToken(IndicadorParser.CUE, 0); }
 		public TerminalNode DOUBLE() { return getToken(IndicadorParser.DOUBLE, 0); }
 		public PrimaryContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -745,20 +753,45 @@ public class IndicadorParser extends Parser {
 	public final PrimaryContext primary() throws RecognitionException {
 		PrimaryContext _localctx = new PrimaryContext(_ctx, getState());
 		enterRule(_localctx, 20, RULE_primary);
-		int _la;
 		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(91);
-			_la = _input.LA(1);
-			if ( !(_la==VAR || _la==DOUBLE) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			setState(100);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case IND:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(91);
+				match(IND);
+				setState(92);
+				match(LPAR);
+				setState(93);
+				match(VAR);
+				setState(94);
+				match(RPAR);
+				}
+				break;
+			case CUE:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(95);
+				match(CUE);
+				setState(96);
+				match(LPAR);
+				setState(97);
+				match(VAR);
+				setState(98);
+				match(RPAR);
+				}
+				break;
+			case DOUBLE:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(99);
+				match(DOUBLE);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -790,29 +823,31 @@ public class IndicadorParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\26`\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\30i\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"+
 		"\f\t\f\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\7\2\"\n\2\f\2\16\2%\13\2\3"+
 		"\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\5\4/\n\4\3\5\3\5\3\5\5\5\64\n\5\3\6\3\6"+
 		"\3\6\5\69\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7G\n\7"+
 		"\3\b\3\b\3\b\5\bL\n\b\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3"+
-		"\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\2\3\2\r\2\4\6\b\n\f\16\20\22\24\26"+
-		"\2\3\3\2\t\n\2_\2\30\3\2\2\2\4&\3\2\2\2\6.\3\2\2\2\b\63\3\2\2\2\n8\3\2"+
-		"\2\2\fF\3\2\2\2\16K\3\2\2\2\20M\3\2\2\2\22Q\3\2\2\2\24V\3\2\2\2\26]\3"+
-		"\2\2\2\30\31\b\2\1\2\31\32\5\b\5\2\32#\3\2\2\2\33\34\f\4\2\2\34\35\7\24"+
-		"\2\2\35\"\5\2\2\5\36\37\f\3\2\2\37 \7\25\2\2 \"\5\2\2\4!\33\3\2\2\2!\36"+
-		"\3\2\2\2\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\3\3\2\2\2%#\3\2\2\2&\'\7\20\2"+
-		"\2\'(\5\2\2\2()\7\21\2\2)\5\3\2\2\2*+\7\25\2\2+/\5\n\6\2,-\7\25\2\2-/"+
-		"\5\f\7\2.*\3\2\2\2.,\3\2\2\2/\7\3\2\2\2\60\64\5\n\6\2\61\64\5\f\7\2\62"+
-		"\64\5\6\4\2\63\60\3\2\2\2\63\61\3\2\2\2\63\62\3\2\2\2\64\t\3\2\2\2\65"+
-		"9\5\4\3\2\669\5\16\b\2\679\5\26\f\28\65\3\2\2\28\66\3\2\2\28\67\3\2\2"+
-		"\29\13\3\2\2\2:;\5\n\6\2;<\7\23\2\2<=\5\n\6\2=G\3\2\2\2>?\5\n\6\2?@\7"+
-		"\23\2\2@A\5\f\7\2AG\3\2\2\2BC\5\n\6\2CD\7\23\2\2DE\5\2\2\2EG\3\2\2\2F"+
-		":\3\2\2\2F>\3\2\2\2FB\3\2\2\2G\r\3\2\2\2HL\5\20\t\2IL\5\22\n\2JL\5\24"+
-		"\13\2KH\3\2\2\2KI\3\2\2\2KJ\3\2\2\2L\17\3\2\2\2MN\7\3\2\2NO\7\20\2\2O"+
-		"P\7\21\2\2P\21\3\2\2\2QR\7\5\2\2RS\7\20\2\2ST\5\2\2\2TU\7\21\2\2U\23\3"+
-		"\2\2\2VW\7\7\2\2WX\7\20\2\2XY\5\2\2\2YZ\7\22\2\2Z[\5\2\2\2[\\\7\21\2\2"+
-		"\\\25\3\2\2\2]^\t\2\2\2^\27\3\2\2\2\t!#.\638FK";
+		"\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\5\fg\n\f\3"+
+		"\f\2\3\2\r\2\4\6\b\n\f\16\20\22\24\26\2\2\2j\2\30\3\2\2\2\4&\3\2\2\2\6"+
+		".\3\2\2\2\b\63\3\2\2\2\n8\3\2\2\2\fF\3\2\2\2\16K\3\2\2\2\20M\3\2\2\2\22"+
+		"Q\3\2\2\2\24V\3\2\2\2\26f\3\2\2\2\30\31\b\2\1\2\31\32\5\b\5\2\32#\3\2"+
+		"\2\2\33\34\f\4\2\2\34\35\7\26\2\2\35\"\5\2\2\5\36\37\f\3\2\2\37 \7\27"+
+		"\2\2 \"\5\2\2\4!\33\3\2\2\2!\36\3\2\2\2\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2"+
+		"$\3\3\2\2\2%#\3\2\2\2&\'\7\22\2\2\'(\5\2\2\2()\7\23\2\2)\5\3\2\2\2*+\7"+
+		"\27\2\2+/\5\n\6\2,-\7\27\2\2-/\5\f\7\2.*\3\2\2\2.,\3\2\2\2/\7\3\2\2\2"+
+		"\60\64\5\n\6\2\61\64\5\f\7\2\62\64\5\6\4\2\63\60\3\2\2\2\63\61\3\2\2\2"+
+		"\63\62\3\2\2\2\64\t\3\2\2\2\659\5\4\3\2\669\5\16\b\2\679\5\26\f\28\65"+
+		"\3\2\2\28\66\3\2\2\28\67\3\2\2\29\13\3\2\2\2:;\5\n\6\2;<\7\25\2\2<=\5"+
+		"\n\6\2=G\3\2\2\2>?\5\n\6\2?@\7\25\2\2@A\5\f\7\2AG\3\2\2\2BC\5\n\6\2CD"+
+		"\7\25\2\2DE\5\2\2\2EG\3\2\2\2F:\3\2\2\2F>\3\2\2\2FB\3\2\2\2G\r\3\2\2\2"+
+		"HL\5\20\t\2IL\5\22\n\2JL\5\24\13\2KH\3\2\2\2KI\3\2\2\2KJ\3\2\2\2L\17\3"+
+		"\2\2\2MN\7\3\2\2NO\7\22\2\2OP\7\23\2\2P\21\3\2\2\2QR\7\5\2\2RS\7\22\2"+
+		"\2ST\5\2\2\2TU\7\23\2\2U\23\3\2\2\2VW\7\7\2\2WX\7\22\2\2XY\5\2\2\2YZ\7"+
+		"\24\2\2Z[\5\2\2\2[\\\7\23\2\2\\\25\3\2\2\2]^\7\t\2\2^_\7\22\2\2_`\7\13"+
+		"\2\2`g\7\23\2\2ab\7\n\2\2bc\7\22\2\2cd\7\13\2\2dg\7\23\2\2eg\7\f\2\2f"+
+		"]\3\2\2\2fa\3\2\2\2fe\3\2\2\2g\27\3\2\2\2\n!#.\638FKf";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

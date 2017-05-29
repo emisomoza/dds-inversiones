@@ -1,9 +1,6 @@
 package ar.edu.utn.dds.expresion;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +14,10 @@ import java.util.List;
 })
 public abstract class Expresion {
 	protected List<Expresion> children;
+	@JsonProperty("negado")
     protected boolean negado = false;
 
+	@JsonIgnore
 	public List<Expresion> getChildren() {
 		return children;
 	}
@@ -35,6 +34,10 @@ public abstract class Expresion {
         this.negado = negado;
     }
 
+	public boolean isNegado() {
+		return negado;
+	}
+
 	public Double getValor() {
 		if(esNegado()) {
 			return -1 * getValorSinSigno();
@@ -42,6 +45,7 @@ public abstract class Expresion {
 		return getValorSinSigno();
 	}
 
+	@JsonIgnore
     protected abstract Double getValorSinSigno();
 }
 

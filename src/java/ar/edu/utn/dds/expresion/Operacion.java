@@ -1,7 +1,9 @@
 package ar.edu.utn.dds.expresion;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
+@JsonIgnoreProperties(value = {"valor"})
 @JsonSubTypes({
     @JsonSubTypes.Type(OperacionSuma.class),
     @JsonSubTypes.Type(OperacionResta.class),

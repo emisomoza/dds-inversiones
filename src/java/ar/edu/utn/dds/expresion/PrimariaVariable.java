@@ -1,16 +1,16 @@
 package ar.edu.utn.dds.expresion;
 
 import ar.edu.utn.dds.ContenedorCalculablesEnUso;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 
-@JsonTypeName("var")
-public class PrimariaVariable extends Primaria {
+@JsonSubTypes({
+        @JsonSubTypes.Type(PrimariaCuenta.class),
+        @JsonSubTypes.Type(PrimariaIndicador.class)
+})
+public abstract class PrimariaVariable extends Primaria {
     private String nombre;
 
-    @JsonCreator
-    public PrimariaVariable(@JsonProperty("nombre") String nombre) {
+    public PrimariaVariable(String nombre) {
         this.nombre = nombre;
     }
 

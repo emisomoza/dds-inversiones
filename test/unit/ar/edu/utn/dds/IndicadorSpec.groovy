@@ -40,7 +40,7 @@ class IndicadorSpec extends Specification {
 
         Expresion op3 = new OperacionMultiplicacion(op1, op2)
 
-        Indicador indicador = new Indicador()
+        Indicador indicador = new Indicador(new ArrayList<String>(), new ArrayList<String>())
         indicador.setNombre("Ind1")
         indicador.setExpresion(op3)
 
