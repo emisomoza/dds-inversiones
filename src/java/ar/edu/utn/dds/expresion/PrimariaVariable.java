@@ -27,4 +27,9 @@ public abstract class PrimariaVariable extends Primaria {
 	    ContenedorCalculablesEnUso contenedor = ContenedorCalculablesEnUso.getInstance();
         return contenedor.getCalculable(nombre).getValor();
     }
+
+    @Override
+    public String getValue() {
+        return this.getNombre();
+    }
 }

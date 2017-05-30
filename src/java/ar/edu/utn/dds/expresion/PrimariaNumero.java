@@ -21,4 +21,14 @@ public class PrimariaNumero extends Primaria {
     public void setValor(Double valor) {
         this.valor = valor;
     }
+
+    @Override
+    public String getKey() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
 }

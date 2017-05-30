@@ -13,4 +13,9 @@ public class PrimariaIndicador extends PrimariaVariable {
     public PrimariaIndicador(@JsonProperty("nombre") String nombre) {
         super(nombre);
     }
+
+    @Override
+    public String getKey() {
+        return "ind";
+    }
 }
