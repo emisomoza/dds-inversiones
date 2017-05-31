@@ -7,6 +7,7 @@ import ar.edu.utn.dds.expresion.OperacionSuma
 import ar.edu.utn.dds.expresion.PrimariaNumero
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
+import utils.DiffHelper
 
 class IndicadorSpec extends Specification {
 
@@ -49,6 +50,6 @@ class IndicadorSpec extends Specification {
         deserializacionEsperada = objectMapper.readValue(new File("./test/resources/indicadorTest2.json").text, HashMap.class)
 
         expect:
-        deserializacion == deserializacionEsperada
+        new DiffHelper().diff(deserializacion, deserializacionEsperada) == []
     }
 }
