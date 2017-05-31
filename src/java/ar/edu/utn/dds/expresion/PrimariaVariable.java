@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.expresion;
 
 import ar.edu.utn.dds.ContenedorCalculablesEnUso;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 @JsonSubTypes({
@@ -28,6 +29,7 @@ public abstract class PrimariaVariable extends Primaria {
         return contenedor.getCalculable(nombre).getValor();
     }
 
+    @JsonIgnore
     @Override
     public String getValue() {
         return this.getNombre();
