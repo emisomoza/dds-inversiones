@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.expresion;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -22,11 +23,13 @@ public class PrimariaNumero extends Primaria {
         this.valor = valor;
     }
 
+    @JsonIgnore
     @Override
     public String getKey() {
         return null;
     }
 
+    @JsonIgnore
     @Override
     public String getValue() {
         return null;

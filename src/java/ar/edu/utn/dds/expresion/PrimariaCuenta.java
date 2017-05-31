@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.expresion;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -14,6 +15,7 @@ public class PrimariaCuenta extends PrimariaVariable {
         super(nombre);
     }
 
+    @JsonIgnore
     @Override
     public String getKey() {
         return "cue";

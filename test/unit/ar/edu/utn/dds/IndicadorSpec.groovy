@@ -16,7 +16,7 @@ class IndicadorSpec extends Specification {
         Indicador indicador
 
         objectMapper.enableDefaultTyping()
-        indicador = objectMapper.readValue(this.getClass().getResource("/indicadorTest1.json").text, Indicador.class)
+        indicador = objectMapper.readValue(new File("./test/resources/indicadorTest1.json").text, Indicador.class)
 
         expect:
         indicador.aplicar() == 41
@@ -46,7 +46,7 @@ class IndicadorSpec extends Specification {
 
         serializacion = objectMapper.writeValueAsString(indicador)
         deserializacion = objectMapper.readValue(serializacion, HashMap.class)
-        deserializacionEsperada = objectMapper.readValue(this.getClass().getResource("/indicadorTest2.json").text, HashMap.class)
+        deserializacionEsperada = objectMapper.readValue(new File("./test/resources/indicadorTest2.json").text, HashMap.class)
 
         expect:
         deserializacion == deserializacionEsperada
