@@ -1,0 +1,28 @@
+{
+	"nombre": "Id Test 1",
+	"expresion": {
+		"tipo": "suma",
+		"expresionIzquierda": {
+			"tipo": "resta",
+			"expresionDerecha": {
+				"tipo": "num",
+				"valor": 3
+			},
+			"expresionIzquierda": {
+				"tipo": "mult",
+				"expresionIzquierda": {
+					"tipo": "num",
+					"valor": 10
+				},
+				"expresionDerecha": {
+					"tipo": "num",
+					"valor": 4
+				}
+			}
+		},
+		"expresionDerecha": {
+			"tipo": "num",
+			"valor": 4
+		}
+	}
+}

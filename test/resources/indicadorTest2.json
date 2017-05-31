@@ -1,0 +1,37 @@
+{
+  "nombre": "Ind1",
+  "expresion": {
+    "tipo": "mult",
+    "expresionIzquierda": {
+      "tipo": "suma",
+      "expresionIzquierda": {
+        "tipo": "num",
+        "valor": 3.0,
+        "negado": false
+      },
+      "expresionDerecha": {
+        "tipo": "num",
+        "valor": 4.0,
+        "negado": false
+      },
+      "negado": false
+    },
+    "expresionDerecha": {
+      "tipo": "resta",
+      "expresionIzquierda": {
+        "tipo": "num",
+        "valor": 20.0,
+        "negado": false
+      },
+      "expresionDerecha": {
+        "tipo": "num",
+        "valor": 10.0,
+        "negado": false
+      },
+      "negado": false
+    },
+    "negado": false
+  },
+  "dependenciasIndicador": [],
+  "dependenciasCuenta": []
+}

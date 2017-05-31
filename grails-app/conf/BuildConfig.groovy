@@ -3,8 +3,8 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.8
+grails.project.source.level = 1.8
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.project.fork = [
@@ -41,9 +41,8 @@ grails.project.dependency.resolution = {
         grailsCentral()
         mavenCentral()
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
-        //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
-        //mavenRepo "http://repository.jboss.com/maven2/"
+        mavenRepo "http://download.java.net/maven/2/"
+        mavenRepo "http://repository.jboss.com/maven2/"
     }
 
     dependencies {
@@ -52,6 +51,9 @@ grails.project.dependency.resolution = {
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
         compile "com.xlson.groovycsv:groovycsv:1.0"
+        compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
+        compile 'org.antlr:antlr4-maven-plugin:4.7'
+
     }
 
     plugins {

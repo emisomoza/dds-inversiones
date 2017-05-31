@@ -1,23 +1,16 @@
-import ar.utn.edu.ar.ContenedorEmpresas
-import ar.utn.edu.ar.Empresa
-import ar.utn.edu.ar.exceptions.CuentaNoExisteException
-import ar.utn.edu.ar.exceptions.PeriodoNoExisteException
+import ar.edu.utn.dds.ContenedorEmpresas
+import ar.edu.utn.dds.Empresa
+import ar.edu.utn.dds.exceptions.CuentaNoExisteException
+import ar.edu.utn.dds.exceptions.PeriodoNoExisteException
 import spock.lang.Specification
 
 import java.text.SimpleDateFormat;
 
-/**
- * Created by esomoza on 5/14/17.
- */
 class CargarDatosSpec extends Specification{
 
-    /*
-     * TODO Los archivos deberian usar path relativos, no absolutos. No podemos forzar
-     * a todos a tener los archivos en el mismo lugar, ni a usar el mismo OS
-     */
     void "insertar 2 empresas nuevas"(){
         setup:
-        ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt")
 
         expect:
@@ -29,7 +22,7 @@ class CargarDatosSpec extends Specification{
 
     void "insertar registros misma empresa"(){
         setup:
-        ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_misma_empresa.txt");
 
         expect:
@@ -41,7 +34,7 @@ class CargarDatosSpec extends Specification{
 
     void "validar creacion periodos misma empresa"(){
         setup:
-        ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_misma_empresa.txt");
 
         expect:
@@ -54,7 +47,7 @@ class CargarDatosSpec extends Specification{
     void "eliminar varias empresas y evaluar cantidad"() {
         setup:
         ArrayList<String> nombres = new ArrayList<String>()
-        ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         nombres.add("Apple")
         nombres.add("Microsoft")
         nombres.add("Samsung")
@@ -77,7 +70,7 @@ class CargarDatosSpec extends Specification{
     void "eliminar varias empresas y evaluar restante"() {
         setup:
         ArrayList<String> nombres = new ArrayList<String>(3);
-        ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         nombres.add("Apple");
         nombres.add("Microsoft");
         nombres.add("Samsung");
@@ -100,7 +93,7 @@ class CargarDatosSpec extends Specification{
     void "obtener varias empresas"() {
         setup:
         ArrayList<String> nombres = new ArrayList<String>()
-        ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         nombres.add("Apple")
         nombres.add("Microsoft")
         nombres.add("Samsung")
@@ -120,7 +113,7 @@ class CargarDatosSpec extends Specification{
 
     void "Consultar cuenta"(){
         setup:
-        ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -137,7 +130,7 @@ class CargarDatosSpec extends Specification{
 
     void "consultar cuenta con periodo inexistente"(){
         setup:
-        ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -154,7 +147,7 @@ class CargarDatosSpec extends Specification{
 
     void consultarCuentaConCuentaInexistente(){
         setup:
-        ContenedorEmpresas contenedor = new ContenedorEmpresas().getInstance()
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 

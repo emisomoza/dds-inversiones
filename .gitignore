@@ -93,3 +93,5 @@ fabric.properties
 .idea/
 .classpath
 
+# Antlr4 copile folder
+src/java/ar/utn/edu/dds/antlr/*
