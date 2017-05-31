@@ -57,7 +57,8 @@ function_unary: FUNC_UNARY LPAR expression RPAR;
 function_binary: FUNC_BINARY LPAR expression COMMA expression RPAR;
 
 primary
-    : VAR
+    : IND LPAR VAR RPAR
+    | CUE LPAR VAR RPAR
     | DOUBLE
     ;
 
@@ -70,6 +71,9 @@ SQRT_FUNC: 'sqrt';
 
 FUNC_BINARY: ROOT_FUNC;
 ROOT_FUNC: 'root';
+
+IND: 'ind';
+CUE: 'cue';
 
 VAR: WORD ('_' WORD)? NUMBER?;
 DOUBLE: NUMBER ('.' NUMBER)?;

@@ -1,6 +1,14 @@
 package ar.edu.utn.dds.expresion;
 
-public abstract class Primaria extends Expresion {
+import ar.edu.utn.dds.utilidades.mapper.Mapeable;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+
+@JsonSubTypes({
+    @JsonSubTypes.Type(PrimariaNumero.class),
+    @JsonSubTypes.Type(PrimariaVariable.class)
+})
+public abstract class Primaria extends Expresion implements Mapeable<String, String> {
+
     @Override
-    protected abstract Double getValor();
+    protected abstract Double getValorSinSigno();
 }

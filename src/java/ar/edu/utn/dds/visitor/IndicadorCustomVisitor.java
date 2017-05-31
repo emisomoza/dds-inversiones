@@ -6,6 +6,8 @@ import ar.edu.utn.dds.expresion.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.RuleNode;
 
+import java.util.HashMap;
+
 public class IndicadorCustomVisitor extends IndicadorBaseVisitor {
 	@Override
 	public Expresion visit(ParseTree tree) {
@@ -67,11 +69,15 @@ public class IndicadorCustomVisitor extends IndicadorBaseVisitor {
 
 	@Override
 	public Primaria visitPrimary(IndicadorParser.PrimaryContext ctx) {
-		if(ctx.VAR() != null) {
-			return new PrimariaVariable(ctx.VAR().getText());
+		if(ctx.IND() != null) {
+			return new PrimariaIndicador(ctx.VAR().getText());
 		} else {
-			Double valor = new Double(ctx.DOUBLE().getText());
-			return new PrimariaNumero(valor);
+			if(ctx.CUE() != null) {
+				return new PrimariaCuenta(ctx.VAR().getText());
+			} else {
+				Double valor = new Double(ctx.DOUBLE().getText());
+				return new PrimariaNumero(valor);
+			}
 		}
 	}
 

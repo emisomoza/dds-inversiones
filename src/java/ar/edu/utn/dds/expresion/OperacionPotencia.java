@@ -1,12 +1,19 @@
 package ar.edu.utn.dds.expresion;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("pot")
 public class OperacionPotencia extends Operacion {
-    public OperacionPotencia(Expresion expresionIzquierda, Expresion expresionDerecha) {
+
+    @JsonCreator
+    public OperacionPotencia(@JsonProperty("expresionIzquierda") Expresion expresionIzquierda, @JsonProperty("expresionDerecha") Expresion expresionDerecha) {
         super(expresionIzquierda, expresionDerecha);
     }
 
     @Override
-    public Double getValor() {
-        return Math.pow(expresionIzquierda.getResultado(), expresionDerecha.getResultado());
+    protected Double getValorSinSigno() {
+        return Math.pow(expresionIzquierda.getValor(), expresionDerecha.getValor());
     }
 }

@@ -1,5 +1,14 @@
 package ar.edu.utn.dds.expresion;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+
+import java.util.List;
+
+@JsonSubTypes({
+    @JsonSubTypes.Type(FuncionBinaria.class),
+    @JsonSubTypes.Type(FuncionEstatica.class),
+    @JsonSubTypes.Type(FuncionUnaria.class)
+})
 public abstract class Funcion extends Expresion {
     protected String nombre;
 
@@ -16,5 +25,5 @@ public abstract class Funcion extends Expresion {
     }
 
     @Override
-    protected abstract Double getValor();
+    protected abstract Double getValorSinSigno();
 }
