@@ -12,17 +12,6 @@ import java.util.List;
     @JsonSubTypes.Type(Primaria.class)
 })
 public abstract class Expresion {
-	protected List<Expresion> children;
-
-	@JsonIgnore
-	public List<Expresion> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<Expresion> children) {
-		this.children = children;
-	}
-
 	@JsonIgnore
 	public abstract Double getValor();
 }

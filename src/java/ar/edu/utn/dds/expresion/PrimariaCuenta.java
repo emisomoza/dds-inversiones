@@ -10,9 +10,4 @@ public class PrimariaCuenta extends PrimariaVariable {
     public PrimariaCuenta(@JsonProperty("nombre") String nombre) {
         super(nombre);
     }
-
-    @Override
-    public String getKey() {
-        return "cue";
-    }
 }

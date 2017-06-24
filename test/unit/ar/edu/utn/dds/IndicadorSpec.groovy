@@ -1,14 +1,20 @@
 package ar.edu.utn.dds
 
-import ar.edu.utn.dds.expresion.Expresion
-import ar.edu.utn.dds.expresion.OperacionMultiplicacion
-import ar.edu.utn.dds.expresion.OperacionResta
-import ar.edu.utn.dds.expresion.OperacionSuma
-import ar.edu.utn.dds.expresion.PrimariaNumero
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
 
 class IndicadorSpec extends Specification {
+
+    void "dependencias indicador"() {
+        expect:
+        Indicador indicador = new Indicador("IndicadorTest", ecuacion)
+        [indicador.getDependenciasIndicador(), indicador.getDependenciasCuenta()] == resultado
+
+        where:
+        ecuacion                                              | resultado
+        "ind(ind1)+cue(cue1)*2^7/cue(cue1)"                   | [["ind1"], ["cue1"]]
+        "ind(ind1)*cue(cue2)+ind(ind4)+ind(ind1)"             | [["ind1", "ind4"], ["cue2"]]
+    }
 
     void "deserializar indiador"() {
         setup:
@@ -30,19 +36,7 @@ class IndicadorSpec extends Specification {
         HashMap<String, Object> deserializacion
         HashMap<String, Object> deserializacionEsperada
 
-        Expresion num1 = new PrimariaNumero(3)
-        Expresion num2 = new PrimariaNumero(4)
-        Expresion num3 = new PrimariaNumero(20)
-        Expresion num4 = new PrimariaNumero(10)
-
-        Expresion op1 = new OperacionSuma(num1, num2)
-        Expresion op2 = new OperacionResta(num3, num4)
-
-        Expresion op3 = new OperacionMultiplicacion(op1, op2)
-
-        Indicador indicador = new Indicador(new ArrayList<String>(), new ArrayList<String>())
-        indicador.setNombre("Ind1")
-        indicador.setExpresion(op3)
+        Indicador indicador = new Indicador("Ind1", "(3+4)*(20-10)")
 
         serializacion = objectMapper.writeValueAsString(indicador)
         deserializacion = objectMapper.readValue(serializacion, HashMap.class)

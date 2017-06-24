@@ -10,6 +10,7 @@ public class Cuenta implements Calculable {
         this.setValor(valor);
     }
 
+    @Override
     public String getNombre() {
         return nombre;
     }
@@ -18,6 +19,7 @@ public class Cuenta implements Calculable {
         this.nombre = nombre;
     }
 
+    @Override
     public Double getValor() {
         return valor;
     }
