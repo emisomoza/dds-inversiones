@@ -23,7 +23,7 @@ public abstract class PrimariaVariable extends Primaria {
     }
 
     @Override
-    protected Double getValorSinSigno() {
+    public Double getValor() {
 	    ContenedorCalculablesEnUso contenedor = ContenedorCalculablesEnUso.getInstance();
         return contenedor.getCalculable(nombre).getValor();
     }

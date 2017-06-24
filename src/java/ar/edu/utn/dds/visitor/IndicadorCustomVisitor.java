@@ -22,9 +22,9 @@ public class IndicadorCustomVisitor extends IndicadorBaseVisitor {
 	@Override
 	public Expresion visitSigned_termino(IndicadorParser.Signed_terminoContext ctx) {
 		Expresion expresion;
+
 		if(ctx.ADDITIVE_OP().getText().equals("-")) {
-			expresion = visitChildren(ctx);
-			expresion.setNegado(true);
+			expresion = new ExpresionNegada(visitChildren(ctx));
 		} else {
 			expresion = visitChildren(ctx);
 		}

@@ -1,7 +1,6 @@
 package ar.edu.utn.dds;
 
 import ar.edu.utn.dds.expresion.Expresion;
-import ar.edu.utn.dds.expresion.PrimariaVariable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -69,8 +68,6 @@ public class Indicador implements Calculable {
 
     private void cargarCalculables() {
     	List<String> nombres = obtenerNombresDeCalculables(expresion);
-
-
     }
 
 	public List<String> obtenerNombresDeCalculables(Expresion expresion) {

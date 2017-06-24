@@ -13,7 +13,7 @@ public class OperacionPotencia extends Operacion {
     }
 
     @Override
-    protected Double getValorSinSigno() {
+    public Double getValor() {
         return Math.pow(expresionIzquierda.getValor(), expresionDerecha.getValor());
     }
 }

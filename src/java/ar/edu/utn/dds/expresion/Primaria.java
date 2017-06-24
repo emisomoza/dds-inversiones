@@ -10,5 +10,5 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 public abstract class Primaria extends Expresion implements Mapeable<String, String> {
 
     @Override
-    protected abstract Double getValorSinSigno();
+    public abstract Double getValor();
 }
