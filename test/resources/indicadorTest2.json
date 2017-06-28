@@ -6,31 +6,24 @@
       "tipo": "suma",
       "expresionIzquierda": {
         "tipo": "num",
-        "valor": 3.0,
-        "negado": false
+        "valor": 3.0
       },
       "expresionDerecha": {
         "tipo": "num",
-        "valor": 4.0,
-        "negado": false
-      },
-      "negado": false
+        "valor": 4.0
+      }
     },
     "expresionDerecha": {
       "tipo": "resta",
       "expresionIzquierda": {
         "tipo": "num",
-        "valor": 20.0,
-        "negado": false
+        "valor": 20.0
       },
       "expresionDerecha": {
         "tipo": "num",
-        "valor": 10.0,
-        "negado": false
-      },
-      "negado": false
-    },
-    "negado": false
+        "valor": 10.0
+      }
+    }
   },
   "dependenciasIndicador": [],
   "dependenciasCuenta": []

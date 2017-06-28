@@ -13,7 +13,7 @@ public class OperacionMultiplicacion extends Operacion {
     }
 
 	@Override
-	protected Double getValorSinSigno() {
+	public Double getValor() {
 		return expresionIzquierda.getValor() * expresionDerecha.getValor();
 	}
 }
