@@ -52,7 +52,7 @@
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse in">
                     <div class="panel-body">
-                        <div id="list-libro" class="content scaffold-list">
+                        <div id="list-metodologias" class="content scaffold-list">
                             <table class="table table-striped table-bordered table-hover table-condensed">
                                 <thead>
                                 <g:sortableColumn property="titulo" title="Título" />
