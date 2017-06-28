@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Título</label>
-                                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Contiene..." value="${libroBusqueda?.titulo}">
+                                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Contiene...">
                             </div>
                             <div class="col-md-12">
                                 <br />
@@ -56,13 +56,17 @@
                             <table class="table table-striped table-bordered table-hover table-condensed">
                                 <thead>
                                 <g:sortableColumn property="titulo" title="Título" />
+                                <g:sortableColumn property="aplicar" title="Aplicar a Empresas" />
                                 </thead>
                                 <tbody>
                                 <g:each in="${metodologias}" status="i"
                                         var="metodologia">
                                     <tr class="${(i % 2) == 0 ? 'info' : ''}">
-                                        <td><g:link action="verMetodologia" id="${metodologia.titulo}">
+                                        <td>
                                             ${metodologia.titulo}
+                                        </td>
+                                        <td><g:link action="verMetodologia" id="${metodologia.titulo}">
+                                            Aplicar
                                         </g:link></td>
                                     </tr>
                                 </g:each>
