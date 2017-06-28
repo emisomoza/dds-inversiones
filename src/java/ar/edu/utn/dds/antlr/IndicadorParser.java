@@ -1,4 +1,4 @@
-// Generated from /home/andres/dev/utn/dds/dds-inversiones/src/antlr4/ar.edu.utn.antlr/Indicador.g4 by ANTLR 4.7
+// Generated from /home/rodrigo/repository/dds-inversiones/src/antlr4/ar.edu.utn.antlr/Indicador.g4 by ANTLR 4.7
 package ar.edu.utn.dds.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -112,6 +112,14 @@ public class IndicadorParser extends Parser {
 		public TerminalNode ADDITIVE_OP() { return getToken(IndicadorParser.ADDITIVE_OP, 0); }
 		public Additive_operationContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterAdditive_operation(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitAdditive_operation(this);
+		}
+		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitAdditive_operation(this);
 			else return visitor.visitChildren(this);
@@ -122,6 +130,14 @@ public class IndicadorParser extends Parser {
 			return getRuleContext(TerminoContext.class,0);
 		}
 		public TermContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterTerm(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitTerm(this);
+		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitTerm(this);
@@ -137,6 +153,14 @@ public class IndicadorParser extends Parser {
 		}
 		public TerminalNode MULTIPLICATIVE_OP() { return getToken(IndicadorParser.MULTIPLICATIVE_OP, 0); }
 		public Multiplicative_operationContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterMultiplicative_operation(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitMultiplicative_operation(this);
+		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitMultiplicative_operation(this);
@@ -234,6 +258,14 @@ public class IndicadorParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_between_parenthesis; }
 		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterBetween_parenthesis(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitBetween_parenthesis(this);
+		}
+		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitBetween_parenthesis(this);
 			else return visitor.visitChildren(this);
@@ -277,6 +309,14 @@ public class IndicadorParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_signed_termino; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterSigned_termino(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitSigned_termino(this);
+		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitSigned_termino(this);
@@ -336,6 +376,14 @@ public class IndicadorParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_termino; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterTermino(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitTermino(this);
+		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitTermino(this);
@@ -398,6 +446,14 @@ public class IndicadorParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_terminal; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterTerminal(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitTerminal(this);
+		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitTerminal(this);
@@ -470,6 +526,14 @@ public class IndicadorParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_raise_operation; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterRaise_operation(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitRaise_operation(this);
+		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitRaise_operation(this);
@@ -545,6 +609,14 @@ public class IndicadorParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_function; }
 		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterFunction(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitFunction(this);
+		}
+		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitFunction(this);
 			else return visitor.visitChildren(this);
@@ -603,6 +675,14 @@ public class IndicadorParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_function_static; }
 		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterFunction_static(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitFunction_static(this);
+		}
+		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitFunction_static(this);
 			else return visitor.visitChildren(this);
@@ -645,6 +725,14 @@ public class IndicadorParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_function_unary; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterFunction_unary(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitFunction_unary(this);
+		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitFunction_unary(this);
@@ -695,6 +783,14 @@ public class IndicadorParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_function_binary; }
 		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterFunction_binary(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitFunction_binary(this);
+		}
+		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitFunction_binary(this);
 			else return visitor.visitChildren(this);
@@ -743,6 +839,14 @@ public class IndicadorParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_primary; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).enterPrimary(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IndicadorListener ) ((IndicadorListener)listener).exitPrimary(this);
+		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof IndicadorVisitor ) return ((IndicadorVisitor<? extends T>)visitor).visitPrimary(this);

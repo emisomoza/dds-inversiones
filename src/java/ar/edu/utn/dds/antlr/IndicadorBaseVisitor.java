@@ -1,4 +1,4 @@
-// Generated from /home/andres/dev/utn/dds/dds-inversiones/src/antlr4/ar.edu.utn.antlr/Indicador.g4 by ANTLR 4.7
+// Generated from /home/rodrigo/repository/dds-inversiones/src/antlr4/ar.edu.utn.antlr/Indicador.g4 by ANTLR 4.7
 package ar.edu.utn.dds.antlr;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 

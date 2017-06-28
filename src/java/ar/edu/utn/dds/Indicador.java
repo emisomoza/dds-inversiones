@@ -1,9 +1,16 @@
 package ar.edu.utn.dds;
 
+import ar.edu.utn.dds.antlr.IndicadorLexer;
+import ar.edu.utn.dds.antlr.IndicadorParser;
 import ar.edu.utn.dds.expresion.Expresion;
+import ar.edu.utn.dds.listener.IndicadorCustomListener;
+import ar.edu.utn.dds.visitor.IndicadorCustomVisitor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +27,26 @@ public class Indicador implements Calculable {
     @JsonProperty("dependenciasCuenta")
     private List<String> dependenciasCuenta;
 
-    public Indicador(List<String> indicadores, List<String> cuentas) {
-        dependenciasIndicador = indicadores;
-        dependenciasCuenta = cuentas;
-    }
+	public Indicador(String nombre, String expresion) {
+		this.nombre = nombre;
 
+		IndicadorLexer lexer = new IndicadorLexer(CharStreams.fromString(expresion));
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		IndicadorParser parser = new IndicadorParser(tokens);
+		IndicadorParser.ExpressionContext context = parser.expression();
+
+		IndicadorCustomVisitor visitor = new IndicadorCustomVisitor();
+		IndicadorCustomListener listener = new IndicadorCustomListener();
+
+		ParseTreeWalker walker = new ParseTreeWalker();
+		walker.walk(listener, context);
+
+		this.expresion = visitor.visit(context);
+		this.dependenciasCuenta = new ArrayList<>(listener.getDependenciasCuenta());
+		this.dependenciasIndicador = new ArrayList<>(listener.getDependenciasIndicador());
+	}
+
+	@Override
     public String getNombre() {
         return nombre;
     }
@@ -61,27 +83,9 @@ public class Indicador implements Calculable {
         return expresion.getValor();
     }
 
+    @Override
     @JsonIgnore
     public Double getValor() {
     	return this.aplicar();
     }
-
-    private void cargarCalculables() {
-    	List<String> nombres = obtenerNombresDeCalculables(expresion);
-    }
-
-	public List<String> obtenerNombresDeCalculables(Expresion expresion) {
-		List<String> nombres = new ArrayList<String>();
-
-		if(expresion.getChildren().isEmpty() && expresion instanceof Calculable) {
-			Calculable calculable = (Calculable) expresion;
-			nombres.add(calculable.getNombre());
-		} else {
-			for(Expresion unaExpresion : expresion.getChildren()) {
-				nombres.addAll(obtenerNombresDeCalculables(unaExpresion));
-			}
-		}
-
-		return nombres;
-	}
 }
