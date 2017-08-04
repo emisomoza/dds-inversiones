@@ -91,23 +91,23 @@
 <body>
 <h1>
     <g:form controller = "Consultas" action ="comparar" >
-        <div>
-            <label>Empresa 1: </label>
-            <g:select name="book.category" from="${['M', 'T', 'F']}"
-                      valueMessagePrefix="book.category" />
-            <g:select name="book.category" from="${mostrarEmpresas}"
-                      valueMessagePrefix="book.category" />
         <g:form controller = "Consultas" action ="mostrarEmpresas" >
+            <div>
+                <label>Empresa 1: </label>
+                <select id="owner" name="owner">
+                    <g:each in="${empresas}">
+                        <option value="${it?.nombre}">${it?.nombre}</option>
+                    </g:each>
+                </select>
+            </div>
+        </g:form>
+        <div>
+            <label>Empresa 2: </label>
             <select id="owner" name="owner">
-                <option>Noboby ...</option>
-                <g:each in="${mostrarEmpresas}">
-                    <option value="${it?.id}">${it?.nombre}</option>
+                <g:each in="${empresas}">
+                    <option value="${it?.nombre}">${it?.nombre}</option>
                 </g:each>
             </select>
-        </g:form>
-        </div>
-        <div>
-            <label>Empresa2: </label>
         </div>
         <div>
             <label>&nbsp;</label><input type="submit" value="Comparar"/>

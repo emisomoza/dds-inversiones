@@ -7,10 +7,12 @@ class ConsultasController {
     }
 
     def verConsultar() {
+        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
+        def empresas = contenedor.getEmpresas()
         render(
                 view: "/consultas",
                 model: [
-
+                        empresas: empresas
                 ]
         )
     }
