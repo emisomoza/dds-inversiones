@@ -82,36 +82,30 @@
 	</head>
 	<body>
 		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div id="status" role="complementary">
+		<div id="page-body" role="main" class="col-md-4 text-center">
 			<h1>Sistema de inversiones</h1>
 			<ul>
-				<g:form controller = "ConsultasController" action ="consultar" >
+				<g:form controller = "Consultas" action ="verConsultar" >
 					<fieldset class="buttons">
 						<label>&nbsp;</label><input type="submit" value="Realizar Consultas"/>
 					</fieldset>
 				</g:form>
-				<button href="registrarProducto.jsp">Cargar Cuentas</button>
-				<button href="registrarProducto.jsp">Crear Indicadores</button>
-				<button href="registrarProducto.jsp">Crear Metodologías</button>
+				<g:form controller = "Cuentas" action ="verCuenta" >
+					<fieldset class="buttons">
+						<label>&nbsp;</label><input type="submit" value="Cargar Cuentas"/>
+					</fieldset>
+				</g:form>
+				<g:form controller = "Indicadores" action ="verIndicadores" >
+					<fieldset class="buttons">
+						<label>&nbsp;</label><input type="submit" value="Crear Indicadores"/>
+					</fieldset>
+				</g:form>
+				<g:form controller = "Metodologias" action ="verMetodologias" >
+					<fieldset class="buttons">
+						<label>&nbsp;</label><input type="submit" value="Crear Metodologías"/>
+					</fieldset>
+				</g:form>
 			</ul>
-		</div>
-		<div id="page-body" role="main">
-			<h1>Emi chupachichi</h1>
-			<p>...</p>
-
-			<div id="controller-list" role="navigation">
-				<h2>Available Controllers:</h2>
-				<ul>
-					<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-						<li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-					</g:each>
-				</ul>
-			</div>
-		</div>
-
-		<div>
-			<h1>...</h1>
-			<span class="glyphicon glyphicon-asterisk"></span>
 		</div>
 	</body>
 </html>

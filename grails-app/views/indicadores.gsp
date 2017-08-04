@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: palunni
-  Date: 31/07/2017
-  Time: 20:09
+  Date: 01/08/2017
+  Time: 20:28
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Consultas</title>
+    <title>Indicadores</title>
     <style type="text/css" media="screen">
     #status {
         background-color: #eee;
@@ -90,34 +90,27 @@
 
 <body>
 <h1>
-    <g:form controller = "Consultas" action ="comparar" >
-        <div>
-            <label>Empresa 1: </label>
-            <g:select name="book.category" from="${['M', 'T', 'F']}"
-                      valueMessagePrefix="book.category" />
-            <g:select name="book.category" from="${mostrarEmpresas}"
-                      valueMessagePrefix="book.category" />
-        <g:form controller = "Consultas" action ="mostrarEmpresas" >
-            <select id="owner" name="owner">
-                <option>Noboby ...</option>
-                <g:each in="${mostrarEmpresas}">
-                    <option value="${it?.id}">${it?.nombre}</option>
-                </g:each>
-            </select>
-        </g:form>
-        </div>
-        <div>
-            <label>Empresa2: </label>
-        </div>
-        <div>
-            <label>&nbsp;</label><input type="submit" value="Comparar"/>
-        </div>
-    </g:form>
+
     <div>
-        <g:form controller = "Cuentas" action ="volver" >
+        <label>Nombre: </label>
+        <g:textField name="nombre"/><br/>
+    </div>
+    <div>
+        <label>Expresion: </label>
+        <g:textField name="expresion"/><br/>
+    </div>
+
+    <div>
+        <g:form controller = "Indicadores" action ="guardar" >
+            <g:actionSubmit  value="Guardar"/>
+        </g:form>
+        <g:form controller = "Indicadores" action ="volver" >
             <label>&nbsp;</label><input type="submit" value="Cancelar"/>
         </g:form>
     </div>
 </h1>
+</div>
+
+
 </body>
 </html>

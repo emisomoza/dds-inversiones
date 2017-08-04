@@ -1,14 +1,14 @@
 package ar.edu.utn.dds
 
-class ConsultasController {
+class CuentasController {
 
     def index() {
 
     }
 
-    def verConsultar() {
+    def verCuenta() {
         render(
-                view: "/consultas",
+                view: "/cuentas",
                 model: [
 
                 ]
@@ -24,9 +24,14 @@ class ConsultasController {
         )
     }
 
-    def mostrarEmpresas() {
-
+    def guardar() {
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
-        return contenedor.getEmpresas()
+        contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt")
+        render(
+                view: "/index",
+                model: [
+
+                ]
+        )
     }
 }

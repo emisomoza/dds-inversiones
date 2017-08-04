@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: palunni
-  Date: 31/07/2017
-  Time: 20:09
+  Date: 01/08/2017
+  Time: 20:07
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Consultas</title>
+    <title>Cuentas</title>
     <style type="text/css" media="screen">
     #status {
         background-color: #eee;
@@ -90,27 +90,25 @@
 
 <body>
 <h1>
-    <g:form controller = "Consultas" action ="comparar" >
+    <g:form controller = "Cuentas" action ="guardar" >
         <div>
-            <label>Empresa 1: </label>
-            <g:select name="book.category" from="${['M', 'T', 'F']}"
-                      valueMessagePrefix="book.category" />
-            <g:select name="book.category" from="${mostrarEmpresas}"
-                      valueMessagePrefix="book.category" />
-        <g:form controller = "Consultas" action ="mostrarEmpresas" >
-            <select id="owner" name="owner">
-                <option>Noboby ...</option>
-                <g:each in="${mostrarEmpresas}">
-                    <option value="${it?.id}">${it?.nombre}</option>
-                </g:each>
-            </select>
-        </g:form>
+            <label>Nombre Empresa: </label>
+            <g:textField name="nombreEmpresa"/><br/>
         </div>
         <div>
-            <label>Empresa2: </label>
+            <label>Nombre Cuenta: </label>
+            <g:textField name="nombreCuenta"/><br/>
         </div>
         <div>
-            <label>&nbsp;</label><input type="submit" value="Comparar"/>
+            <label>Períodos: </label>
+            <g:textField name="periodos"/><br/>
+        </div>
+        <div>
+            <label>Importe: </label>
+            <g:textField name="importe"/><br/>
+        </div>
+        <div>
+            <g:actionSubmit  value="Guardar"/>
         </div>
     </g:form>
     <div>
