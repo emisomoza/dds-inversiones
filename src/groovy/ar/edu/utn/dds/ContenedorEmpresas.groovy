@@ -103,4 +103,7 @@ public class ContenedorEmpresas {
         }
     }
 
+    public Map getEmpresasAsMap(){
+        this.empresas.toArray()
+    }
 }
