@@ -8,18 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+    <meta name="layout" content="main"/>
     <title>Metodologias</title>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 </head>
 
 <body>
-<h1>aca van las metodologias</h1>
-    <div>
-        <g:form controller = "Metodologias" action ="volver" >
-            <fieldset class="buttons">
-                <label>&nbsp;</label><input type="submit" value="Volver"/>
-            </fieldset>
-        </g:form>
-        <span class="glyphicon glyphicon-asterisk"></span>
-    </div>
+<h1>Metodologias</h1>
 </body>
 </html>
