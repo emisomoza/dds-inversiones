@@ -16,7 +16,7 @@ public class OperadorFiltroCreciente extends OperadorFiltro {
 
 
     @Override
-    Boolean filtrar(Empresa empresa) throws MetodologiaException {
+    public Boolean filtrar(Empresa empresa) throws MetodologiaException {
         List<Periodo> periodos = this.getModificador().filtrarPeriodos(
                 empresa.getPeriodos().stream()
                         .sorted(Comparator.comparing(Periodo::getFechaInicio))

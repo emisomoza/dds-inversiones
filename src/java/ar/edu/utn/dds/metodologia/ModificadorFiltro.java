@@ -7,9 +7,7 @@ import java.util.List;
 /**
  * Created by andres on 06/08/17.
  */
-public class ModificadorFiltro extends Modificador {
+public abstract class ModificadorFiltro extends Modificador {
 
-    public List<Periodo> filtrarPeriodos(List<Periodo> periodos) {
-        return null;
-    }
+    public abstract List<Periodo> filtrarPeriodos(List<Periodo> periodos);
 }

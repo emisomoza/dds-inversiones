@@ -24,6 +24,7 @@ public abstract class OperadorFiltro extends Operador {
         this.modificador = modificador;
     }
 
-    abstract Boolean filtrar(Empresa empresa) throws MetodologiaException;
+
+    public abstract Boolean filtrar(Empresa empresa) throws MetodologiaException;
 
 }
