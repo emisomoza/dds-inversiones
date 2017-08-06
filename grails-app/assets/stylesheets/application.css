@@ -115,6 +115,7 @@ nav.sidebar, .main{
         float: left;
         z-index: 8000;
         margin-bottom: 0px;
+        position:absolute;
     }
 
     /*give sidebar 100% width;*/
@@ -163,4 +164,9 @@ nav:hover .forAnimate{
 }
 section{
     padding-left: 15px;
+}
+
+form.form-horizontal{
+    padding-left: 60px;
+    padding-top: 20px;
 }
