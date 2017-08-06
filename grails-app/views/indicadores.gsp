@@ -5,37 +5,33 @@
   Time: 20:28
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
     <title>Indicadores</title>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
+    <asset:stylesheet src="application.css"/>
 </head>
 
 <body>
-<h1>
-
-    <div>
-        <label>Nombre: </label>
-        <g:textField name="nombre"/><br/>
-    </div>
-    <div>
-        <label>Expresion: </label>
-        <g:textField name="expresion"/><br/>
-    </div>
-
-    <div>
-        <g:form controller = "Indicadores" action ="guardar" >
-            <g:actionSubmit  value="Guardar"/>
-        </g:form>
-        <g:form controller = "Indicadores" action ="volver" >
-            <label>&nbsp;</label><input type="submit" value="Cancelar"/>
-        </g:form>
-    </div>
-</h1>
-</div>
-
-
+    <form class="form-horizontal" role="form">
+        <div>
+            <h2 class="panel-title">Agregar Indicador</h2></br>
+        </div>
+        <div class="form-group">
+            <label for="nombre" class="col-sm-1 control-label">Nombre</label>
+            <div class="col-sm-10">
+                <input type="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="expresion" class="col-sm-1 control-label">Expresion</label>
+            <div class="col-sm-10">
+                <input type="expresion" class="form-control" id="inputExpresion" placeholder="Expresion">
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
 </body>
 </html>

@@ -2,8 +2,6 @@
 <html>
 <head>
 	<title><g:layoutTitle default="Inversiones"/></title>
-	<asset:stylesheet src="application.css"/>
-	<asset:javascript src="application.js"/>
 	<g:layoutHead/>
 </head>
 <body>
