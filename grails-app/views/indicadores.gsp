@@ -9,7 +9,6 @@
 <head>
     <meta name="layout" content="main"/>
     <title>Indicadores</title>
-    <asset:stylesheet src="application.css"/>
 </head>
 
 <body>
@@ -20,13 +19,13 @@
         <div class="form-group">
             <label for="nombre" class="col-sm-1 control-label">Nombre</label>
             <div class="col-sm-10">
-                <input type="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
+                <input id="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
             </div>
         </div>
         <div class="form-group">
             <label for="expresion" class="col-sm-1 control-label">Expresion</label>
             <div class="col-sm-10">
-                <input type="expresion" class="form-control" id="inputExpresion" placeholder="Expresion">
+                <input id="expresion" class="form-control" id="inputExpresion" placeholder="Expresion">
             </div>
         </div>
         <div>
