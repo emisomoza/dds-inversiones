@@ -5,19 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-/**
- * Created by andres on 29/05/17.
- */
 @JsonTypeName("cue")
 public class PrimariaCuenta extends PrimariaVariable {
     @JsonCreator
     public PrimariaCuenta(@JsonProperty("nombre") String nombre) {
         super(nombre);
-    }
-
-    @JsonIgnore
-    @Override
-    public String getKey() {
-        return "cue";
     }
 }

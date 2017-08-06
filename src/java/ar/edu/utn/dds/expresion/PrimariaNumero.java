@@ -15,23 +15,11 @@ public class PrimariaNumero extends Primaria {
     }
 
     @Override
-    protected Double getValorSinSigno() {
+    public Double getValor() {
         return valor;
     }
 
     public void setValor(Double valor) {
         this.valor = valor;
-    }
-
-    @JsonIgnore
-    @Override
-    public String getKey() {
-        return null;
-    }
-
-    @JsonIgnore
-    @Override
-    public String getValue() {
-        return null;
     }
 }

@@ -30,5 +30,5 @@ public abstract class Operacion extends Expresion {
     }
 
     @Override
-    protected abstract Double getValorSinSigno();
+    public abstract Double getValor();
 }

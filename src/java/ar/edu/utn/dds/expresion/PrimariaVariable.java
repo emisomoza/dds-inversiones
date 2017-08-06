@@ -1,7 +1,6 @@
 package ar.edu.utn.dds.expresion;
 
-import ar.edu.utn.dds.ContenedorCalculablesEnUso;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import ar.edu.utn.dds.ContenedorCalculables;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 @JsonSubTypes({
@@ -9,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
         @JsonSubTypes.Type(PrimariaIndicador.class)
 })
 public abstract class PrimariaVariable extends Primaria {
-    private String nombre;
+    protected String nombre;
 
     public PrimariaVariable(String nombre) {
         this.nombre = nombre;
@@ -24,14 +23,8 @@ public abstract class PrimariaVariable extends Primaria {
     }
 
     @Override
-    protected Double getValorSinSigno() {
-	    ContenedorCalculablesEnUso contenedor = ContenedorCalculablesEnUso.getInstance();
-        return contenedor.getCalculable(nombre).getValor();
-    }
-
-    @JsonIgnore
-    @Override
-    public String getValue() {
-        return this.getNombre();
+    public Double getValor() {
+        ContenedorCalculables contenedor = ContenedorCalculables.getInstance();
+        return contenedor.getCalculablePorNombre(nombre).getValor();
     }
 }
