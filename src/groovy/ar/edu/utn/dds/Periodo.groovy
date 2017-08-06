@@ -50,7 +50,7 @@ public class Periodo {
         cuentas.add(cuenta);
     }
 
-    public Cuenta obtenerCuentaConNombre(String nombreCuenta) {
+        public Cuenta obtenerCuentaConNombre(String nombreCuenta) {
         return this.cuentas.find{unaCuenta -> unaCuenta.getNombre().equals(nombreCuenta)}
     }
 

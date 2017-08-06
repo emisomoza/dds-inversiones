@@ -2,20 +2,28 @@ package ar.edu.utn.dds.metodologia;
 
 import ar.edu.utn.dds.Empresa;
 import ar.edu.utn.dds.Periodo;
+import ar.edu.utn.dds.exceptions.MetodologiaException;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Created by andres on 06/08/17.
  */
-public class OperadorFiltro extends Operador {
+public abstract class OperadorFiltro extends Operador {
 
-    private Predicate<Periodo> expresionFiltrado(String nombreIndicador) {
-        return null;
+    private ModificadorFiltro modificador;
+
+    public ModificadorFiltro getModificador() {
+        return modificador;
     }
 
-    public Boolean filtrar(Empresa empresa, String indicador, Modificador modificador) {
-        return null; //TODO Completar
+    public void setModificador(ModificadorFiltro modificador) {
+        this.modificador = modificador;
     }
+
+    abstract Boolean filtrar(Empresa empresa) throws MetodologiaException;
 
 }

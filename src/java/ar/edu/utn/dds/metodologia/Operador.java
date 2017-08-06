@@ -5,5 +5,13 @@ package ar.edu.utn.dds.metodologia;
  */
 public class Operador {
 
+    private String indicador;
 
+    public String getIndicador() {
+        return indicador;
+    }
+
+    public void setIndicador(String indicador) {
+        this.indicador = indicador;
+    }
 }

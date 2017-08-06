@@ -12,18 +12,8 @@ import java.util.List;
  */
 public class Metodologia {
 
-    private String indicador;
     private List<OperadorFiltro> operadoresFiltro;
     private List<OperadorOrdenador> operadoresOrden;
-    private Modificador modificador;
-
-    public String getIndicador() {
-        return indicador;
-    }
-
-    public void setIndicador(String indicador) {
-        this.indicador = indicador;
-    }
 
     public List<OperadorFiltro> getOperadoresFiltro() {
         return operadoresFiltro;
@@ -41,16 +31,8 @@ public class Metodologia {
         this.operadoresOrden = operadoresOrden;
     }
 
-    public Modificador getModificador() {
-        return modificador;
-    }
-
-    public void setModificador(Modificador modificador) {
-        this.modificador = modificador;
-    }
-
     public Boolean filtrar(Empresa empresa) {
         return this.operadoresFiltro.stream()
-                .allMatch(operador -> operador.filtrar(empresa, this.indicador, this.modificador));
+                .allMatch(operador -> operador.filtrar(empresa));
     }
 }
