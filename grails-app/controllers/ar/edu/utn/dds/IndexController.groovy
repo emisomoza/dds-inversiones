@@ -36,7 +36,7 @@ class IndexController {
 
     def agregarIndicadores() {
         render(
-                view: "/indicadores",
+                view: "/indicadores/cargaIndicadores",
                 model: [
 
                 ]

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <form class="form-horizontal" role="form">
+    <g:form class="form-horizontal" role="form" controller="Indicadores" action="save">
         <div>
             <h2 class="panel-title">Agregar Indicador</h2></br>
         </div>
@@ -31,6 +31,6 @@
         <div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
-    </form>
+    </g:form>
 </body>
 </html>
