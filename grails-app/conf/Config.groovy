@@ -57,6 +57,22 @@ grails {
         // escapes all not-encoded output at final stage of outputting
         // filteringCodecForContentType.'text/html' = 'html'
     }
+
+    redis {
+        poolConfig {
+            // jedis pool specific tweaks here, see jedis docs & src
+            // ex: testWhileIdle = true
+        }
+        timeout = 2000 //default in milliseconds
+        //password = "somepassword" //defaults to no password
+
+        // requires either host & port combo, or a sentinels and masterName combo
+
+        // use a single redis server (use only if nore using sentinel cluster)
+        port = 6379
+        host = "localhost"
+        database = 5 // set default database to 5
+    }
 }
 
 
