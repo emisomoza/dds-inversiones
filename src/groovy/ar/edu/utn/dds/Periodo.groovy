@@ -2,34 +2,36 @@ package ar.edu.utn.dds
 
 import ar.edu.utn.dds.exceptions.CuentaNoExisteException
 
+import java.time.LocalDate
+
 /**
  * Created by esomoza on 5/13/17.
  */
 public class Periodo {
 
     private List<Cuenta> cuentas
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
 
-    public Periodo(Date fechaComienzo, Date fechaFin) {
+    public Periodo(LocalDate fechaComienzo, LocalDate fechaFin) {
         this.fechaInicio = fechaComienzo;
         this.fechaFin = fechaFin;
         this.cuentas = new ArrayList<Cuenta>()
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void getFechaInicio(Date fechaInicio) {
+    public void getFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public LocalDate getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
 
@@ -48,12 +50,12 @@ public class Periodo {
         cuentas.add(cuenta);
     }
 
-    public Cuenta obtenerCuentaConNombre(String nombreCuenta) {
+        public Cuenta obtenerCuentaConNombre(String nombreCuenta) {
         return this.cuentas.find{unaCuenta -> unaCuenta.getNombre().equals(nombreCuenta)}
     }
 
     public List<Cuenta> obtenerCuentasConNombre(List<String> nombres) {
-        return this.cuentas.find{unaCuenta -> nombres.contains(unaCuenta.getNombre())}
+            return this.cuentas.find{unaCuenta -> nombres.contains(unaCuenta.getNombre())}
     }
 
     public void eliminarCuentaConNombre(String nombre) {
