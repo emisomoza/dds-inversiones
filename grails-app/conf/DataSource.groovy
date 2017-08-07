@@ -1,10 +1,10 @@
 dataSource {
     pooled = true
     dbCreate = "update"
-    url = "jdbc:mysql://localhost:3306/my_database"
-    driverClassName = "com.mysql.jdbc.Driver"
+    url = "jdbc:mysql://localhost:3306/INVERSIONES"
+    driverClassName = "com.mysql.cj.jdbc.Driver"
     dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-    username = "sa"
+    username = "root"
     password = "password"
     properties {
         jmxEnabled = true

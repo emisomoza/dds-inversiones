@@ -50,13 +50,11 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         runtime 'mysql:mysql-connector-java:jar:6.0.6'
-        // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
         compile 'org.antlr:antlr4-maven-plugin:4.7'
-        compile 'org.grails.plugins:mongodb:6.1.3'
-
+        //compile 'org.grails.plugins:mongodb:6.1.3'
     }
 
     plugins {
@@ -78,6 +76,8 @@ grails.project.dependency.resolution = {
         test ":funky-spock:0.2.2"
 
         compile ":csv:0.3.1"
+        compile ':cache-redis:1.1.2-SNAPSHOT'
+//        compile ':mongodb:5.0.0.RC1'
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
