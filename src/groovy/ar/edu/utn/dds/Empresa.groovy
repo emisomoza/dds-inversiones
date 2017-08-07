@@ -4,7 +4,9 @@ import ar.edu.utn.dds.exceptions.CuentaNoExisteException
 import ar.edu.utn.dds.exceptions.PeriodoNoExisteException
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by esomoza on 5/13/17.
@@ -36,11 +38,11 @@ public class Empresa {
         periodos.add(periodo);
     }
 
-    public Periodo obtenerPeriodo(Date fechaInicio, Date fechaFin) {
+    public Periodo obtenerPeriodo(LocalDate fechaInicio, LocalDate fechaFin) {
         return this.periodos.find{unPeriodo -> unPeriodo.getFechaInicio().equals(fechaInicio) && unPeriodo.getFechaFin().equals(fechaFin)}
     }
 
-    public void eliminarPeriodo(Date fechaInicio, Date fechaFin) {
+    public void eliminarPeriodo(LocalDate fechaInicio, LocalDate fechaFin) {
         eliminarPeriodo(obtenerPeriodo(fechaInicio, fechaFin));
     }
 
@@ -49,12 +51,12 @@ public class Empresa {
     }
 
     public void importarCuenta(String fechaInicioString, String fechaFinString, String cuentaString, String valorCuentaString) throws ParseException {
-        SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-        Date fechaInicio;
-        Date fechaFin;
+        DateTimeFormatter formatoDeFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaInicio;
+        LocalDate fechaFin;
 
-        fechaInicio = formatoDeFecha.parse(fechaInicioString);
-        fechaFin = formatoDeFecha.parse(fechaFinString);
+        fechaInicio = LocalDate.parse(fechaInicioString, formatoDeFecha);
+        fechaFin = LocalDate.parse(fechaFinString, formatoDeFecha);
 
         Periodo periodo = obtenerPeriodo(fechaInicio, fechaFin);
 
@@ -66,7 +68,7 @@ public class Empresa {
         periodo.importarCuenta(cuentaString, valorCuentaString);
     }
 
-    public float consultarCuenta(String nombreCuenta, Date fechaDesde, Date fechaHasta) throws PeriodoNoExisteException, CuentaNoExisteException {
+    public float consultarCuenta(String nombreCuenta, LocalDate fechaDesde, LocalDate fechaHasta) throws PeriodoNoExisteException, CuentaNoExisteException {
         Periodo periodo = obtenerPeriodo(fechaDesde, fechaHasta);
 
         if(periodo == null) {
