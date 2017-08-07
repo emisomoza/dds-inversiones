@@ -17,15 +17,15 @@
             <h2 class="panel-title">Agregar Indicador</h2></br>
         </div>
         <div class="form-group">
-            <label for="nombre" class="col-sm-1 control-label">Nombre</label>
+            <label for="inputNombre" class="col-sm-1 control-label">Nombre</label>
             <div class="col-sm-10">
-                <input id="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
+                <input name="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
             </div>
         </div>
         <div class="form-group">
-            <label for="expresion" class="col-sm-1 control-label">Expresion</label>
+            <label for="inputExpresion" class="col-sm-1 control-label">Expresion</label>
             <div class="col-sm-10">
-                <input id="expresion" class="form-control" id="inputExpresion" placeholder="Expresion">
+                <input name="expresion" class="form-control" id="inputExpresion" placeholder="root(2, 2+2^4-(-4)+3)">
             </div>
         </div>
         <div>

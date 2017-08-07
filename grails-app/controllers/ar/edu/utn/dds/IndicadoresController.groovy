@@ -1,16 +1,16 @@
 package ar.edu.utn.dds
 
 class IndicadoresController {
+    def save() {
+        Indicador nuevoIndicador = new Indicador(params.nombre, params.expresion)
 
-    def volver() {
+        //Guardarlo en la BD
+
         render(
-                view: "/index",
+                view: "/indicadorAgregado",
                 model: [
-
+                    indicador: nuevoIndicador
                 ]
         )
-    }
-    def guardar() {
-    /*Agregar invocacion a dominio*/
     }
 }

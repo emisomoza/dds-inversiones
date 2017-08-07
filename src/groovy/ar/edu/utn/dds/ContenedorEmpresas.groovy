@@ -59,6 +59,10 @@ public class ContenedorEmpresas {
         empresas.removeAll(unasEmpresas);
     }
 
+    public void eliminarEmpresas() {
+        this.empresas = new ArrayList<>()
+    }
+
     public void importarCuentasDesdeArchivo (String pathArchivo) {
 
         /*

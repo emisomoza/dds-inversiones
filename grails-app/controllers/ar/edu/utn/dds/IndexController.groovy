@@ -3,8 +3,6 @@ package ar.edu.utn.dds
 class IndexController {
 
     def home() {
-        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
-        contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt")
         render(
                 view: "/index",
                 model: [
@@ -16,6 +14,7 @@ class IndexController {
 
     def compararEmpresas() {
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
+        contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt")
         def empresas = contenedor.getEmpresas()
         render(
                 view: "/consultas",

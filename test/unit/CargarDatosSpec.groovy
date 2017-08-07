@@ -2,9 +2,12 @@ import ar.edu.utn.dds.ContenedorEmpresas
 import ar.edu.utn.dds.Empresa
 import ar.edu.utn.dds.exceptions.CuentaNoExisteException
 import ar.edu.utn.dds.exceptions.PeriodoNoExisteException
+import net.sf.cglib.core.Local
 import spock.lang.Specification
 
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter;
 
 class CargarDatosSpec extends Specification{
 
@@ -17,7 +20,7 @@ class CargarDatosSpec extends Specification{
         contenedor.getEmpresas().size() == 2
 
         cleanup:
-        contenedor.empresas = []
+        contenedor.eliminarEmpresas()
     }
 
     void "insertar registros misma empresa"(){
@@ -29,7 +32,7 @@ class CargarDatosSpec extends Specification{
         contenedor.getEmpresas().size() == 1
 
         cleanup:
-        contenedor.empresas = []
+        contenedor.eliminarEmpresas()
     }
 
     void "validar creacion periodos misma empresa"(){
@@ -41,7 +44,7 @@ class CargarDatosSpec extends Specification{
         contenedor.getAllPeriodos().size() == 3
 
         cleanup:
-        contenedor.empresas = []
+        contenedor.eliminarEmpresas()
     }
 
     void "eliminar varias empresas y evaluar cantidad"() {
@@ -64,7 +67,7 @@ class CargarDatosSpec extends Specification{
         contenedor.getEmpresas().size() == 1
 
         cleanup:
-        contenedor.empresas = []
+        contenedor.eliminarEmpresas()
     }
 
     void "eliminar varias empresas y evaluar restante"() {
@@ -87,7 +90,7 @@ class CargarDatosSpec extends Specification{
         contenedor.getEmpresas().get(0).getNombre() == "Apple"
 
         cleanup:
-        contenedor.empresas = []
+        contenedor.eliminarEmpresas()
     }
 
     void "obtener varias empresas"() {
@@ -108,58 +111,58 @@ class CargarDatosSpec extends Specification{
         }
 
         cleanup:
-        contenedor.empresas = []
+        contenedor.eliminarEmpresas()
     }
 
     void "Consultar cuenta"(){
         setup:
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         Empresa empresa = contenedor.obtenerEmpresaConNombre("Apple");
 
-        float valor = empresa.consultarCuenta("mac", dateFormat.parse("01/01/2015"), dateFormat.parse("01/01/2016"));
+        float valor = empresa.consultarCuenta("mac", LocalDate.parse("01/01/2015", dateFormat), LocalDate.parse("01/01/2016", dateFormat));
 
         expect:
         1000.0f == valor
 
         cleanup:
-        contenedor.empresas = []
+        contenedor.eliminarEmpresas()
     }
 
     void "consultar cuenta con periodo inexistente"(){
         setup:
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         when:
         Empresa empresa = contenedor.obtenerEmpresaConNombre("Apple");
-        empresa.consultarCuenta("mac", dateFormat.parse("02/01/2015"), dateFormat.parse("01/12/2016"));
+        empresa.consultarCuenta("mac", LocalDate.parse("02/01/2015", dateFormat), LocalDate.parse("01/12/2016", dateFormat));
 
         then:
         thrown PeriodoNoExisteException
 
         cleanup:
-        contenedor.empresas = []
+        contenedor.eliminarEmpresas()
     }
 
     void consultarCuentaConCuentaInexistente(){
         setup:
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         when:
         Empresa empresa = contenedor.obtenerEmpresaConNombre("Apple");
-        empresa.consultarCuenta("estaCuentaNoExiste", dateFormat.parse("01/01/2015"), dateFormat.parse("01/01/2016"));
+        empresa.consultarCuenta("estaCuentaNoExiste", LocalDate.parse("01/01/2015", dateFormat), LocalDate.parse("01/01/2016", dateFormat));
 
         then:
         thrown CuentaNoExisteException
 
         cleanup:
-        contenedor.empresas = []
+        contenedor.eliminarEmpresas()
     }
 
 }
