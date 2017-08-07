@@ -5,15 +5,17 @@
   Time: 20:30
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Metodologias</title>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
+    <title>Metodologías</title>
 </head>
 
 <body>
-<h1>Metodologias</h1>
+    <g:form class="form-horizontal">
+        <div>
+            <h2 class="panel-title">Agregar Metodología</h2></br>
+        </div>
+    </g:form>
 </body>
 </html>

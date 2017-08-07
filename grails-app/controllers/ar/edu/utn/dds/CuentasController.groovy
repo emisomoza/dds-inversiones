@@ -24,7 +24,7 @@ class CuentasController {
         )
     }
 
-    def guardar() {
+    def save() {
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt")
         render(
