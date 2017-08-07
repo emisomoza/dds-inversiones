@@ -14,7 +14,22 @@ import java.util.stream.Collectors;
  */
 public class OperadorFiltroMayor extends OperadorFiltro {
 
-    private Float comparador;
+    private Double comparador;
+
+    public OperadorFiltroMayor() {
+    }
+
+    public OperadorFiltroMayor(Double comparador) {
+        this.comparador = comparador;
+    }
+
+    public Double getComparador() {
+        return comparador;
+    }
+
+    public void setComparador(Double comparador) {
+        this.comparador = comparador;
+    }
 
     @Override
     public Boolean filtrar(Empresa empresa) throws MetodologiaException {
