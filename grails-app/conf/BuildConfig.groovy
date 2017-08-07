@@ -55,7 +55,6 @@ grails.project.dependency.resolution = {
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
         compile 'org.antlr:antlr4-maven-plugin:4.7'
-        compile 'org.grails.plugins:redis:2.0.4'
         compile 'org.grails.plugins:mongodb:6.1.3'
 
     }
