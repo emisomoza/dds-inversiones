@@ -20,6 +20,7 @@
             <label for="selectEmpresa1" class="col-sm-1 control-label">Empresa 1</label>
             <div class="col-sm-10">
                 <select id="selectEmpresa1" name = "empresa1" class="form-control">
+                    <option value="" disabled selected hidden>Seleccione...</option>
                     <g:each in="${empresas}">
                         <option value="${it?.nombre}">${it?.nombre}</option>
                     </g:each>
@@ -30,6 +31,7 @@
             <label for="selectEmpresa2" class="col-sm-1 control-label">Empresa 2</label>
             <div class="col-sm-10">
                 <select id="selectEmpresa2" name = "empresa2" class="form-control">
+                    <option value="" disabled selected hidden>Seleccione...</option>
                     <g:each in="${empresas}">
                         <option value="${it?.nombre}">${it?.nombre}</option>
                     </g:each>
