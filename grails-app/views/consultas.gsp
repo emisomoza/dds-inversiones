@@ -5,42 +5,40 @@
   Time: 20:09
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
     <title>Consultas</title>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 </head>
 
 <body>
-<h1>
-    <g:form controller = "Consultas" action ="comparar" >
+    <g:form class="form-horizontal" role="form" controller="Consultas" action="comparar">
         <div>
-            <label>Empresa 1: </label>
-            <select id="owner" name="owner">
-                <g:each in="${empresas}">
-                    <option value="${it?.nombre}">${it?.nombre}</option>
-                </g:each>
-            </select>
+            <h2 class="panel-title">Comparar Empresas</h2></br>
         </div>
-        <div>
-            <label>Empresa 2: </label>
-            <select id="owner" name="owner">
-                <g:each in="${empresas}">
-                    <option value="${it?.nombre}">${it?.nombre}</option>
-                </g:each>
-            </select>
+        <div class="form-group">
+            <label for="selectEmpresa1" class="col-sm-1 control-label">Empresa 1</label>
+            <div class="col-sm-10">
+                <select id="selectEmpresa1" name = "empresa1" class="form-control">
+                    <g:each in="${empresas}">
+                        <option value="${it?.nombre}">${it?.nombre}</option>
+                    </g:each>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectEmpresa2" class="col-sm-1 control-label">Empresa 2</label>
+            <div class="col-sm-10">
+                <select id="selectEmpresa2" name = "empresa2" class="form-control">
+                    <g:each in="${empresas}">
+                        <option value="${it?.nombre}">${it?.nombre}</option>
+                    </g:each>
+                </select>
+            </div>
         </div>
         <div>
             <label>&nbsp;</label><input type="submit" value="Comparar"/>
         </div>
     </g:form>
-    <div>
-        <g:form controller = "Cuentas" action ="volver" >
-            <label>&nbsp;</label><input type="submit" value="Cancelar"/>
-        </g:form>
-    </div>
-</h1>
 </body>
 </html>
