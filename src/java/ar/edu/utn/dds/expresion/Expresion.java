@@ -9,7 +9,8 @@ import java.util.List;
 @JsonSubTypes({
     @JsonSubTypes.Type(Operacion.class),
     @JsonSubTypes.Type(Funcion.class),
-    @JsonSubTypes.Type(Primaria.class)
+    @JsonSubTypes.Type(Primaria.class),
+	@JsonSubTypes.Type(ExpresionNegada.class)
 })
 public abstract class Expresion {
 	@JsonIgnore

@@ -27,6 +27,9 @@ public class Indicador implements Calculable {
     @JsonProperty("dependenciasCuenta")
     private List<String> dependenciasCuenta;
 
+	public Indicador() {
+	}
+
 	public Indicador(String nombre, String expresion) {
 		this.nombre = nombre;
 
