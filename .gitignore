@@ -3,9 +3,8 @@
 # suggested that you use the "grails integrate-with --git" command
 # to generate your .gitignore file.
 
-dds-inversiones-grailsPlugins.iml
 .DS_Store
-dds-inversiones.iml
+*.iml
 .slcache/*
 .asscache
 web-app/WEB-INF/tld/c.tld
