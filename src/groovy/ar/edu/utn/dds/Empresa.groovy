@@ -30,9 +30,15 @@ public class Empresa {
         this.nombre = nombre;
     }
 
+    public void savePeriodo(Map period){
+        Periodo periodo = new Empresa(LocalDate.parse(period.fechaDesde, formatoDeFecha), LocalDate.parse(period.fechaHasta, formatoDeFecha));
+        this.agregarPeriodo(periodo);
+    }
+
     public List<Periodo> getPeriodos() {
         return periodos;
     }
+
 
     public void agregarPeriodo(Periodo periodo) {
         periodos.add(periodo);
