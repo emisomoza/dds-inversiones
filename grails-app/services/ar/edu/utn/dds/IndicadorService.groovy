@@ -14,4 +14,8 @@ class IndicadorService {
     public Indicador findIndicadorByName(String name) {
         return mongoTemplate.findById(name, Indicador.class)
     }
+
+    public Indicador findIndicadorByNameWithGorm(String name) {
+        return Indicador.get(name)
+    }
 }

@@ -82,6 +82,7 @@ grails.project.dependency.resolution = {
 
         compile "org.grails.plugins:mongodb:5.0.0.RC1"
         compile "org.grails.plugins:redis:1.6.6"
+        compile "org.grails.plugins:hibernate:3.6.10.19"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
