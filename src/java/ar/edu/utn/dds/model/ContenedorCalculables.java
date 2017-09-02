@@ -1,4 +1,4 @@
-package ar.edu.utn.dds;
+package ar.edu.utn.dds.model;
 
 import java.util.ArrayList;
 import java.util.List;

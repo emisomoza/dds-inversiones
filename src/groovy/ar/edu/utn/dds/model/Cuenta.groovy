@@ -1,4 +1,6 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.model
+
+import ar.edu.utn.dds.model.Calculable
 
 public class Cuenta implements Calculable {
 

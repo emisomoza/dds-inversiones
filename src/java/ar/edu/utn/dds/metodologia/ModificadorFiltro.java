@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.metodologia;
 
-import ar.edu.utn.dds.Periodo;
+import ar.edu.utn.dds.model.Periodo;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.model
 
 import ar.edu.utn.dds.exceptions.CuentaNoExisteException
 

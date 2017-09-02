@@ -1,8 +1,8 @@
 package ar.edu.utn.dds.metodologia
 
-import ar.edu.utn.dds.Cuenta
-import ar.edu.utn.dds.Empresa
-import ar.edu.utn.dds.Periodo
+import ar.edu.utn.dds.model.Cuenta
+import ar.edu.utn.dds.model.Empresa
+import ar.edu.utn.dds.model.Periodo
 import spock.lang.Specification
 
 import java.time.LocalDate

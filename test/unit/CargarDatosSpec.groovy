@@ -1,11 +1,9 @@
-import ar.edu.utn.dds.ContenedorEmpresas
-import ar.edu.utn.dds.Empresa
+import ar.edu.utn.dds.model.ContenedorEmpresas
+import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.exceptions.CuentaNoExisteException
 import ar.edu.utn.dds.exceptions.PeriodoNoExisteException
-import net.sf.cglib.core.Local
 import spock.lang.Specification
 
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter;
 

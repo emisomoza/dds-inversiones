@@ -1,5 +1,6 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.model.Indicador
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
 import utils.DiffHelper

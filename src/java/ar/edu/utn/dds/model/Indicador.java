@@ -1,4 +1,4 @@
-package ar.edu.utn.dds;
+package ar.edu.utn.dds.model;
 
 import ar.edu.utn.dds.antlr.IndicadorLexer;
 import ar.edu.utn.dds.antlr.IndicadorParser;
@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Indicador implements Calculable {
 
+    @Id
     @JsonProperty("nombre")
     private String nombre;
     @JsonProperty("expresion")

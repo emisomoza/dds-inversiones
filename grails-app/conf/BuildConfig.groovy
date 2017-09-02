@@ -40,6 +40,7 @@ grails.project.dependency.resolution = {
         mavenLocal()
         grailsCentral()
         mavenCentral()
+
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         mavenRepo "http://download.java.net/maven/2/"
         mavenRepo "http://repository.jboss.com/maven2/"
@@ -54,7 +55,7 @@ grails.project.dependency.resolution = {
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
         compile 'org.antlr:antlr4-maven-plugin:4.7'
-        //compile 'org.grails.plugins:mongodb:6.1.3'
+        compile 'org.springframework.data:spring-data-mongodb:1.10.6.RELEASE'
     }
 
     plugins {
@@ -77,7 +78,10 @@ grails.project.dependency.resolution = {
 
         compile ":csv:0.3.1"
         compile ':cache-redis:1.1.2-SNAPSHOT'
-//        compile ':mongodb:5.0.0.RC1'
+
+
+        compile "org.grails.plugins:mongodb:5.0.0.RC1"
+        compile "org.grails.plugins:redis:1.6.6"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
