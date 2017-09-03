@@ -50,12 +50,12 @@ grails.project.dependency.resolution = {
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
-        runtime 'mysql:mysql-connector-java:jar:6.0.6'
+        runtime 'mysql:mysql-connector-java:6.0.6'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
         compile 'org.antlr:antlr4-maven-plugin:4.7'
-        compile 'org.springframework.data:spring-data-mongodb:1.10.6.RELEASE'
+        compile 'org.springframework.data:spring-data-mongodb:2.0.0.RC2'
     }
 
     plugins {
@@ -69,7 +69,6 @@ grails.project.dependency.resolution = {
         compile ":asset-pipeline:2.5.7"
 
         // plugins needed at runtime but not for compilation
-        runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
         runtime ':twitter-bootstrap:3.3.5'
@@ -80,9 +79,9 @@ grails.project.dependency.resolution = {
         compile ':cache-redis:1.1.2-SNAPSHOT'
 
 
-        compile "org.grails.plugins:mongodb:5.0.0.RC1"
+        compile "org.grails.plugins:mongodb:5.0.0.RELEASE"
         compile "org.grails.plugins:redis:1.6.6"
-        compile "org.grails.plugins:hibernate:3.6.10.19"
+        compile "org.grails.plugins:hibernate4:4.3.10"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
