@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.expresion;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 @JsonSubTypes({
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 })
 public abstract class Primaria extends Expresion {
 
+    @JsonProperty
     @Override
     public abstract Double getValor();
 }

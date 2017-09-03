@@ -14,6 +14,7 @@ public class PrimariaNumero extends Primaria {
         this.valor = valor;
     }
 
+    @JsonProperty
     @Override
     public Double getValor() {
         return valor;
