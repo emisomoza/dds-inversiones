@@ -11,6 +11,11 @@ public class ContenedorEmpresas {
         empresas = new ArrayList<Empresa>()
     }
 
+    public Empresa(String nombre){
+        this.nombre = nombre;
+        this.periodos = new ArrayList<Periodo>()
+    }
+
     public static ContenedorEmpresas getInstance() {
         if(instance == null) {
             instance = new ContenedorEmpresas()
@@ -38,6 +43,12 @@ public class ContenedorEmpresas {
 
     public ArrayList<Empresa> obtenerEmpresasConNombre(List<String> nombres) {
         return empresas.findAll{Empresa unaEmpresa -> nombres.contains(unaEmpresa.nombre)};
+    }
+
+    public void save (Map empresas) {
+
+        Empresa empresa = new Empresa(empresas.nomEmpresa);
+        this.empresas.add(empresa);
     }
 
     public void eliminarEmpresaConNombre(String nombre) {
