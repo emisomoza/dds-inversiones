@@ -2,6 +2,8 @@ package ar.edu.utn.dds
 
 class IndexController {
 
+    def empresaService;
+
     def home() {
         render(
                 view: "/index",
