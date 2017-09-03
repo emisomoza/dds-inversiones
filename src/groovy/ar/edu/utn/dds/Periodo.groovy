@@ -9,14 +9,35 @@ import java.time.LocalDate
  */
 public class Periodo {
 
+    private Long id
     private List<Cuenta> cuentas
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private LocalDate fechaInicio
+    private LocalDate fechaFin
 
     public Periodo(LocalDate fechaComienzo, LocalDate fechaFin) {
         this.fechaInicio = fechaComienzo;
         this.fechaFin = fechaFin;
         this.cuentas = new ArrayList<Cuenta>()
+    }
+
+    Long getId() {
+        return id
+    }
+
+    void setId(Long id) {
+        this.id = id
+    }
+
+    List<Cuenta> getCuentas() {
+        return cuentas
+    }
+
+    void setCuentas(List<Cuenta> cuentas) {
+        this.cuentas = cuentas
+    }
+
+    void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio
     }
 
     public LocalDate getFechaInicio() {
