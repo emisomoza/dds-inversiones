@@ -50,12 +50,15 @@ grails.project.dependency.resolution = {
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
+        compile 'org.springframework:spring-core:jar:4.3.10.RELEASE'
+        compile 'org.springframework.data:spring-data-commons:jar:1.13.6.RELEASE'
+        compile 'org.springframework.data:spring-data-mongodb:1.10.6.RELEASE'
+        compile 'org.mongodb:mongo-java-driver:jar:3.5.0'
         runtime 'mysql:mysql-connector-java:6.0.6'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
         compile 'org.antlr:antlr4-maven-plugin:4.7'
-        compile 'org.springframework.data:spring-data-mongodb:2.0.0.RC2'
     }
 
     plugins {

@@ -4,8 +4,6 @@ import ar.edu.utn.dds.model.ContenedorEmpresas
 
 class CuentasController {
 
-    def indicadorService
-
     def index() {
 
     }
@@ -31,7 +29,6 @@ class CuentasController {
     def save() {
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
         contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt")
-        indicadorService.insertIndicador("indicadorPrueba")
         render(
                 view: "/index",
                 model: [

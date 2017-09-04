@@ -11,15 +11,11 @@ class IndicadorService {
     @Autowired
     private MongoTemplate mongoTemplate
 
-    public Indicador insertIndicador(String name) {
-        return mongoTemplate.save(name, "test")
+    public void guardarIndicador(Indicador indicador) {
+        mongoTemplate.save(indicador)
     }
 
-    public Indicador findIndicadorByName(String name) {
+    public Indicador getIndicador(String name) {
         return mongoTemplate.findById(name, Indicador.class)
-    }
-
-    public Indicador findIndicadorByNameWithGorm(String name) {
-        return Indicador.get(name)
     }
 }
