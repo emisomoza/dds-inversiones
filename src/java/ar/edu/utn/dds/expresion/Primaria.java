@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 })
 public abstract class Primaria extends Expresion {
 
+
 	@JsonIgnore(false)
     @Override
     public abstract Double getValor();

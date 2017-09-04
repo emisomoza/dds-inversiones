@@ -2,14 +2,27 @@ package ar.edu.utn.dds.model
 
 import ar.edu.utn.dds.model.Calculable
 
-public class Cuenta implements Calculable {
+class Cuenta implements Calculable {
 
-    private String nombre;
-    private Double valor;
+    private Long id
+    private String nombre
+    private Double valor
 
-    public Cuenta (String nombre, Double valor) {
-        this.setNombre(nombre);
-        this.setValor(valor);
+    Cuenta() {
+
+    }
+
+    Cuenta (String nombre, Double valor) {
+        this.setNombre(nombre)
+        this.setValor(valor)
+    }
+
+    Long getId() {
+        return id
+    }
+
+    void setId(Long id) {
+        this.id = id
     }
 
     @Override

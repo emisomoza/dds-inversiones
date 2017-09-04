@@ -71,7 +71,6 @@ grails {
         // use a single redis server (use only if nore using sentinel cluster)
         port = 6379
         host = "localhost"
-        database = 5 // set default database to 5
     }
 }
 

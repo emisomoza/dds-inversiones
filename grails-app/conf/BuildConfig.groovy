@@ -46,6 +46,8 @@ grails.project.dependency.resolution = {
         mavenRepo "http://repository.jboss.com/maven2/"
         mavenRepo "http://repo.grails.org/grails/core"
         mavenRepo "http://repo.grails.org/grails/plugins"
+        mavenRepo "http://repo.grails.org/grails/libs-releases/"
+
     }
 
     dependencies {
@@ -74,16 +76,15 @@ grails.project.dependency.resolution = {
         // plugins needed at runtime but not for compilation
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
-        runtime ':twitter-bootstrap:3.3.5'
+        runtime ":twitter-bootstrap:3.3.5"
 
         test ":funky-spock:0.2.2"
 
         compile ":csv:0.3.1"
-        compile ':cache-redis:1.1.2-SNAPSHOT'
-
 
         compile "org.grails.plugins:mongodb:5.0.0.RELEASE"
         compile "org.grails.plugins:redis:1.6.6"
+        compile ':cache-redis:1.1.2-SNAPSHOT'
         compile "org.grails.plugins:hibernate4:4.3.10"
 
         // Uncomment these to enable additional asset-pipeline capabilities
