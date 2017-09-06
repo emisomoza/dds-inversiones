@@ -11,7 +11,7 @@ class EmpresaService {
 
     def listar() {
         String query = "SELECT * FROM EMPRESA"
-        return jdbcTemplate.queryForObject(query, new EmpresaMapper())
+        return jdbcTemplate.query(query, new EmpresaMapper())
     }
 
     def obtener(Long id) {

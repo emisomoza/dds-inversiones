@@ -17,8 +17,7 @@ class IndexController {
     }
 
     def compararEmpresas() {
-        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
-        def empresas = contenedor.getEmpresas()
+        def empresas = empresaService.listar()
 
         render(
                 view: "/consultas",
@@ -29,8 +28,7 @@ class IndexController {
     }
 
     def agregarCuentas() {
-        ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
-        def empresas = contenedor.getEmpresas()
+        def empresas = empresaService.listar()
         render(
                 view: "/empresas",
                 model: [
@@ -50,10 +48,10 @@ class IndexController {
 
     def crearMetodologias() {
         render(
-                view: "/metodologias",
-                model: [
+            view: "/metodologias",
+            model: [
 
-                ]
+            ]
         )
     }
 }
