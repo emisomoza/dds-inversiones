@@ -1,6 +1,6 @@
 package ar.edu.utn.dds
 
-import ar.edu.utn.dds.Periodo
+import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.mappers.PeriodoMapper
 import grails.transaction.Transactional
 

@@ -1,6 +1,6 @@
 package ar.edu.utn.dds
 
-import ar.edu.utn.dds.Empresa
+import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.mappers.EmpresaMapper
 import grails.transaction.Transactional
 

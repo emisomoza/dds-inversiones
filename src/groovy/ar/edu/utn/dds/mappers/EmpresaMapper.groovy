@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.mappers
 
-import ar.edu.utn.dds.Empresa
+import ar.edu.utn.dds.model.Empresa
 import org.springframework.jdbc.core.RowMapper
 
 import java.sql.ResultSet
