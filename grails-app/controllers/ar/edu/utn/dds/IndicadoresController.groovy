@@ -11,7 +11,7 @@ class IndicadoresController {
         indicadorService.guardarIndicador(nuevoIndicador)
 
         render(
-                view: "/indicadorAgregado",
+                view: "/indicadores/indicadorAgregado",
                 model: [
                     indicador: nuevoIndicador
                 ]

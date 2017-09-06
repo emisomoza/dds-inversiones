@@ -84,7 +84,7 @@ grails.project.dependency.resolution = {
 
         compile "org.grails.plugins:mongodb:5.0.0.RELEASE"
         compile "org.grails.plugins:redis:1.6.6"
-        compile ':cache-redis:1.1.2-SNAPSHOT'
+        //compile ':cache-redis:1.1.2-SNAPSHOT'
         compile "org.grails.plugins:hibernate4:4.3.10"
 
         // Uncomment these to enable additional asset-pipeline capabilities
