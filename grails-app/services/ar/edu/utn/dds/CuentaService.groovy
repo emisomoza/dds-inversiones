@@ -1,6 +1,6 @@
 package ar.edu.utn.dds
 
-import ar.edu.utn.dds.Cuenta
+import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.mappers.CuentaMapper
 import grails.transaction.Transactional
 

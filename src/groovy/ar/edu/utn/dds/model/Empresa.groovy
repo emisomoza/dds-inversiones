@@ -1,10 +1,9 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.model
 
 import ar.edu.utn.dds.exceptions.CuentaNoExisteException
 import ar.edu.utn.dds.exceptions.PeriodoNoExisteException
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat
+import java.text.ParseException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter;
 

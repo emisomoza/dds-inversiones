@@ -40,6 +40,7 @@ grails.project.dependency.resolution = {
         mavenLocal()
         grailsCentral()
         mavenCentral()
+
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         mavenRepo "http://download.java.net/maven/2/"
         mavenRepo "http://repository.jboss.com/maven2/"
@@ -51,11 +52,15 @@ grails.project.dependency.resolution = {
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
+        compile 'org.springframework:spring-core:jar:4.3.10.RELEASE'
+        compile 'org.springframework.data:spring-data-commons:jar:1.13.6.RELEASE'
+        compile 'org.springframework.data:spring-data-mongodb:1.10.6.RELEASE'
+        compile 'org.mongodb:mongo-java-driver:jar:3.5.0'
+        runtime 'mysql:mysql-connector-java:6.0.6'
+        test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
         compile 'org.antlr:antlr4-maven-plugin:4.7'
-        runtime 'mysql:mysql-connector-java:jar:6.0.6'
-        test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
     }
 
     plugins {
@@ -68,16 +73,19 @@ grails.project.dependency.resolution = {
         // asset-pipeline 2.0+ requires Java 7, use version 1.9.x with Java 6
         compile ":asset-pipeline:2.5.7"
 
-        compile ":csv:0.3.1"
-        compile ":redis:1.6.6"
-
         // plugins needed at runtime but not for compilation
-        runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
         runtime ":twitter-bootstrap:3.3.5"
 
         test ":funky-spock:0.2.2"
+
+        compile ":csv:0.3.1"
+
+        compile "org.grails.plugins:mongodb:5.0.0.RELEASE"
+        compile "org.grails.plugins:redis:1.6.6"
+        //compile ':cache-redis:1.1.2-SNAPSHOT'
+        compile "org.grails.plugins:hibernate4:4.3.10"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"

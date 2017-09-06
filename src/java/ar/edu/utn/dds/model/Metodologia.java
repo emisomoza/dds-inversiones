@@ -1,7 +1,6 @@
-package ar.edu.utn.dds;
+package ar.edu.utn.dds.model;
 
-import ar.edu.utn.dds.metodologia.Modificador;
-import ar.edu.utn.dds.metodologia.Operador;
+import ar.edu.utn.dds.model.Empresa;
 import ar.edu.utn.dds.metodologia.OperadorFiltro;
 import ar.edu.utn.dds.metodologia.OperadorOrdenador;
 

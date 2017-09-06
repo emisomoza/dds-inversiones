@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.mappers
 
-import ar.edu.utn.dds.Cuenta
+import ar.edu.utn.dds.model.Cuenta
 import org.springframework.jdbc.core.RowMapper
 
 import java.sql.ResultSet

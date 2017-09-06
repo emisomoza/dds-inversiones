@@ -1,5 +1,7 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.model.ContenedorEmpresas
+
 class IndexController {
 
     def empresaService;

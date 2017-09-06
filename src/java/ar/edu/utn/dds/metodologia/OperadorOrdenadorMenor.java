@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.metodologia;
 
-import ar.edu.utn.dds.Empresa;
+import ar.edu.utn.dds.model.Empresa;
 
 import java.util.List;
 import java.util.stream.Collectors;
