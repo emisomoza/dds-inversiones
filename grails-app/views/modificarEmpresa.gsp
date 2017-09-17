@@ -12,9 +12,9 @@
 </head>
 
 <body>
-<g:form class="form-horizontal" role="form" controller="ModificarEmpresa" action="save">
+<g:form class="form-horizontal" role="form" controller="Empresas" action="save_periodo">
     <div>
-        <h2 class="panel-title">Modificando empresa: ${empresa.nombre}</h2></br>
+        <h2 class="panel-title">Modificando empresa: ${empresa}</h2></br>
     </div>
     <div class="form-group">
         <label for="inputPeriodoDesde" class="col-sm-1 control-label">Fecha Desde</label>
