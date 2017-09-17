@@ -3,7 +3,9 @@ package ar.edu.utn.dds.configuration;
 import ar.edu.utn.dds.cache.CacheData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.DefaultRedisCachePrefix;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCachePrefix;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -35,6 +37,8 @@ public class RedisConfiguration {
 		RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate(), CacheData.getAllCacheNames());
 		redisCacheManager.initializeCaches();
 		redisCacheManager.setDefaultExpiration(ttl);
+		redisCacheManager.setCachePrefix(new DefaultRedisCachePrefix("cached"));
+		redisCacheManager.setUsePrefix(true);
 		return redisCacheManager;
 	}
 
