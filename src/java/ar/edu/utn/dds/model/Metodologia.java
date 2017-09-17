@@ -1,16 +1,13 @@
 package ar.edu.utn.dds.model;
 
-import ar.edu.utn.dds.model.Empresa;
 import ar.edu.utn.dds.metodologia.OperadorFiltro;
 import ar.edu.utn.dds.metodologia.OperadorOrdenador;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by andres on 06/08/17.
- */
-public class Metodologia {
+public class Metodologia implements Serializable {
 
     private List<OperadorFiltro> operadoresFiltro;
     private OperadorOrdenador operadorOrden;
