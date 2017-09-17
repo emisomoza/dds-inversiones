@@ -14,12 +14,13 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "indicadores")
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Indicador implements Calculable {
+public class Indicador implements Serializable, Calculable {
 
     @Id
     @JsonProperty("nombre")

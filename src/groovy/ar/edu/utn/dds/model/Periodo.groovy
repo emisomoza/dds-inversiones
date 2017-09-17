@@ -4,10 +4,7 @@ import ar.edu.utn.dds.exceptions.CuentaNoExisteException
 
 import java.time.LocalDate
 
-/**
- * Created by esomoza on 5/13/17.
- */
-public class Periodo {
+public class Periodo implements Serializable {
 
     private Long id
     private List<Cuenta> cuentas
