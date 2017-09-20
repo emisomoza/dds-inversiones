@@ -1,10 +1,13 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
 import ar.edu.utn.dds.mappers.EmpresaMapper
 import ar.edu.utn.dds.model.Empresa
 import grails.transaction.Transactional
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.dao.DataAccessException
 import org.springframework.jdbc.core.ResultSetExtractor
 
@@ -40,6 +43,7 @@ class EmpresaService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = CacheData.EMPRESA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     def listar() {
         def result
         log.info("Listando empresas")
@@ -63,6 +67,7 @@ class EmpresaService {
         }
     }
 
+    @CacheEvict(cacheNames = CacheData.EMPRESA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
     def guardar(Empresa empresa) {
         def result
         log.info("Guardando empresa")

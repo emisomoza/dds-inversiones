@@ -47,16 +47,25 @@ grails.project.dependency.resolution = {
         mavenRepo "http://repo.grails.org/grails/core"
         mavenRepo "http://repo.grails.org/grails/plugins"
         mavenRepo "http://repo.grails.org/grails/libs-releases/"
-
     }
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         compile 'org.springframework:spring-core:jar:4.3.10.RELEASE'
+        compile 'org.springframework:spring-context:jar:4.3.10.RELEASE'
+        compile 'org.springframework:spring-context-support:jar:4.3.10.RELEASE'
+        compile 'org.springframework:spring-beans:jar:4.3.10.RELEASE'
+        compile 'org.springframework:spring-aop:jar:4.3.10.RELEASE'
         compile 'org.springframework.data:spring-data-commons:jar:1.13.6.RELEASE'
+
         compile 'org.springframework.data:spring-data-mongodb:1.10.6.RELEASE'
         compile 'org.mongodb:mongo-java-driver:jar:3.5.0'
+
         runtime 'mysql:mysql-connector-java:6.0.6'
+
+        compile 'org.springframework.data:spring-data-redis:jar:1.8.6.RELEASE'
+        compile 'redis.clients:jedis:jar:2.9.0'
+
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
@@ -82,9 +91,6 @@ grails.project.dependency.resolution = {
 
         compile ":csv:0.3.1"
 
-        compile "org.grails.plugins:mongodb:5.0.0.RELEASE"
-        compile "org.grails.plugins:redis:1.6.6"
-        //compile ':cache-redis:1.1.2-SNAPSHOT'
         compile "org.grails.plugins:hibernate4:4.3.10"
 
         // Uncomment these to enable additional asset-pipeline capabilities

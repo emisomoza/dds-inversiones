@@ -34,7 +34,7 @@
             <select id="selectEmpresa" name = "empresa" class="form-control">
                 <option value="" disabled selected hidden>Seleccione...</option>
                 <g:each in="${empresas}">
-                    <option value="${it?.nombre}">${it?.nombre}</option>
+                    <option value="${it?.id}">${it?.nombre}</option>
                 </g:each>
             </select>
         </div>

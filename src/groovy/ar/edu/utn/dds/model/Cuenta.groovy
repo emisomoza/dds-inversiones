@@ -2,7 +2,7 @@ package ar.edu.utn.dds.model
 
 import ar.edu.utn.dds.model.Calculable
 
-class Cuenta implements Calculable {
+class Cuenta implements Serializable, Calculable {
 
     private Long id
     private String nombre

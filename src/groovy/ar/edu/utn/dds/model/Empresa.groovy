@@ -7,11 +7,7 @@ import java.text.ParseException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter;
 
-/**
- * Created by esomoza on 5/13/17.
- */
-
-public class Empresa {
+public class Empresa implements Serializable {
 
     private Long id;
     private String nombre
