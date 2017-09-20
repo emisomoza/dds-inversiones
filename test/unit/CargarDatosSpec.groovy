@@ -12,7 +12,7 @@ class CargarDatosSpec extends Specification{
     void "insertar 2 empresas nuevas"(){
         setup:
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
-        contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt")
+        contenedor.importarCuentasDesdeArchivo("./carga_cuentas.csv")
 
         expect:
         contenedor.getEmpresas().size() == 2
@@ -115,7 +115,7 @@ class CargarDatosSpec extends Specification{
     void "Consultar cuenta"(){
         setup:
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
-        contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt");
+        contenedor.importarCuentasDesdeArchivo("./carga_cuentas.csv");
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         Empresa empresa = contenedor.obtenerEmpresaConNombre("Apple");
@@ -132,7 +132,7 @@ class CargarDatosSpec extends Specification{
     void "consultar cuenta con periodo inexistente"(){
         setup:
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
-        contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt");
+        contenedor.importarCuentasDesdeArchivo("./carga_cuentas.csv");
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         when:
@@ -149,7 +149,7 @@ class CargarDatosSpec extends Specification{
     void consultarCuentaConCuentaInexistente(){
         setup:
         ContenedorEmpresas contenedor = ContenedorEmpresas.getInstance()
-        contenedor.importarCuentasDesdeArchivo("./archivo_2_empresas.txt");
+        contenedor.importarCuentasDesdeArchivo("./carga_cuentas.csv");
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         when:
