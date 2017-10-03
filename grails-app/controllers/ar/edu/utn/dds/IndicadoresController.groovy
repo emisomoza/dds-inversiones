@@ -2,6 +2,7 @@ package ar.edu.utn.dds
 
 import ar.edu.utn.dds.model.Indicador
 
+
 class IndicadoresController {
     def indicadorService
 

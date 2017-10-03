@@ -3,7 +3,7 @@ package ar.edu.utn.dds
 import ar.edu.utn.dds.model.Indicador
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
-import utils.DiffHelper
+import ar.edu.utn.dds.utils.DiffHelper
 
 class IndicadorSpec extends Specification {
 
