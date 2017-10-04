@@ -1,6 +1,7 @@
 # Inversiones
 
-# Configuración MySql para sistemas basados en Unix:
+
+# Configuración MySql para sistemas basados en Unix
 
 Instalar docker community edition según sistema operativo. Como se explica en el instructivo de docker, para testear la correcta instalación se puede usar la imagen “hello-world”.
 
@@ -32,6 +33,7 @@ Por defecto, si no dio ningún error podemos asumir que salió todo bien, pero p
 .$ docker exec -it mysql mysql -uroot -ppassword
 mysql> use INVERSIONES
 mysql> show tables;
+
 
 # Instalación de redis en docker
 
