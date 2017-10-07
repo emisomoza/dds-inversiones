@@ -122,20 +122,22 @@ class EmpresaService {
         String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d'), STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d'));"
         try {
             result = jdbcTemplate.update(query)
+        }
+        catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al guardar el periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
 
-        /*    String qSelect = "SELECT PERIODO_ID FROM PERIODO " +
-                    "WHERE fecha_inicio = STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d')" +
-                    "and fecha_fin = STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d')"
-
-            try {
-                long periodoId = jdbcTemplate.queryForObject(qSelect, new EmpresaMapper())
-            } catch(DataAccessException e) {
-                throw new SQLInaccesibleException("Error al obtener periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
-*/
-            } catch(DataAccessException e) {
-                throw new SQLInaccesibleException("Error al guardar el periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
-
-            }
         }
 
+        /*String qSelect = "SELECT PERIODO_ID FROM PERIODO " +
+                "WHERE fecha_inicio = STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d')" +
+                "and fecha_fin = STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d')"
+
+        try {
+            long periodoId = jdbcTemplate.queryForObject(qSelect, new EmpresaMapper())
+        }
+        catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al obtener periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
+        }*/
     }
+
+}
