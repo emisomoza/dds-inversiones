@@ -14,7 +14,6 @@ import org.springframework.jdbc.core.ResultSetExtractor
 
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.text.DateFormatSymbols
 
 @Transactional
 class EmpresaService {
@@ -117,10 +116,10 @@ class EmpresaService {
     @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
     def agregarPeriodo(Long idEmpresa, Date fechaDesde, Date fechaHasta) {
         def result
-        String fechaDesdeString = fechaDesde.calendarDate.year + '-' + new DateFormatSymbols().getMonths()[fechaDesde.month] + '-10'
-        String fechaHastaString = fechaHasta.calendarDate.year + '-' + new DateFormatSymbols().getMonths()[fechaDesde.month] + '-10'
+        String fechaDesdeString = fechaDesde.calendarDate.year + '-' + fechaDesde.calendarDate.month + '-10'
+        String fechaHastaString = fechaHasta.calendarDate.year + '-' + fechaDesde.calendarDate.month + '-10'
         log.info("Guardando período")
-        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (STR_TO_DATE('" + fechaDesdeString + "', '%Y-%M-%d'), STR_TO_DATE('" + fechaHastaString + "', '%Y-%M-%d'))"
+        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d'), STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d'))"
         try {
             result = jdbcTemplate.update(query)
             log.info(String.format("Periodo guardado: %l", result))
