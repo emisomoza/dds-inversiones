@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.ResultSetExtractor
 
 import java.sql.ResultSet
 import java.sql.SQLException
+import java.text.DateFormatSymbols
 
 @Transactional
 class EmpresaService {
@@ -116,17 +117,17 @@ class EmpresaService {
     @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
     def agregarPeriodo(Long idEmpresa, Date fechaDesde, Date fechaHasta) {
         def result
-        String fechaDesdeString = fechaDesde.calendarDate.year + '-' + fechaDesde.calendarDate.month
-        String fechaHastaString = fechaHasta.calendarDate.year + '-' + fechaHasta.calendarDate.month
-        /*log.info("Guardando período")
-        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (TO_DATE(" + fechaDesdeString + ", 'YYYY-MM'), TO_DATE(" + fechaHastaString + ", 'YYYY-MM'))"
+        String fechaDesdeString = fechaDesde.calendarDate.year + '-' + new DateFormatSymbols().getMonths()[fechaDesde.month]
+        String fechaHastaString = fechaHasta.calendarDate.year + '-' + new DateFormatSymbols().getMonths()[fechaDesde.month]
+        log.info("Guardando período")
+        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (STR_TO_DATE('" + fechaDesdeString + "', '%Y-%M'), STR_TO_DATE('" + fechaHastaString + "', '%Y-%M'))"
         try {
-            result = jdbcTemplate.update(query, fechaDesde, fechaHasta)
+            result = jdbcTemplate.update(query)
             log.info(String.format("Periodo guardado: %l", result))
             return result
         } catch(DataAccessException e) {
             throw new SQLInaccesibleException("Error al guardar el periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
-        }*/
+        }
     }
 
 }
