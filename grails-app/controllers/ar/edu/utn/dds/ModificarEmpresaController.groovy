@@ -22,13 +22,14 @@ class ModificarEmpresaController {
         Date fechaHasta = params.fechaHasta
 
         empresaService.agregarPeriodo(idEmpresa, fechaDesde, fechaHasta)
-        def empresas = empresaService.obtener(idEmpresa)
+        def empresa = empresaService.obtener(idEmpresa)
         //def periodos = empresaService.obtenerPeriodos(idEmpresa)
 
         render(
             view: "/modificarEmpresa",
             model: [
-                    periodos: empresas
+                    periodos: null,
+                    empresa: empresa
             ]
         )
     }
