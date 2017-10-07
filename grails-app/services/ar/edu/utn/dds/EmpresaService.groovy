@@ -1,8 +1,6 @@
 package ar.edu.utn.dds
 
 import ar.edu.utn.dds.cache.CacheData
-import ar.edu.utn.dds.exceptions.DatosInaccesiblesException
-import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
 import ar.edu.utn.dds.exceptions.SQLInaccesibleException
 import ar.edu.utn.dds.mappers.EmpresaMapper
@@ -115,6 +113,20 @@ class EmpresaService {
         List<Map<String, String>> mapasCuentas = this.cuentaService.parsearArchImportCuentas(archivo)
     }
 
-
+    @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
+    def agregarPeriodo(Long idEmpresa, Date fechaDesde, Date fechaHasta) {
+        def result
+        String fechaDesdeString = fechaDesde.calendarDate.year + '-' + fechaDesde.calendarDate.month
+        String fechaHastaString = fechaHasta.calendarDate.year + '-' + fechaHasta.calendarDate.month
+        /*log.info("Guardando período")
+        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (TO_DATE(" + fechaDesdeString + ", 'YYYY-MM'), TO_DATE(" + fechaHastaString + ", 'YYYY-MM'))"
+        try {
+            result = jdbcTemplate.update(query, fechaDesde, fechaHasta)
+            log.info(String.format("Periodo guardado: %l", result))
+            return result
+        } catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al guardar el periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
+        }*/
+    }
 
 }

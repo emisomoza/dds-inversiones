@@ -2,27 +2,34 @@ package ar.edu.utn.dds
 
 class ModificarEmpresaController {
 
+    def empresaService
+
     def index() {
-        def empresaService
-        def empresas = empresaService.obtener(params.empresa)
+        def empresas = empresaService.obtener(Long.parseLong(params.empresa))
 
         render(
                 view: "/modificarEmpresa",
                 model: [
-                        empresa: empresa
+                        empresa: empresas
                 ]
         )
     }
 
     def save_periodo() {
 
-        def empresa = params.empresa
-        def periodos = params.empresa
+        Long idEmpresa = Long.parseLong(params.empresa)
+        Date fechaDesde = params.fechaDesde
+        Date fechaHasta = params.fechaHasta
+
+        empresaService.agregarPeriodo(idEmpresa, fechaDesde, fechaHasta)
+
+        //def periodos = empresaService.obtenerPeriodos(idEmpresa)
+
         render(
-                view: "/modificarEmpresa",
-                model: [
-                        empresa: empresa
-                ]
+            view: "/modificarEmpresa",
+            model: [
+                    periodos: null
+            ]
         )
     }
 }
