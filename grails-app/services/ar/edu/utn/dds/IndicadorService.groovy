@@ -32,4 +32,15 @@ class IndicadorService {
             throw new MongoInaccesibleException("Error al obtener indicador " + name, e.getCause())
         }
     }
+
+    @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    public ArrayList<Indicador>  getIndicadores() {
+        try {
+            ArrayList<Indicador> indicadores = []
+            indicadores = mongoTemplate.findAll(Indicador.class)
+            return indicadores
+        } catch(Exception e) {
+            throw new MongoInaccesibleException("Error al obtener todos los indicadores", e.getCause())
+        }
+    }
 }

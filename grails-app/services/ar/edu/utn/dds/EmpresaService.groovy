@@ -1,8 +1,6 @@
 package ar.edu.utn.dds
 
 import ar.edu.utn.dds.cache.CacheData
-import ar.edu.utn.dds.exceptions.DatosInaccesiblesException
-import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
 import ar.edu.utn.dds.exceptions.SQLInaccesibleException
 import ar.edu.utn.dds.mappers.EmpresaMapper
@@ -115,6 +113,31 @@ class EmpresaService {
         List<Map<String, String>> mapasCuentas = this.cuentaService.parsearArchImportCuentas(archivo)
     }
 
+    @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
+    def agregarPeriodo(Long idEmpresa, Date fechaDesde, Date fechaHasta) {
+        def result
+        String fechaDesdeString = fechaDesde.calendarDate.year + '-' + fechaDesde.calendarDate.month + '-10'
+        String fechaHastaString = fechaHasta.calendarDate.year + '-' + fechaHasta.calendarDate.month + '-10'
+        log.info("Guardando período")
+        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d'), STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d'));"
+        try {
+            result = jdbcTemplate.update(query)
+        }
+        catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al guardar el periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
 
+        }
+
+        /*String qSelect = "SELECT PERIODO_ID FROM PERIODO " +
+                "WHERE fecha_inicio = STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d')" +
+                "and fecha_fin = STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d')"
+
+        try {
+            long periodoId = jdbcTemplate.queryForObject(qSelect, new EmpresaMapper())
+        }
+        catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al obtener periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
+        }*/
+    }
 
 }
