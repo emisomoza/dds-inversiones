@@ -34,4 +34,13 @@ class ModificarEmpresaController {
             ]
         )
     }
+
+    def modificarPeriodo(){
+        render(
+                view: "/modificarPeriodo",
+                model: [
+
+                ]
+        )
+    }
 }
