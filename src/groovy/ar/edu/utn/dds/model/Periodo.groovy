@@ -11,6 +11,8 @@ public class Periodo implements Serializable {
     private LocalDate fechaInicio
     private LocalDate fechaFin
 
+    public Periodo(){}
+
     public Periodo(LocalDate fechaComienzo, LocalDate fechaFin) {
         this.fechaInicio = fechaComienzo;
         this.fechaFin = fechaFin;

@@ -53,16 +53,32 @@ class PeriodoService {
 
         }
 
-        /*String qSelect = "SELECT PERIODO_ID FROM PERIODO " +
-                "WHERE fecha_inicio = STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d')" +
-                "and fecha_fin = STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d')"
+        def periodo = obtenerIdInsertado()
+        guardarRelacion(idEmpresa, periodo)
+    }
+
+    @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
+    def guardarRelacion(Long idEmpresa, Periodo periodo) {
+        def result
+        String query = "INSERT INTO PERIODO_EMPRESA (pe_empresa_id, pe_periodo_id) VALUES (?,?);"
+        try {
+            result = jdbcTemplate.update(query, idEmpresa, periodo.getId())
+        }
+        catch (DataAccessException e) {
+            throw new SQLInaccesibleException("Error al guardar relacion periodo empresa ")
+
+        }
+    }
+
+    @Cacheable(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    def obtenerIdInsertado() {
 
         try {
-            long periodoId = jdbcTemplate.queryForObject(qSelect, new EmpresaMapper())
+            String query = "SELECT * FROM PERIODO WHERE PERIODO_ID = (SELECT MAX(PERIODO_ID) FROM PERIODO)"
+            return jdbcTemplate.queryForObject(query, new PeriodoMapper())
+        } catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al obtener ultimo insertado")
         }
-        catch(DataAccessException e) {
-            throw new SQLInaccesibleException("Error al obtener periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
-        }*/
     }
 
     @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
