@@ -1,11 +1,8 @@
 package ar.edu.utn.dds
 
-import ar.edu.utn.dds.model.Indicador
-
 class IndexController {
 
     def empresaService;
-    def indicadorService;
 
     def home() {
         render(
@@ -43,18 +40,6 @@ class IndexController {
                 view: "/indicadores/cargaIndicadores",
                 model: [
 
-                ]
-        )
-    }
-
-    def crearMetodologias() {
-        ArrayList<Indicador> indicadores
-        indicadores = indicadorService.getIndicadores()
-
-        render(
-                view: "/metodologias",
-                model: [
-                        indicadores: indicadores
                 ]
         )
     }

@@ -37,7 +37,7 @@ class IndicadorService {
     public ArrayList<Indicador>  getIndicadores() {
         try {
             ArrayList<Indicador> indicadores = []
-            //indicadores = mongoTemplate.findAll(Indicador.class)
+            indicadores = mongoTemplate.findAll(Indicador.class)
             return indicadores
         } catch(Exception e) {
             throw new MongoInaccesibleException("Error al obtener todos los indicadores", e.getCause())

@@ -14,7 +14,7 @@
 					<li><a href="${createLink(controller:'Index', action:'compararEmpresas')}">Comparar Empresas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-usd"></span></a></li>
 					<li><a href="${createLink(controller:'Index', action:'agregarCuentas')}">Gestión Cuentas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a></li>
 					<li><a href="${createLink(controller:'Index', action:'agregarIndicadores')}">Gestión Indicadores<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-stats"></span></a></li>
-					<li><a href="${createLink(controller:'Index', action:'crearMetodologias')}">Gestión Metodologías<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-check"></span></a></li>
+					<li><a href="${createLink(controller:'Metodologias', action:'crear')}">Gestión Metodologías<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-check"></span></a></li>
 				</ul>
 			</div>
 		</div>
