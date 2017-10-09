@@ -21,8 +21,13 @@
         <div class="col-sm-3">
             <input id="inputCuenta" name = "nomCuenta" class="form-control" placeholder="Cuenta">
         </div>
-        <button type="submit" class="btn btn-primary">Agregar</button>
     </div>
+    <div class="form-group">
+        <label for="inputImporte" class="col-sm-2 control-label">Importe</label>
+         <div class="col-sm-3">
+            <input id="inputImporte" name = "importe" class="form-control" placeholder="Importe">
+         </div>
+     </div>
 <div>
     <button type="submit" class="btn btn-primary">Agregar</button>
 </div>
