@@ -94,9 +94,13 @@ class PeriodoService {
     @CacheEvict(cacheNames = CacheData.PERIODO_EMPRESA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
     def obtenerPeriodos(Long idEmpresa) {
         log.info("Obteniendo períodos para una empresa")
+        def periodos
         String query = "SELECT periodo_id, fecha_inicio, fecha_fin FROM PERIODO WHERE periodo_id in (SELECT pe_periodo_id FROM PERIODO_EMPRESA WHERE pe_empresa_id = ?) ORDER BY fecha_inicio"
         try {
-            return jdbcTemplate.queryForObject(query, [idEmpresa] as Object[], new PeriodoMapper())
+            periodos = jdbcTemplate.queryForObject(query, [idEmpresa] as Object[], new PeriodoMapper())
+            return periodos
+        } catch(EmptyResultDataAccessException e) {
+            return periodos
         }
         catch(DataAccessException e) {
             throw new SQLInaccesibleException("Error al obtener los periodos para la empresa " + idEmpresa, e.getCause())

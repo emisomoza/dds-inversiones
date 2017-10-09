@@ -6,7 +6,7 @@ class ModificarEmpresaController {
     def periodoService
 
     def index() {
-        def empresas = empresaService.obtener(Long.parseLong(params.empresa))
+        def empresa = empresaService.obtener(Long.parseLong(params.empresa))
 
         def periodos = periodoService.obtenerPeriodos(Long.parseLong(params.empresa))
 
@@ -14,7 +14,7 @@ class ModificarEmpresaController {
                 view: "/modificarEmpresa",
                 model: [
                         periodos: periodos,
-                        empresa: empresas
+                        empresa: empresa
                 ]
         )
     }
