@@ -10,11 +10,9 @@ class PeriodoMapper implements RowMapper {
     
     @Override
     Object mapRow(ResultSet resultSet, int i) throws SQLException {
-        Periodo periodo = new Periodo()
+        Periodo periodo = new Periodo(resultSet.getDate("fecha_inicio").toLocalDate(), resultSet.getDate("fecha_fin").toLocalDate())
         
         periodo.setId(resultSet.getLong("periodo_id"))
-        periodo.setFechaInicio(resultSet.getDate("fecha_inicio").toLocalDate())
-        periodo.setFechaFin(resultSet.getDate("fecha_fin").toLocalDate())
         
         return periodo
     }

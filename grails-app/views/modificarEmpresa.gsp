@@ -42,7 +42,7 @@
             <select id="selectPeriodo" name = "periodo" class="form-control">
                 <option value="" disabled selected hidden>Seleccione...</option>
                 <g:each in="${periodos}">
-                    <option value="${it?.nombre}">${it?.nombre}</option>
+                    <option value="${it?.id}">Del ${it?.fechaInicio} al ${it?.fechaFin}</option>
                 </g:each>
             </select>
         </div>
