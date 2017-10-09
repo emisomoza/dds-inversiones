@@ -8,6 +8,8 @@ import static java.lang.Math.sqrt
 
 @JsonTypeName("fun")
 class FuncionUnaria extends Funcion {
+    public static final String SQRT = "sqrt"
+
     private Expresion expresion
 
     @JsonCreator
@@ -18,15 +20,5 @@ class FuncionUnaria extends Funcion {
 
     Expresion getExpresion() {
         return expresion
-    }
-
-    @Override
-    Double getValor() {
-        switch (nombre) {
-            case "sqrt":
-                return sqrt(expresion.getValor())
-            default:
-                return null
-        }
     }
 }

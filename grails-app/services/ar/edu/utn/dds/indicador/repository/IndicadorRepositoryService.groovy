@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.indicador.repository
 
 import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.exceptions.MongoInaccesibleException
@@ -10,7 +10,7 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.mongodb.core.MongoTemplate
 
 @Transactional
-class IndicadorService {
+class IndicadorRepositoryService {
 
     @Autowired
     private MongoTemplate mongoTemplate

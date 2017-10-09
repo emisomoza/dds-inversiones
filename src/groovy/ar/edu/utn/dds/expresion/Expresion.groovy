@@ -14,6 +14,4 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
     @JsonSubTypes.Type(ExpresionNegada.class)
 ])
 abstract class Expresion {
-    @JsonIgnore
-    abstract Double getValor()
 }

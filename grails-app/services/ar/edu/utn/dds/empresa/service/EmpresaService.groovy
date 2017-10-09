@@ -1,8 +1,6 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.empresa.service
 
 import ar.edu.utn.dds.cache.CacheData
-import ar.edu.utn.dds.exceptions.DatosInaccesiblesException
-import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
 import ar.edu.utn.dds.exceptions.SQLInaccesibleException
 import ar.edu.utn.dds.mappers.EmpresaMapper
@@ -20,7 +18,7 @@ import java.sql.SQLException
 @Transactional
 class EmpresaService {
     def jdbcTemplate
-    def cuentaService
+    def cuentaRepositoryService
 
     @Transactional(readOnly = true)
     def existe(Long id) {
@@ -112,7 +110,7 @@ class EmpresaService {
     }
 
     def importarCuentas(File archivo) {
-        List<Map<String, String>> mapasCuentas = this.cuentaService.parsearArchImportCuentas(archivo)
+        List<Map<String, String>> mapasCuentas = this.cuentaRepositoryService.parsearArchImportCuentas(archivo)
     }
 
 

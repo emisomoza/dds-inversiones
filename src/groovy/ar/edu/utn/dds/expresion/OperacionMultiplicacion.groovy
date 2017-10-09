@@ -11,9 +11,4 @@ class OperacionMultiplicacion extends Operacion {
     OperacionMultiplicacion(@JsonProperty("expresionIzquierda") Expresion expresionIzquierda, @JsonProperty("expresionDerecha") Expresion expresionDerecha) {
         super(expresionIzquierda, expresionDerecha)
     }
-
-    @Override
-    Double getValor() {
-        return expresionIzquierda.getValor() * expresionDerecha.getValor()
-    }
 }

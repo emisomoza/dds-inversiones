@@ -8,9 +8,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
     @JsonSubTypes.Type(PrimariaVariable.class)
 ])
 abstract class Primaria extends Expresion {
-
-
     @JsonIgnore(false)
-    @Override
     abstract Double getValor()
 }

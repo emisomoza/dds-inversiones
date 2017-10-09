@@ -11,9 +11,4 @@ class OperacionPotencia extends Operacion {
     OperacionPotencia(@JsonProperty("expresionIzquierda") Expresion expresionIzquierda, @JsonProperty("expresionDerecha") Expresion expresionDerecha) {
         super(expresionIzquierda, expresionDerecha)
     }
-
-    @Override
-    Double getValor() {
-        return Math.pow(expresionIzquierda.getValor(), expresionDerecha.getValor())
-    }
 }

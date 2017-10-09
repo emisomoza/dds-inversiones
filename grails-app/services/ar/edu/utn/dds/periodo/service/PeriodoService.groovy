@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.periodo.service
 
 import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException

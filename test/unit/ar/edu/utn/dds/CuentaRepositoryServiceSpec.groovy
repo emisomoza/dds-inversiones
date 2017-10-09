@@ -1,10 +1,11 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.cuenta.repository.CuentaRepositoryService
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-@TestFor(CuentaService)
-class CuentaServiceSpec extends Specification {
+@TestFor(CuentaRepositoryService)
+class CuentaRepositoryServiceSpec extends Specification {
 
     void "parsear archivo de importacion de cuentas"() {
         setup:

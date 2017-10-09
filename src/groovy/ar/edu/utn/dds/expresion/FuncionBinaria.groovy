@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName
 
 @JsonTypeName("fbi")
 class FuncionBinaria extends Funcion {
+    public static final String ROOT = "root"
+
     private Expresion primerParametro
     private Expresion segundoParametro
 
@@ -22,15 +24,5 @@ class FuncionBinaria extends Funcion {
 
     Expresion getSegundoParametro() {
         return segundoParametro
-    }
-
-    @Override
-    Double getValor() {
-        switch (nombre) {
-            case "root":
-                return Math.pow(segundoParametro.getValor(), 1.0 / primerParametro.getValor())
-            default:
-                return null
-        }
     }
 }

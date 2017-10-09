@@ -84,12 +84,12 @@ class Indicador implements Serializable, Calculable {
     }
 
     Double aplicar() {
-        return expresion.getValor();
+        return this.getValor();
     }
 
     @Override
     @JsonIgnore
     Double getValor() {
-        return this.aplicar();
+        return expresion.getValor();
     }
 }

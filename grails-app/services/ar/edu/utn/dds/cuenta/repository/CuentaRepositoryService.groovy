@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.cuenta.repository
 
 import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.exceptions.InversionesException
@@ -15,7 +15,7 @@ import org.springframework.dao.EmptyResultDataAccessException
 import static com.xlson.groovycsv.CsvParser.parseCsv
 
 @Transactional
-class CuentaService {
+class CuentaRepositoryService {
 
     def jdbcTemplate
 
@@ -31,6 +31,18 @@ class CuentaService {
 
     @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     def obtener(Long id) {
+        try {
+            String query = "SELECT * FROM CUENTA WHERE cuenta_id = ?"
+            return (Cuenta) jdbcTemplate.queryForObject(query, [id] as Object[], new CuentaMapper())
+        } catch (EmptyResultDataAccessException e) {
+            throw new RecursoNoEncontradoException("No se encontro cuenta con id " + id, e.getCause())
+        } catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al listar todas las cuentas", e.getCause())
+        }
+    }
+
+    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    def obtenerLista(List<String> cuentas) {
         try {
             String query = "SELECT * FROM CUENTA WHERE cuenta_id = ?"
             return jdbcTemplate.queryForObject(query, [id] as Object[], new CuentaMapper())
