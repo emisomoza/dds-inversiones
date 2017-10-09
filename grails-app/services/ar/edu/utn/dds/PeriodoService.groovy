@@ -39,12 +39,45 @@ class PeriodoService {
     }
 
     @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    def guardar(Periodo periodo) {
+    def guardar(Long idEmpresa, Date fechaDesde, Date fechaHasta) {
+        def result
+        String fechaDesdeString = fechaDesde.calendarDate.year + '-' + fechaDesde.calendarDate.month + '-10'
+        String fechaHastaString = fechaHasta.calendarDate.year + '-' + fechaHasta.calendarDate.month + '-10'
+        log.info("Guardando período")
+        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d'), STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d'));"
         try {
-            String query = "INSERT INTO PERIODO (fecha_fin, fecha_inicio) VALUES (?, ?)"
-            return jdbcTemplate.update(query, periodo.getFechaFin(), periodo.getFechaInicio())
+            result = jdbcTemplate.update(query)
+        }
+        catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al guardar el periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
+
+        }
+
+        def periodo = obtenerIdInsertado()
+        guardarRelacion(idEmpresa, periodo)
+    }
+
+    @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
+    def guardarRelacion(Long idEmpresa, Periodo periodo) {
+        def result
+        String query = "INSERT INTO PERIODO_EMPRESA (pe_empresa_id, pe_periodo_id) VALUES (?,?);"
+        try {
+            result = jdbcTemplate.update(query, idEmpresa, periodo.getId())
+        }
+        catch (DataAccessException e) {
+            throw new SQLInaccesibleException("Error al guardar relacion periodo empresa ")
+
+        }
+    }
+
+    @Cacheable(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    def obtenerIdInsertado() {
+
+        try {
+            String query = "SELECT * FROM PERIODO WHERE PERIODO_ID = (SELECT MAX(PERIODO_ID) FROM PERIODO)"
+            return jdbcTemplate.queryForObject(query, new PeriodoMapper())
         } catch(DataAccessException e) {
-            throw new SQLInaccesibleException("Error al guardar periodo", e.getCause())
+            throw new SQLInaccesibleException("Error al obtener ultimo insertado")
         }
     }
 
