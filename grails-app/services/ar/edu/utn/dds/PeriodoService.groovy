@@ -39,13 +39,30 @@ class PeriodoService {
     }
 
     @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    def guardar(Periodo periodo) {
+    def guardar(Long idEmpresa, Date fechaDesde, Date fechaHasta) {
+        def result
+        String fechaDesdeString = fechaDesde.calendarDate.year + '-' + fechaDesde.calendarDate.month + '-10'
+        String fechaHastaString = fechaHasta.calendarDate.year + '-' + fechaHasta.calendarDate.month + '-10'
+        log.info("Guardando período")
+        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d'), STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d'));"
         try {
-            String query = "INSERT INTO PERIODO (fecha_fin, fecha_inicio) VALUES (?, ?)"
-            return jdbcTemplate.update(query, periodo.getFechaFin(), periodo.getFechaInicio())
-        } catch(DataAccessException e) {
-            throw new SQLInaccesibleException("Error al guardar periodo", e.getCause())
+            result = jdbcTemplate.update(query)
         }
+        catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al guardar el periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
+
+        }
+
+        /*String qSelect = "SELECT PERIODO_ID FROM PERIODO " +
+                "WHERE fecha_inicio = STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d')" +
+                "and fecha_fin = STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d')"
+
+        try {
+            long periodoId = jdbcTemplate.queryForObject(qSelect, new EmpresaMapper())
+        }
+        catch(DataAccessException e) {
+            throw new SQLInaccesibleException("Error al obtener periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
+        }*/
     }
 
     @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)

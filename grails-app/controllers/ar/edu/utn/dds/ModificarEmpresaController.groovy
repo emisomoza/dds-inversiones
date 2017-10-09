@@ -3,6 +3,7 @@ package ar.edu.utn.dds
 class ModificarEmpresaController {
 
     def empresaService
+    def periodoService
 
     def index() {
         def empresas = empresaService.obtener(Long.parseLong(params.empresa))
@@ -21,7 +22,7 @@ class ModificarEmpresaController {
         Date fechaDesde = params.fechaDesde
         Date fechaHasta = params.fechaHasta
 
-        empresaService.agregarPeriodo(idEmpresa, fechaDesde, fechaHasta)
+        periodoService.guardar(idEmpresa, fechaDesde, fechaHasta)
         def empresa = empresaService.obtener(idEmpresa)
         //def periodos = empresaService.obtenerPeriodos(idEmpresa)
 
