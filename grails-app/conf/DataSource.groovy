@@ -1,7 +1,7 @@
 dataSource {
     pooled = true
     dbCreate = "update"
-    url = "jdbc:mysql://localhost:3306/INVERSIONES?useSSL=false"
+//    url = "jdbc:mysql://localhost:3306/INVERSIONES?useSSL=false"
     driverClassName = "com.mysql.cj.jdbc.Driver"
     dialect = org.hibernate.dialect.MySQL5InnoDBDialect
     username = "root"
