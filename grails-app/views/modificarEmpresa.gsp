@@ -12,20 +12,22 @@
 </head>
 
 <body>
-<g:form class="form-horizontal" role="form" controller="Empresas" action="save_periodo">
+<g:form params="[empresa:params.empresa]" class="form-horizontal" role="form" controller="modificarEmpresa" action="save_periodo">
     <div>
-        <h2 class="panel-title">Modificando empresa: ${empresa}</h2></br>
+        <h2 class="panel-title">Modificando empresa: ${empresa.nombre}</h2></br>
     </div>
     <div class="form-group">
-        <label for="inputPeriodoDesde" class="col-sm-1 control-label">Fecha Desde</label>
+        <label for="inputPeriodoDesde" class="col-sm-1 control-label">Desde</label>
         <div class="col-sm-10">
-            <input id="inputPeriodoDesde" name = "fechaDesde" class="form-control" placeholder="Desde">
+            <g:datePicker id="inputPeriodoDesde" name="fechaDesde" value="${new Date()}" precision="month" years="${1970..2020}"/>
         </div>
     </div>
     <div class="form-group">
-        <label for="inputPeriodoHasta" class="col-sm-1 control-label">Fecha Hasta</label>
+        <div>
+            <label for="inputPeriodoHasta" class="col-sm-1 control-label">Hasta</label>
+        </div>
         <div class="col-sm-10">
-            <input id="inputPeriodoHasta" name = "fechaHasta" class="form-control" placeholder="Hasta">
+            <g:datePicker id="inputPeriodoHasta" name="fechaHasta" value="${new Date()}" precision="month" years="${1970..2020}"/>
         </div>
     </div>
     <div>
@@ -40,7 +42,7 @@
             <select id="selectPeriodo" name = "periodo" class="form-control">
                 <option value="" disabled selected hidden>Seleccione...</option>
                 <g:each in="${periodos}">
-                    <option value="${it?.nombre}">${it?.nombre}</option>
+                    <option value="${it?.id}">Del ${it?.fechaInicio} al ${it?.fechaFin}</option>
                 </g:each>
             </select>
         </div>

@@ -38,3 +38,8 @@ mysql> show tables;
 # Instalación de redis en docker
 
 docker run --name some-redis -p6379:6379 -d redis
+
+
+# Instalación de mongo en docker
+
+sudo docker run -d -p 27017:27017 -v ~/data:/data/db mongo
