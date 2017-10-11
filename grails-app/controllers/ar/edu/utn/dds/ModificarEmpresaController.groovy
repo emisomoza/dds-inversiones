@@ -1,5 +1,7 @@
 package ar.edu.utn.dds
 
+import java.time.LocalDate
+
 class ModificarEmpresaController {
 
     def empresaService
@@ -22,10 +24,13 @@ class ModificarEmpresaController {
     def save_periodo() {
 
         Long idEmpresa = Long.parseLong(params.empresa)
-        Date fechaDesde = params.fechaDesde
-        Date fechaHasta = params.fechaHasta
+        Date fechaDesdeDate = params.fechaDesde
+        Date fechaHastaDate = params.fechaHasta
 
-        periodoService.guardar(idEmpresa, fechaDesde, fechaHasta)
+        LocalDate fechaDesdeLocalDate = LocalDate.of(fechaDesdeDate.calendarDate.getYear(), fechaDesdeDate.calendarDate.getMonth(), fechaDesdeDate.calendarDate.getDayOfMonth())
+        LocalDate fechaHastaLocalDate = LocalDate.of(fechaHastaDate.calendarDate.getYear(), fechaHastaDate.calendarDate.getMonth(), fechaHastaDate.calendarDate.getDayOfMonth())
+
+        periodoService.guardar(idEmpresa, fechaDesdeLocalDate, fechaHastaLocalDate)
         def empresa = empresaService.obtener(idEmpresa)
 
         def periodos = periodoService.obtenerPeriodos(idEmpresa)

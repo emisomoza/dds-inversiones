@@ -11,6 +11,8 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.dao.DataAccessException
 import org.springframework.dao.EmptyResultDataAccessException
 
+import java.time.LocalDate
+
 @Transactional
 class PeriodoService {
 
@@ -39,21 +41,17 @@ class PeriodoService {
     }
 
     @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    def guardar(Long idEmpresa, Date fechaDesde, Date fechaHasta) {
+    def guardar(Long idEmpresa, LocalDate fechaDesde, LocalDate fechaHasta) {
         def result
-        String fechaDesdeString = fechaDesde.calendarDate.year + '-' + fechaDesde.calendarDate.month + '-10'
-        String fechaHastaString = fechaHasta.calendarDate.year + '-' + fechaHasta.calendarDate.month + '-10'
         log.info("Guardando período")
-        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (STR_TO_DATE('" + fechaDesdeString + "', '%Y-%m-%d'), STR_TO_DATE('" + fechaHastaString + "', '%Y-%m-%d'));"
+        String query = "INSERT INTO PERIODO (fecha_inicio, fecha_fin) VALUES (?, ?);"
         try {
-            result = jdbcTemplate.update(query)
-        }
-        catch(DataAccessException e) {
+            result = jdbcTemplate.update(query, fechaDesde, fechaHasta)
+        } catch(DataAccessException e) {
             throw new SQLInaccesibleException("Error al guardar el periodo " + fechaDesde + '-' + fechaHasta, e.getCause())
-
         }
 
-        def periodo = obtenerIdInsertado()
+        Periodo periodo = obtenerIdInsertado()
         guardarRelacion(idEmpresa, periodo)
     }
 
