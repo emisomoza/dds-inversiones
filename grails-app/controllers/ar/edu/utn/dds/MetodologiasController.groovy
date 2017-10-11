@@ -10,7 +10,7 @@ class MetodologiasController {
 
     def crear() {
         ArrayList<Indicador> indicadores
-        indicadores = indicadorService.getIndicadores()
+        indicadores = indicadorService.getIndicadores().sort{it.nombre}
 
         render(
                 view: "/metodologias",
