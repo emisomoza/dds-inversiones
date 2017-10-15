@@ -6,6 +6,7 @@ import ar.edu.utn.dds.metodologia.OperadorOrdenador
 
 class Metodologia implements Serializable {
 
+    private String nombre;
     private List<OperadorFiltro> operadoresFiltro;
     private OperadorOrdenador operadorOrden;
 

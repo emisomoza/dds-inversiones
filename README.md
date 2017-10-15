@@ -21,7 +21,7 @@ Checkear si el contenedor está levantado ejecutando .$ docker ps -a
 Para levantar el container si estuviera bajo usamos docker start <nombre del container>, para bajarlo docker stop <nombre del container>, en nuestro caso el nombre del container es “mysql”.
 
 Inicializar base
-Descargar script mysqlScript.sql.
+Descargar script mysqlScript.sql. (https://drive.google.com/open?id=0B06mqNfUJIpzQTdyNk5Mb1A2R2c)
 Ejecutar el comando que se encuentra a continuación (en rojo se encuentra la parte dependiente del paso “3.a”). Con esto estamos creando la base de datos de la aplicación y las tablas para guardar el dominio existentes hasta hoy.
 
 Comando:
