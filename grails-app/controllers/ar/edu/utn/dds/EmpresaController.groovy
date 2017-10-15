@@ -2,7 +2,7 @@ package ar.edu.utn.dds
 
 import ar.edu.utn.dds.model.Empresa
 
-class EmpresasController {
+class EmpresaController {
     def empresaService
 
     def index() { }
