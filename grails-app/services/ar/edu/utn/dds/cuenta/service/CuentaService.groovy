@@ -15,8 +15,8 @@ class CuentaService {
 
     def cuentaRepositoryService
 
-    def listarTodo() {
-        return cuentaRepositoryService.listarTodo()
+    def listar() {
+        return this.listar(new Cuenta())
     }
 
     def listar(Cuenta cuenta) {

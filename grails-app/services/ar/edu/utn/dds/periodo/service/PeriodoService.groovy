@@ -6,8 +6,8 @@ class PeriodoService {
 
     def periodoRepositoryService
 
-    def listarTodo() {
-        periodoRepositoryService.listarTodo()
+    def listar() {
+        return this.listar(new Periodo())
     }
 
     def listar(Periodo periodo) {

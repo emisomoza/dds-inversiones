@@ -28,12 +28,6 @@ class EmpresaRepositoryService extends DefaultJDBCRepositoryService<Empresa> {
         this.existe(queryUtils)
     }
 
-    @Cacheable(cacheNames = CacheData.EMPRESA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    List<Empresa> listarTodo() {
-        QueryUtils queryUtils = this.obtenerQueryListarTodo(TABLE)
-        return this.listar(queryUtils, mapper)
-    }
-
     private QueryUtils obtenerQueryExiste(Long id) {
         QueryUtils queryUtils = new QueryUtils()
 

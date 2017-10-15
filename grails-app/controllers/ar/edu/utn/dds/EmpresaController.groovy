@@ -10,7 +10,7 @@ class EmpresaController {
     def save() {
         empresaService.guardar(new Empresa(params.nomEmpresa))
 
-        def empresas = empresaService.listarTodo()
+        def empresas = empresaService.listar()
         render(
                 view: "/empresas",
                 model: [

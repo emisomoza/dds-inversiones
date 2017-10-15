@@ -6,8 +6,8 @@ class TipoCuentaService {
 
     def tipoCuentaRepositoryService
 
-    def listarTodo() {
-        return tipoCuentaRepositoryService.listarTodo()
+    def listar() {
+        return this.listar(new TipoCuenta())
     }
 
     def listar(TipoCuenta tipoCuenta) {

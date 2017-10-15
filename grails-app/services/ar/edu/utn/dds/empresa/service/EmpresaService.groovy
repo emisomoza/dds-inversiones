@@ -11,8 +11,8 @@ class EmpresaService {
         return this.empresaRepositoryService.existe(id)
     }
 
-    def listarTodo() {
-        return empresaRepositoryService.listarTodo()
+    def listar() {
+        return this.listar(new Empresa())
     }
 
     def listar(Empresa empresa) {
