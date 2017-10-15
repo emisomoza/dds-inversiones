@@ -17,6 +17,10 @@ class QueryUtils {
         this.rootStatement = rootStatement
     }
 
+    String getRootStatement() {
+        return rootStatement
+    }
+
     List<String> getParams() {
         return params
     }

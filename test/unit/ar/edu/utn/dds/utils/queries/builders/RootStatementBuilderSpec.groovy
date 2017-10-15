@@ -63,8 +63,8 @@ class RootStatementBuilderSpec extends Specification {
 
         where:
             table     | result
-            "TABLE_1" | " INSERT INTO TABLE_1"
-            "TABLE_2" | " INSERT INTO TABLE_2"
+            "TABLE_1" | "INSERT INTO TABLE_1 "
+            "TABLE_2" | "INSERT INTO TABLE_2 "
     }
 
     void "constuir declaracion raiz insert excepcion"() {

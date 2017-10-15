@@ -40,8 +40,9 @@ class RootStatementBuilder {
 
         StringBuilder rs = new StringBuilder()
 
-        rs.append(" INSERT INTO ")
+        rs.append("INSERT INTO ")
         rs.append(table)
+        rs.append(" ")
 
         return rs
     }

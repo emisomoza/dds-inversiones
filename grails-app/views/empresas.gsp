@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <g:form class="form-horizontal" role="form" controller="Empresas" action="save">
+    <g:form class="form-horizontal" role="form" controller="Empresa" action="save">
         <div>
             <h2 class="panel-title">Agregar Empresa:</h2></br>
         </div>

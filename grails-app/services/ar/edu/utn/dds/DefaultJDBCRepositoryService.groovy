@@ -99,8 +99,8 @@ class DefaultJDBCRepositoryService<T> {
         log.info(String.format("Guardando %s", T.getClass().getName()))
         log.debug(String.format("Query: %s", queryUtils.getSqlQuery()))
         String query =
-                queryUtils.getSqlQuery() + "( " + queryUtils.getParams().stream().collect(Collectors.joining(", ")) + " ) VALUES (" +
-                queryUtils.getParams().collect {p -> " ? "}.stream().collect(Collectors.joining(", "))
+                queryUtils.getRootStatement() + "( " + queryUtils.getParams().stream().collect(Collectors.joining(", ")) + " ) VALUES (" +
+                queryUtils.getParams().collect {p -> " ? "}.stream().collect(Collectors.joining(", ")) + ")"
         try {
             jdbcTemplate.update(query, { ps ->
                 try {
