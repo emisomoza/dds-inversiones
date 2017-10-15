@@ -28,7 +28,4 @@ abstract class Operacion extends Expresion {
     Expresion getExpresionDerecha() {
         return expresionDerecha
     }
-
-    @Override
-    abstract Double getValor()
 }

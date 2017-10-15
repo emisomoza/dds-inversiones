@@ -1,8 +1,9 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.jdbc
 
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
 import ar.edu.utn.dds.exceptions.SQLInaccesibleException
 import ar.edu.utn.dds.utils.queries.QueryUtils
+import ar.edu.utn.dds.utils.queries.builders.RootStatementBuilder
 import grails.transaction.Transactional
 import org.springframework.dao.DataAccessException
 import org.springframework.dao.EmptyResultDataAccessException
@@ -18,7 +19,6 @@ import java.util.stream.Collectors
 
 @Transactional
 class DefaultJDBCRepositoryService<T> {
-
     def jdbcTemplate
 
     void setPSArgs(PreparedStatement ps, List<Object> args) throws Exception {
@@ -130,5 +130,13 @@ class DefaultJDBCRepositoryService<T> {
         } catch(DataAccessException e) {
             throw new SQLInaccesibleException("Error al actualizar empresa " + empresa.getId(), e.getCause())
         }
+    }
+
+    protected QueryUtils obtenerQueryListarTodo(String tableName) {
+        QueryUtils queryUtils = new QueryUtils()
+
+        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement("*", tableName))
+
+        return queryUtils
     }
 }

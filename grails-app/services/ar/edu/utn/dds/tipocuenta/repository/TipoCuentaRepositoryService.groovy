@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.tipocuenta.repository
 
-import ar.edu.utn.dds.DefaultJDBCRepositoryService
+import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.mappers.TipoCuentaMapper
 import ar.edu.utn.dds.model.TipoCuenta
@@ -35,6 +35,12 @@ class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuent
         queryUtils.addWhereParam(COLUMNS.get("id"), id)
 
         return queryUtils
+    }
+
+    @Cacheable(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    List<TipoCuenta> listarTodo() {
+        QueryUtils queryUtils = this.obtenerQueryListarTodo(TABLE)
+        return this.listar(queryUtils, mapper)
     }
 
     @Cacheable(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)

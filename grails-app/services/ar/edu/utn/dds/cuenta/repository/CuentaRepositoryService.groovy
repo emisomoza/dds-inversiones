@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.cuenta.repository
 
-import ar.edu.utn.dds.DefaultJDBCRepositoryService
+import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.mappers.CuentaMapper
 import ar.edu.utn.dds.model.Cuenta
@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.RowMapper
 import java.util.stream.Collectors
 
 class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
-    
+
     private static final Map<String, String> COLUMNS = {
         Map columns = new HashMap()
         columns.put("empid", "EMPRESA_ID")
@@ -41,6 +41,12 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
         queryUtils.addWhereParam(COLUMNS.get("cueid"), cueId)
 
         return queryUtils
+    }
+
+    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    List<Cuenta> listarTodo() {
+        QueryUtils queryUtils = this.obtenerQueryListarTodo(TABLE)
+        return this.listar(queryUtils, mapper)
     }
 
     @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)

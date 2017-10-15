@@ -4,12 +4,12 @@ import ar.edu.utn.dds.model.Indicador
 
 
 class IndicadoresController {
-    def indicadorService
+    def indicadorRepositoryService
 
     def save() {
         Indicador nuevoIndicador = new Indicador(params.nombre, params.expresion)
 
-        indicadorService.guardarIndicador(nuevoIndicador)
+        indicadorRepositoryService.guardarIndicador(nuevoIndicador)
 
         render(
                 view: "/indicadores/indicadorAgregado",

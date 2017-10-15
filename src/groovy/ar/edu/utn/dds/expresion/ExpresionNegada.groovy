@@ -12,9 +12,4 @@ class ExpresionNegada extends Expresion {
     ExpresionNegada(@JsonProperty("expresion") Expresion expresion) {
         this.expresion = expresion
     }
-
-    @Override
-    Double getValor() {
-        return -1 * expresion.getValor()
-    }
 }

@@ -21,7 +21,4 @@ abstract class Funcion extends Expresion {
     void setNombre(String nombre) {
         this.nombre = nombre
     }
-
-    @Override
-    abstract Double getValor()
 }

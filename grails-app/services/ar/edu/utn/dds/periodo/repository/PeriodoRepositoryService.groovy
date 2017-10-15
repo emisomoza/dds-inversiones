@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.periodo.repository
 
-import ar.edu.utn.dds.DefaultJDBCRepositoryService
+import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.mappers.PeriodoMapper
 import ar.edu.utn.dds.model.Periodo
@@ -38,6 +38,12 @@ class PeriodoRepositoryService extends DefaultJDBCRepositoryService<Periodo> {
         queryUtils.addWhereParam(COLUMNS.get("id"), id)
 
         return queryUtils
+    }
+
+    @Cacheable(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    List<Periodo> listarTodo() {
+        QueryUtils queryUtils = this.obtenerQueryListarTodo(TABLE)
+        return this.listar(queryUtils, mapper)
     }
 
     @Cacheable(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)

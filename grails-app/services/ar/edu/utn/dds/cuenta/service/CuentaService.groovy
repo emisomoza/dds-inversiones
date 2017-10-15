@@ -1,10 +1,7 @@
 package ar.edu.utn.dds.cuenta.service
 
-import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.model.Cuenta
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.cache.annotation.Cacheable
 
 import static com.xlson.groovycsv.CsvParser.parseCsv
 
@@ -18,26 +15,22 @@ class CuentaService {
 
     def cuentaRepositoryService
 
-    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    def listar() {
-        return this.listar(new Cuenta())
+    def listarTodo() {
+        return cuentaRepositoryService.listarTodo()
     }
 
     def listar(Cuenta cuenta) {
         return this.cuentaRepositoryService.listar(cuenta)
     }
 
-    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     def obtener(Long empId, Long perId, Long cueId) {
         return this.cuentaRepositoryService.obtener(empId, perId, cueId)
     }
 
-    @CacheEvict(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
     def guardar(Cuenta cuenta) {
        return this.cuentaRepositoryService.guardar(cuenta)
     }
 
-    @CacheEvict(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
     def actualizar(Cuenta cuenta) {
        return this.cuentaRepositoryService.actualizar(cuenta)
     }

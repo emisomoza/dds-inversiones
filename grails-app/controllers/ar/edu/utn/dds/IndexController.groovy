@@ -17,7 +17,7 @@ class IndexController {
     }
 
     def compararEmpresas() {
-        def empresas = empresaService.listar()
+        def empresas = empresaService.listarTodo()
         ArrayList<Metodologia> metodologias = [new Metodologia(nombre: "Metodología 1"), new Metodologia(nombre: "Metodología 2")]
 
         render(
@@ -30,7 +30,7 @@ class IndexController {
     }
 
     def agregarCuentas() {
-        def empresas = empresaService.listar()
+        def empresas = empresaService.listarTodo()
         render(
                 view: "/empresas",
                 model: [

@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.empresa.repository
 
-import ar.edu.utn.dds.DefaultJDBCRepositoryService
+import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.mappers.EmpresaMapper
 import ar.edu.utn.dds.model.Empresa
@@ -26,6 +26,12 @@ class EmpresaRepositoryService extends DefaultJDBCRepositoryService<Empresa> {
     Boolean existe(Long id) {
         QueryUtils queryUtils = this.obtenerQueryExiste(id)
         this.existe(queryUtils)
+    }
+
+    @Cacheable(cacheNames = CacheData.EMPRESA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    List<Empresa> listarTodo() {
+        QueryUtils queryUtils = this.obtenerQueryListarTodo(TABLE)
+        return this.listar(queryUtils, mapper)
     }
 
     private QueryUtils obtenerQueryExiste(Long id) {

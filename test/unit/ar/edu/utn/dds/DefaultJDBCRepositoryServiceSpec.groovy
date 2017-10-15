@@ -1,5 +1,6 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
