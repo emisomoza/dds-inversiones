@@ -18,7 +18,7 @@ class IndicadorSpec extends Specification {
         "ind(ind1)*cue(cue2)+ind(ind4)+ind(ind1)"             | [["ind1", "ind4"], ["cue2"]]
     }
 
-    void "deserializar indiador"() {
+    void "deserializar indicador"() {
         setup:
         ObjectMapper objectMapper = new ObjectMapper()
         Indicador indicador

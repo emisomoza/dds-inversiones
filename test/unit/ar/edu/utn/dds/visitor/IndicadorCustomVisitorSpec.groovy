@@ -3,6 +3,7 @@ package ar.edu.utn.dds.visitor
 import ar.edu.utn.dds.antlr.IndicadorLexer
 import ar.edu.utn.dds.antlr.IndicadorParser
 import ar.edu.utn.dds.expresion.Expresion
+import ar.edu.utn.dds.resolver.ResolvedorIndicador
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import spock.lang.Specification
@@ -16,7 +17,7 @@ class IndicadorCustomVisitorSpec extends Specification {
         IndicadorParser.ExpressionContext context = parser.expression()
         IndicadorCustomVisitor visitor = new IndicadorCustomVisitor()
         Expresion expression = visitor.visit(context)
-        expression.getValor() == resultado
+        new ResolvedorIndicador().resolver(expression) == resultado
 
         where:
         ecuacion                       | resultado

@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.configuration;
 
 import ar.edu.utn.dds.cache.CacheData;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.DefaultRedisCachePrefix;
@@ -13,7 +14,8 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 @Configuration
 public class RedisConfiguration {
-	private String host = "localhost";
+	@Value("${redis.url}")
+	private String host;
 	private Integer port = 6379;
 	private Integer ttl = 3600;
 

@@ -1,6 +1,6 @@
 package ar.edu.utn.dds
 
-import ar.edu.utn.dds.model.ContenedorEmpresas
+import ar.edu.utn.dds.model.Metodologia
 
 class IndexController {
 
@@ -18,11 +18,13 @@ class IndexController {
 
     def compararEmpresas() {
         def empresas = empresaService.listar()
+        ArrayList<Metodologia> metodologias = [new Metodologia(nombre: "Metodología 1"), new Metodologia(nombre: "Metodología 2")]
 
         render(
                 view: "/consultas",
                 model: [
-                        empresas: empresas
+                        empresas: empresas,
+                        metodologias: metodologias
                 ]
         )
     }
@@ -43,15 +45,6 @@ class IndexController {
                 model: [
 
                 ]
-        )
-    }
-
-    def crearMetodologias() {
-        render(
-            view: "/metodologias",
-            model: [
-
-            ]
         )
     }
 }

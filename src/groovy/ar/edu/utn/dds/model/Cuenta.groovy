@@ -4,7 +4,9 @@ package ar.edu.utn.dds.model
 class Cuenta implements Serializable, Calculable {
 
     private Long id
-    private String nombre
+    private Long empresa
+    private Long periodo
+    private TipoCuenta tipo
     private Double valor
 
     Cuenta() {
@@ -12,7 +14,8 @@ class Cuenta implements Serializable, Calculable {
     }
 
     Cuenta (String nombre, Double valor) {
-        this.setNombre(nombre)
+        this.setTipo(new TipoCuenta())
+        this.getTipo().setDescripcion(nombre)
         this.setValor(valor)
     }
 
@@ -26,19 +29,39 @@ class Cuenta implements Serializable, Calculable {
 
     @Override
     public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+        return tipo.getDescripcion()
     }
 
     @Override
     public Double getValor() {
-        return valor;
+        return valor
     }
 
     public void setValor(Double valor) {
-        this.valor = valor;
+        this.valor = valor
+    }
+
+    Long getEmpresa() {
+        return empresa
+    }
+
+    void setEmpresa(Long empresa) {
+        this.empresa = empresa
+    }
+
+    Long getPeriodo() {
+        return periodo
+    }
+
+    void setPeriodo(Long periodo) {
+        this.periodo = periodo
+    }
+
+    TipoCuenta getTipo() {
+        return tipo
+    }
+
+    void setTipo(TipoCuenta tipo) {
+        this.tipo = tipo
     }
 }

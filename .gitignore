@@ -94,3 +94,6 @@ fabric.properties
 
 # Antlr4 copile folder
 src/java/ar/utn/edu/dds/antlr/*
+
+# Compose
+dependencies/

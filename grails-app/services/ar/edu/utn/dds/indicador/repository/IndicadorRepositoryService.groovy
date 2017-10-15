@@ -11,25 +11,35 @@ import org.springframework.data.mongodb.core.MongoTemplate
 
 @Transactional
 class IndicadorRepositoryService {
-
     @Autowired
     private MongoTemplate mongoTemplate
 
     @CacheEvict(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    public void guardarIndicador(Indicador indicador) {
+    void guardarIndicador(Indicador indicador) {
         try {
             mongoTemplate.save(indicador)
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new MongoInaccesibleException("Error al guardar indicador " + indicador.getNombre(), e.getCause())
         }
     }
 
     @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    public Indicador getIndicador(String name) {
+    Indicador obtenerIndicador(String name) {
         try {
             return mongoTemplate.findById(name, Indicador.class)
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new MongoInaccesibleException("Error al obtener indicador " + name, e.getCause())
+        }
+    }
+
+    @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    ArrayList<Indicador> listar() {
+        try {
+            ArrayList<Indicador> indicadores = []
+            indicadores = mongoTemplate.findAll(Indicador.class)
+            return indicadores
+        } catch (Exception e) {
+            throw new MongoInaccesibleException("Error al obtener todos los indicadores", e.getCause())
         }
     }
 }

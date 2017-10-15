@@ -1,107 +1,118 @@
 package ar.edu.utn.dds.cuenta.repository
 
+import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
-import ar.edu.utn.dds.exceptions.InversionesException
-import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
-import ar.edu.utn.dds.exceptions.SQLInaccesibleException
 import ar.edu.utn.dds.mappers.CuentaMapper
 import ar.edu.utn.dds.model.Cuenta
-import grails.transaction.Transactional
+import ar.edu.utn.dds.utils.queries.QueryUtils
+import ar.edu.utn.dds.utils.queries.builders.RootStatementBuilder
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.dao.DataAccessException
-import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.jdbc.core.RowMapper
 
-import static com.xlson.groovycsv.CsvParser.parseCsv
+import java.util.stream.Collectors
 
-@Transactional
-class CuentaRepositoryService {
+class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
 
-    def jdbcTemplate
+    private static final Map<String, String> COLUMNS = {
+        Map columns = new HashMap()
+        columns.put("empid", "EMPRESA_ID")
+        columns.put("perid", "PERIODO_ID")
+        columns.put("cueid", "CUENTA_TIPO")
+        columns.put("valor", "CUENTA_VALOR")
+        return columns
+    }.call()
 
-    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    def listar() {
-        try {
-            String query = "SELECT * FROM CUENTA"
-            return jdbcTemplate.queryForObject(query, new CuentaMapper())
-        } catch(DataAccessException e) {
-            throw new SQLInaccesibleException("Error al listar todas las cuentas", e.getCause())
-        }
+    private static final String TABLE = "PERIODO"
+
+    private RowMapper mapper = new CuentaMapper()
+
+    Boolean existe(Long empId, Long perId, Long cueId) {
+        QueryUtils queryUtils = this.obtenerQueryExiste(empId, perId, cueId)
+        this.existe(queryUtils)
+    }
+
+    private QueryUtils obtenerQueryExiste(Long empId, Long perId, Long cueId) {
+        QueryUtils queryUtils = new QueryUtils()
+
+        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement("1", TABLE))
+        queryUtils.addWhereParam(COLUMNS.get("empid"), empId)
+        queryUtils.addWhereParam(COLUMNS.get("perid"), perId)
+        queryUtils.addWhereParam(COLUMNS.get("cueid"), cueId)
+
+        return queryUtils
     }
 
     @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    def obtener(Long id) {
-        try {
-            String query = "SELECT * FROM CUENTA WHERE cuenta_id = ?"
-            return (Cuenta) jdbcTemplate.queryForObject(query, [id] as Object[], new CuentaMapper())
-        } catch (EmptyResultDataAccessException e) {
-            throw new RecursoNoEncontradoException("No se encontro cuenta con id " + id, e.getCause())
-        } catch(DataAccessException e) {
-            throw new SQLInaccesibleException("Error al listar todas las cuentas", e.getCause())
-        }
+    List<Cuenta> listar(Cuenta cuenta) {
+        QueryUtils queryUtils = this.obtenerQueryListar(cuenta)
+        return this.listar(queryUtils, mapper)
+    }
+
+    private QueryUtils obtenerQueryListar(Cuenta cuenta) {
+        QueryUtils queryUtils = new QueryUtils()
+
+        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement(
+                COLUMNS.values().stream().collect(Collectors.joining(", ")) + "TIPO_ID, TIPO_DESCRIPCION",
+                TABLE + "JOIN TIPO_CUENTA ON CUENTA_TIPO = TIPO_ID"))
+        queryUtils.addWhereParam(COLUMNS.get("empid"), cuenta.getEmpresa())
+        queryUtils.addWhereParam(COLUMNS.get("perid"), cuenta.getPeriodo())
+        queryUtils.addWhereParam(COLUMNS.get("cueid"), cuenta.getTipo().getId())
+        queryUtils.addWhereParam(COLUMNS.get("valor"), cuenta.getValor())
+
+        return queryUtils
     }
 
     @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    def obtenerLista(List<String> cuentas) {
-        try {
-            String query = "SELECT * FROM CUENTA WHERE cuenta_id = ?"
-            return jdbcTemplate.queryForObject(query, [id] as Object[], new CuentaMapper())
-        } catch (EmptyResultDataAccessException e) {
-            throw new RecursoNoEncontradoException("No se encontro cuenta con id " + id, e.getCause())
-        } catch(DataAccessException e) {
-            throw new SQLInaccesibleException("Error al listar todas las cuentas", e.getCause())
-        }
+    Cuenta obtener(Long empId, Long perId, Long cueId) {
+        QueryUtils queryUtils = this.obtenerQueryObtener(empId, perId, cueId)
+        return this.obtener(queryUtils, mapper)
+    }
+
+    private QueryUtils obtenerQueryObtener(Long empId, Long perId, Long cueId) {
+        QueryUtils queryUtils = new QueryUtils()
+
+        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement(COLUMNS.values().toList(), TABLE))
+        queryUtils.addWhereParam(COLUMNS.get("empid"), empId)
+        queryUtils.addWhereParam(COLUMNS.get("perid"), perId)
+        queryUtils.addWhereParam(COLUMNS.get("cueid"), cueId)
+
+        return queryUtils
     }
 
     @CacheEvict(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    def guardar(Cuenta cuenta) {
-        try {
-            String query = "INSERT INTO CUENTA (cuenta_nombre, cuenta_valor) VALUES (?, ?)"
-            return jdbcTemplate.update(query, cuenta.getNombre(), cuenta.getValor())
-        } catch(DataAccessException e) {
-            throw new SQLInaccesibleException("Error al guardar cuenta " + cuenta.getNombre(), e.getCause())
-        }
+    void guardar(Cuenta cuenta) {
+        QueryUtils queryUtils = this.obtenerQueryGuardar(cuenta)
+        this.guardar(queryUtils)
+    }
+
+    private QueryUtils obtenerQueryGuardar(Cuenta cuenta) {
+        QueryUtils queryUtils = new QueryUtils()
+
+        queryUtils.setRootStatement(RootStatementBuilder.buildInsertRootStatement(TABLE))
+        queryUtils.addParam(COLUMNS.get("empid"), cuenta.getEmpresa())
+        queryUtils.addParam(COLUMNS.get("perid"), cuenta.getPeriodo())
+        queryUtils.addParam(COLUMNS.get("cueid"), cuenta.getTipo().getId())
+        queryUtils.addParam(COLUMNS.get("valor"), cuenta.getValor())
+
+        return queryUtils
     }
 
     @CacheEvict(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    def actualizar(Cuenta cuenta) {
-        try {
-            String query = "UPDATE CUENTA SET cuenta_nombre = ?, cuenta_valor = ? WHERE cuenta_id = ?"
-            jdbcTemplate.update(query, cuenta.getNombre(), cuenta.getValor(), cuenta.getId())
-        } catch(DataAccessException e) {
-            throw new SQLInaccesibleException("Error al actualizar cuenta " + cuenta.getNombre(), e.getCause())
-        }
-    }
-    
-    def parsearArchImportCuentas(File archivo) {
-        try {
-            return this.parsearArchImportCuentas(archivo.text.toString())
-        } catch (Exception e) {
-            String mensaje = "Error importando cuentas desde archivo"
-            log.error(mensaje)
-            throw new InversionesException(mensaje, e.getCause())
-        }
+    void actualizar(Cuenta cuenta) {
+        QueryUtils queryUtils = this.obtenerQueryActualizar(cuenta)
+        this.actualizar(queryUtils)
     }
 
-    def parsearArchImportCuentas(String cuentasCSV) {
-        List<Map<String, String>> mapasCuentas = new ArrayList<>()
+    private QueryUtils obtenerQueryActualizar(Cuenta cuenta) {
+        QueryUtils queryUtils = new QueryUtils()
 
-        try {
-            Iterator iteradorCuentas = parseCsv(cuentasCSV)
+        queryUtils.setRootStatement(RootStatementBuilder.buildUpdateRootStatement(TABLE))
+        queryUtils.addParam(COLUMNS.get("valor"), cuenta.getValor())
+        queryUtils.addWhereParam(COLUMNS.get("empid"), cuenta.getEmpresa())
+        queryUtils.addWhereParam(COLUMNS.get("perid"), cuenta.getPeriodo())
+        queryUtils.addWhereParam(COLUMNS.get("cueid"), cuenta.getTipo().getId())
 
-            for(linea in iteradorCuentas) {
-                Map<String, String> mapaCuentas = new HashMap<>()
-                mapaCuentas.put("empresa", linea.Empresa)
-                mapaCuentas.put("fecha_desde", linea.Fecha_Desde)
-                mapaCuentas.put("fecha_hasta", linea.Fecha_Hasta)
-                mapaCuentas.put("tipo", linea.Cuenta)
-                mapaCuentas.put("valor", linea.Valor)
-                mapasCuentas.add(mapaCuentas)
-            }
-
-            return mapasCuentas
-        } catch(Exception e) {
-            throw new InversionesException("Error parceando cuentas para importar", e.getCause())
-        }
+        return queryUtils
     }
 }

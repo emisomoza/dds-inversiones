@@ -12,7 +12,7 @@ class IndicadorService {
 
     void aplicar(Periodo periodo, List<Indicador> indicadores) {
         Closure<Cuenta> obtenedorDeCuentas = {String unNombreCuenta -> periodo.getCuentas().find {it.getNombre().equals(unNombreCuenta)}}
-        Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> indicadorRepositoryService.getIndicador(unNombreIndicador)}
+        Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> indicadorRepositoryService.obtenerIndicador(unNombreIndicador)}
 
         ResolvedorIndicador resolvedorIndicador = new ResolvedorIndicador(obtenedorDeCuentas, obtenedorDeIndicadores)
         for(Indicador unIndicador : indicadores) {

@@ -8,6 +8,7 @@ import ar.edu.utn.dds.expresion.OperacionDivision
 import ar.edu.utn.dds.expresion.OperacionMultiplicacion
 import ar.edu.utn.dds.expresion.OperacionPotencia
 import ar.edu.utn.dds.expresion.OperacionResta
+import ar.edu.utn.dds.expresion.OperacionSuma
 import ar.edu.utn.dds.expresion.PrimariaCuenta
 import ar.edu.utn.dds.expresion.PrimariaIndicador
 import ar.edu.utn.dds.expresion.PrimariaNumero
@@ -19,7 +20,7 @@ import static java.lang.Math.sqrt
 class ResolvedorIndicador {
     private Closure<Cuenta> obtenedorDeCuentas
     private Closure<Indicador> obtenedorDeIndicadores
-    private Map<String, Double> resultadosIndicadores;
+    private Map<String, Double> resultadosIndicadores
 
     ResolvedorIndicador() {
     }
@@ -96,6 +97,10 @@ class ResolvedorIndicador {
 
     Double resolver(OperacionPotencia expresion) {
         return Math.pow(resolver(expresion.getExpresionIzquierda()), resolver(expresion.getExpresionDerecha()))
+    }
+
+    Double resolver(OperacionSuma expresion) {
+        return resolver(expresion.getExpresionIzquierda()) + resolver(expresion.getExpresionDerecha())
     }
 
     Double resolver(OperacionResta expresion) {
