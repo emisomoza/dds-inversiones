@@ -33,11 +33,9 @@ class IndicadorRepositoryService {
     }
 
     @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    ArrayList<Indicador> listar() {
+    ArrayList<Indicador> listarTodo() {
         try {
-            ArrayList<Indicador> indicadores = []
-            indicadores = mongoTemplate.findAll(Indicador.class)
-            return indicadores
+            return mongoTemplate.findAll(Indicador.class)
         } catch (Exception e) {
             throw new MongoInaccesibleException("Error al obtener todos los indicadores", e.getCause())
         }

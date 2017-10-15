@@ -44,6 +44,12 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
     }
 
     @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    List<Cuenta> listarTodo() {
+        QueryUtils queryUtils = this.obtenerQueryListarTodo(TABLE)
+        return this.listar(queryUtils, mapper)
+    }
+
+    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     List<Cuenta> listar(Cuenta cuenta) {
         QueryUtils queryUtils = this.obtenerQueryListar(cuenta)
         return this.listar(queryUtils, mapper)

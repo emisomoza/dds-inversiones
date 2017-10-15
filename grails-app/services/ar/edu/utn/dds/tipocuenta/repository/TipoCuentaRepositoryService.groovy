@@ -38,6 +38,12 @@ class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuent
     }
 
     @Cacheable(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    List<TipoCuenta> listarTodo() {
+        QueryUtils queryUtils = this.obtenerQueryListarTodo(TABLE)
+        return this.listar(queryUtils, mapper)
+    }
+
+    @Cacheable(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     List<TipoCuenta> listar(TipoCuenta tipoCuenta) {
         QueryUtils queryUtils = this.obtenerQueryListar(tipoCuenta)
         return this.listar(queryUtils, mapper)

@@ -19,4 +19,16 @@ class IndicadorService {
             resolvedorIndicador.resolver(unIndicador)
         }
     }
+
+    void guardarIndicador(Indicador indicador) {
+        indicadorRepositoryService.guardarIndicador(indicador)
+    }
+
+    Indicador obtenerIndicador(String name) {
+        indicadorRepositoryService.obtenerIndicador(name)
+    }
+
+    ArrayList<Indicador> listarTodo() {
+        indicadorRepositoryService.listarTodo()
+    }
 }

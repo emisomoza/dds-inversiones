@@ -4,26 +4,26 @@ import ar.edu.utn.dds.model.TipoCuenta
 
 class TipoCuentaService {
 
-    def tipoCuentaRepository
+    def tipoCuentaRepositoryService
 
-    def listar() {
-        return this.listar(new TipoCuenta())
+    def listarTodo() {
+        return tipoCuentaRepositoryService.listarTodo()
     }
 
     def listar(TipoCuenta tipoCuenta) {
-        return this.tipoCuentaRepository.listar(tipoCuenta)
+        return this.tipoCuentaRepositoryService.listar(tipoCuenta)
     }
 
     def obtener(Long id) {
-        return this.tipoCuentaRepository.obtener(id)
+        return this.tipoCuentaRepositoryService.obtener(id)
     }
 
     def guardar(TipoCuenta tipoCuenta) {
-        return this.tipoCuentaRepository.guardar(tipoCuenta)
+        return this.tipoCuentaRepositoryService.guardar(tipoCuenta)
     }
 
     def actualizar(TipoCuenta tipoCuenta) {
-        return this.tipoCuentaRepository.actualizar(tipoCuenta)
+        return this.tipoCuentaRepositoryService.actualizar(tipoCuenta)
     }
 
 }

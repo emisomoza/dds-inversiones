@@ -41,6 +41,12 @@ class PeriodoRepositoryService extends DefaultJDBCRepositoryService<Periodo> {
     }
 
     @Cacheable(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    List<Periodo> listarTodo() {
+        QueryUtils queryUtils = this.obtenerQueryListarTodo(TABLE)
+        return this.listar(queryUtils, mapper)
+    }
+
+    @Cacheable(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     List<Periodo> listar(Periodo periodo) {
         QueryUtils queryUtils = this.obtenerQueryListar(periodo)
         return this.listar(queryUtils, mapper)
