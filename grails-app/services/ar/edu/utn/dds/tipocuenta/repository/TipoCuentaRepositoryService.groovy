@@ -1,14 +1,15 @@
 package ar.edu.utn.dds.tipocuenta.repository
 
 import ar.edu.utn.dds.DefaultJDBCRepositoryService
+import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.mappers.TipoCuentaMapper
 import ar.edu.utn.dds.model.TipoCuenta
 import ar.edu.utn.dds.utils.queries.QueryUtils
 import ar.edu.utn.dds.utils.queries.builders.RootStatementBuilder
-import grails.transaction.Transactional
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.jdbc.core.RowMapper
 
-@Transactional
 class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuenta> {
 
     private static final Map<String, String> COLUMNS = {
@@ -36,6 +37,7 @@ class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuent
         return queryUtils
     }
 
+    @Cacheable(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     List<TipoCuenta> listar(TipoCuenta tipoCuenta) {
         QueryUtils queryUtils = this.obtenerQueryListar(tipoCuenta)
         return this.listar(queryUtils, mapper)
@@ -51,6 +53,7 @@ class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuent
         return queryUtils
     }
 
+    @Cacheable(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     TipoCuenta obtener(Long id) {
         QueryUtils queryUtils = this.obtenerQueryObtener(id)
         return this.obtener(queryUtils, mapper)
@@ -65,6 +68,7 @@ class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuent
         return queryUtils
     }
 
+    @CacheEvict(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
     void guardar(TipoCuenta tipoCuenta) {
         QueryUtils queryUtils = this.obtenerQueryGuardar(tipoCuenta)
         this.guardar(queryUtils)
@@ -79,6 +83,7 @@ class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuent
         return queryUtils
     }
 
+    @CacheEvict(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
     void actualizar(TipoCuenta tipoCuenta) {
         QueryUtils queryUtils = this.obtenerQueryActualizar(tipoCuenta)
         this.actualizar(queryUtils)
