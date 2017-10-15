@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.empresa.cuenta.service
+package ar.edu.utn.dds.cuenta.service
 
 import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.exceptions.InversionesException

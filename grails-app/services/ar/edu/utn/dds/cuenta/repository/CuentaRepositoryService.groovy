@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.empresa.cuenta.repository
+package ar.edu.utn.dds.cuenta.repository
 
 import ar.edu.utn.dds.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
