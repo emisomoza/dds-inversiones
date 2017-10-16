@@ -2,7 +2,7 @@ package ar.edu.utn.dds
 
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+@Secured('ROLE_USER')
 class ConsultasController {
 
     def comparar() {

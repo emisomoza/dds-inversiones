@@ -3,14 +3,14 @@ package ar.edu.utn.dds
 import ar.edu.utn.dds.model.Indicador
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+@Secured('ROLE_USER')
 class IndicadoresController {
-    def indicadorRepositoryService
+    def indicadorService
 
     def save() {
         Indicador nuevoIndicador = new Indicador(params.nombre, params.expresion)
 
-        indicadorRepositoryService.guardarIndicador(nuevoIndicador)
+        indicadorService.guardarIndicador(nuevoIndicador)
 
         render(
                 view: "/indicadores/indicadorAgregado",

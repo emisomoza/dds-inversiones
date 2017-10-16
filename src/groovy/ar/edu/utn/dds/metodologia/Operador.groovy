@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.metodologia
 
-abstract class Operador {
+abstract class Operador implements Serializable {
 
     private String indicador;
 
