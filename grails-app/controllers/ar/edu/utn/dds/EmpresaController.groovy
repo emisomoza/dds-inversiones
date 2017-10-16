@@ -1,7 +1,9 @@
 package ar.edu.utn.dds
 
 import ar.edu.utn.dds.model.Empresa
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class EmpresaController {
     def empresaService
 

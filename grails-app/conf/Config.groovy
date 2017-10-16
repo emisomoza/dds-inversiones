@@ -1,3 +1,5 @@
+import grails.plugin.springsecurity.SecurityConfigType
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -91,6 +93,9 @@ grails.web.disable.multipart=false
 // request parameters to mask when logging exceptions
 grails.exceptionresolver.params.exclude = ['password']
 
+// disabled hibernate second level caching
+hibernate.cache.use_second_level_cache=false
+
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
 grails.hibernate.cache.queries = false
 
@@ -145,3 +150,21 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.securityConfigType = SecurityConfigType.Annotation
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'ar.edu.utn.dds.auth.DDSUser'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'ar.edu.utn.dds.auth.DDSUserDDSRole'
+grails.plugin.springsecurity.authority.className = 'ar.edu.utn.dds.auth.ddsRole'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/':                ['permitAll'],
+	'/index':           ['permitAll'],
+	'/index.gsp':       ['permitAll'],
+	'/assets/**':       ['permitAll'],
+	'/**/js/**':        ['permitAll'],
+	'/**/css/**':       ['permitAll'],
+	'/**/images/**':    ['permitAll'],
+	'/**/favicon.ico':  ['permitAll']
+]
+

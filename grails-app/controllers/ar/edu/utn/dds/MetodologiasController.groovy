@@ -1,10 +1,12 @@
 package ar.edu.utn.dds
 
 import ar.edu.utn.dds.model.Indicador
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class MetodologiasController {
 
-    def indicadorService;
+    def indicadorService
 
     def index() { }
 
