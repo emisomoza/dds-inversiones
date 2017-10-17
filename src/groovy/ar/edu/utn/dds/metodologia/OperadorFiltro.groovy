@@ -1,7 +1,9 @@
 package ar.edu.utn.dds.metodologia
 
 import ar.edu.utn.dds.exceptions.MetodologiaException
+import ar.edu.utn.dds.indicador.service.IndicadorService
 import ar.edu.utn.dds.model.Empresa
+import ar.edu.utn.dds.resolver.ResolvedorIndicador
 
 abstract class OperadorFiltro extends Operador {
 
@@ -16,6 +18,6 @@ abstract class OperadorFiltro extends Operador {
     }
 
 
-    abstract Boolean filtrar(Empresa empresa) throws MetodologiaException;
+    abstract Boolean filtrar(Empresa empresa, IndicadorService indicadorService) throws MetodologiaException;
 
 }

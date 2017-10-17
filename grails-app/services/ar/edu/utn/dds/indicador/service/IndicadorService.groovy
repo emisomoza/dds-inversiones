@@ -11,24 +11,29 @@ class IndicadorService {
     def indicadorRepositoryService
 
     void aplicar(Periodo periodo, List<Indicador> indicadores) {
-        Closure<Cuenta> obtenedorDeCuentas = {String unNombreCuenta -> periodo.getCuentas().find {it.getNombre().equals(unNombreCuenta)}}
-        Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> indicadorRepositoryService.obtenerIndicador(unNombreIndicador)}
-
-        ResolvedorIndicador resolvedorIndicador = new ResolvedorIndicador(obtenedorDeCuentas, obtenedorDeIndicadores)
         for(Indicador unIndicador : indicadores) {
-            resolvedorIndicador.resolver(unIndicador)
+            this.aplicar(periodo, unIndicador)
         }
     }
 
-    void guardarIndicador(Indicador indicador) {
-        indicadorRepositoryService.guardarIndicador(indicador)
+    Double aplicar(Periodo periodo, Indicador indicador) {
+        Closure<Cuenta> obtenedorDeCuentas = {String unNombreCuenta -> periodo.getCuentas().find {it.getNombre().equals(unNombreCuenta)}}
+        Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> indicadorRepositoryService.obtener(unNombreIndicador)}
+
+        ResolvedorIndicador resolvedorIndicador = new ResolvedorIndicador(obtenedorDeCuentas, obtenedorDeIndicadores)
+
+        return resolvedorIndicador.resolver(indicador)
     }
 
-    Indicador obtenerIndicador(String name) {
-        indicadorRepositoryService.obtenerIndicador(name)
+    void guardar(Indicador indicador) {
+        indicadorRepositoryService.guardar(indicador)
     }
 
-    ArrayList<Indicador> listarTodo() {
-        indicadorRepositoryService.listarTodo()
+    Indicador obtener(String name) {
+        indicadorRepositoryService.obtener(name)
+    }
+
+    ArrayList<Indicador> listar() {
+        indicadorRepositoryService.listar()
     }
 }
