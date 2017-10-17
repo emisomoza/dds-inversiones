@@ -32,7 +32,7 @@ class IndicadorRepositoryService {
         }
     }
 
-    @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    //@Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     ArrayList<Indicador> listarTodo() {
         try {
             return mongoTemplate.findAll(Indicador.class)

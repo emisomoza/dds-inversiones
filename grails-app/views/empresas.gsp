@@ -25,7 +25,7 @@
         </div>
     </g:form>
 
-    <g:form class="form-horizontal" role="form" controller="ModificarEmpresa" action="index">
+    <g:form class="form-horizontal" role="form" controller="ModificarEmpresa">
         <div>
             <h2 class="panel-title">Gestionar Empresas:</h2></br>
         </div>
@@ -40,7 +40,8 @@
                 </select>
             </div>
             <div>
-                <button type="submit" class="btn btn-primary">Modificar empresa</button>
+                <g:actionSubmit class="btn btn-primary" value="Agregar cuentas" action="agregarPeriodo"/>
+                <g:actionSubmit class="btn btn-secondary" value="Ver cuentas" action="delete"/>
             </div>
         </div>
     </g:form>
