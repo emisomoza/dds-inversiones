@@ -1,6 +1,5 @@
 package ar.edu.utn.dds.metodologia
 
-import ar.edu.utn.dds.indicador.repository.IndicadorRepositoryService
 import ar.edu.utn.dds.indicador.service.IndicadorService
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
@@ -15,7 +14,7 @@ class OperadorOrdenSpec extends Specification {
     Indicador indicador2
     Indicador indicador3
 
-    IndicadorService indicadors
+    IndicadorService indicadorServ
 
     Empresa empresa1
     Empresa empresa2
@@ -36,15 +35,11 @@ class OperadorOrdenSpec extends Specification {
     }
 
     def setupIndicadorService() {
-        IndicadorRepositoryService indicadorRepositoryService = Mock(IndicadorRepositoryService)
-        indicadorRepositoryService.obtener("indicador1", 1) >> indicador1
-        indicadorRepositoryService.obtener("indicador2", 1) >> indicador2
-        indicadorRepositoryService.obtener("indicador3", 1) >> indicador3
-
-        indicadors = Spy(IndicadorService)
-        indicadors.obtener("indicador1") >> indicador1
-        indicadors.obtener("indicador2") >> indicador2
-        indicadors.obtener("indicador3") >> indicador3
+        indicadorServ = Spy(IndicadorService) {
+            obtener("indicador1") >> indicador1
+            obtener("indicador2") >> indicador2
+            obtener("indicador3") >> indicador3
+        }
     }
 
     def setupEmpresas() {
@@ -102,7 +97,7 @@ class OperadorOrdenSpec extends Specification {
         operadorOrdenador.setModificador(new ModificadorOrdenadorSum())
 
         then:
-        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa1, empresa2, empresa3], indicadors);
+        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa1, empresa2, empresa3], indicadorServ);
         empresasOrdenadas == [empresa3, empresa2, empresa1]
     }
 
@@ -113,7 +108,7 @@ class OperadorOrdenSpec extends Specification {
         operadorOrdenador.setModificador(new ModificadorOrdenadorSum())
 
         then:
-        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa3, empresa2, empresa1], indicadors);
+        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa3, empresa2, empresa1], indicadorServ);
         empresasOrdenadas == [empresa1, empresa2, empresa3]
     }
 }
