@@ -53,7 +53,7 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
         QueryUtils queryUtils = new QueryUtils()
 
         queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement(
-                COLUMNS.values().stream().collect(Collectors.joining(", ")) + " TIPO_ID, TIPO_DESCRIPCION ",
+                COLUMNS.values().stream().collect(Collectors.joining(", ")) + ", TIPO_ID, TIPO_DESCRIPCION ",
                 TABLE + " JOIN TIPO_CUENTA ON CUENTA_TIPO = TIPO_ID "))
         queryUtils.addWhereParam(COLUMNS.get("empid"), cuenta.getEmpresa())
         queryUtils.addWhereParam(COLUMNS.get("perid"), cuenta.getPeriodo())
@@ -73,7 +73,9 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
     private QueryUtils obtenerQueryObtener(Long empId, Long perId, Long cueId) {
         QueryUtils queryUtils = new QueryUtils()
 
-        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement(COLUMNS.values().toList(), TABLE))
+        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement(
+                COLUMNS.values().stream().collect(Collectors.joining(", ")) + ", TIPO_ID, TIPO_DESCRIPCION ",
+                TABLE + " JOIN TIPO_CUENTA ON CUENTA_TIPO = TIPO_ID "))
         queryUtils.addWhereParam(COLUMNS.get("empid"), empId)
         queryUtils.addWhereParam(COLUMNS.get("perid"), perId)
         queryUtils.addWhereParam(COLUMNS.get("cueid"), cueId)

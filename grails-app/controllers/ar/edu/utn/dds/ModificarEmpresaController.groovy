@@ -10,13 +10,13 @@ class ModificarEmpresaController {
     def empresaService
     def periodoService
 
-    def index() {
+    def agregarPeriodo() {
         def empresa = empresaService.obtener(Long.parseLong(params.empresa))
 
         def periodos = new ArrayList()
 
         render(
-                view: "/modificarEmpresa",
+                view: "/agregarPeriodo",
                 model: [
                         periodos: periodos,
                         empresa: empresa
@@ -39,7 +39,7 @@ class ModificarEmpresaController {
         def periodos = periodoService.obtenerPeriodos(idEmpresa)
 
         render(
-            view: "/modificarEmpresa",
+            view: "/agregarPeriodo",
             model: [
                     periodos: periodos,
                     empresa: empresa

@@ -12,28 +12,33 @@ class IndicadorService {
     def springSecurityService
 
     void aplicar(Periodo periodo, List<Indicador> indicadores) {
-        Closure<Cuenta> obtenedorDeCuentas = {String unNombreCuenta -> periodo.getCuentas().find {it.getNombre().equals(unNombreCuenta)}}
-        Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> indicadorRepositoryService.obtenerIndicador(unNombreIndicador)}
-
-        ResolvedorIndicador resolvedorIndicador = new ResolvedorIndicador(obtenedorDeCuentas, obtenedorDeIndicadores)
         for(Indicador unIndicador : indicadores) {
-            resolvedorIndicador.resolver(unIndicador)
+            this.aplicar(periodo, unIndicador)
         }
     }
 
-    void guardarIndicador(Indicador indicador) {
+    Double aplicar(Periodo periodo, Indicador indicador) {
+        Closure<Cuenta> obtenedorDeCuentas = {String unNombreCuenta -> periodo.getCuentas().find {it.getNombre().equals(unNombreCuenta)}}
+        Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> indicadorRepositoryService.obtener(unNombreIndicador)}
+
+        ResolvedorIndicador resolvedorIndicador = new ResolvedorIndicador(obtenedorDeCuentas, obtenedorDeIndicadores)
+
+        return resolvedorIndicador.resolver(indicador)
+    }
+
+    void guardar(Indicador indicador) {
         Long userId = (Long) springSecurityService.getCurrentUserId()
         indicador.setOwner(userId)
-        indicadorRepositoryService.guardarIndicador(indicador)
+        indicadorRepositoryService.guardar(indicador)
     }
 
-    Indicador obtenerIndicador(String name) {
+    Indicador obtener(String name) {
         Long userId = (Long) springSecurityService.getCurrentUserId()
-        indicadorRepositoryService.obtenerIndicador(name, userId)
+        indicadorRepositoryService.obtener(name, userId)
     }
 
-    ArrayList<Indicador> listarTodo() {
+    ArrayList<Indicador> listar() {
         Long userId = (Long) springSecurityService.getCurrentUserId()
-        indicadorRepositoryService.listarTodo(userId)
+        indicadorRepositoryService.listar(userId)
     }
 }

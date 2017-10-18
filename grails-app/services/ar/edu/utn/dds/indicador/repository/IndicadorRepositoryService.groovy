@@ -17,7 +17,7 @@ class IndicadorRepositoryService {
     private MongoTemplate mongoTemplate
 
     @CacheEvict(cacheNames = CacheData.INDICADOR_CACHE_NAME, key = "#indicador.owner", cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    void guardarIndicador(Indicador indicador) {
+    void guardar(Indicador indicador) {
         try {
             mongoTemplate.save(indicador)
         } catch (Exception e) {
@@ -26,7 +26,7 @@ class IndicadorRepositoryService {
     }
 
     @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, key = "#nombre.concat('-').concat(#userId)", cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    Indicador obtenerIndicador(String nombre, Long userId) {
+    Indicador obtener(String nombre, Long userId) {
         BasicQuery query = new BasicQuery("{nombre: '" + nombre + "', owner: " + userId + "}")
         try {
             return mongoTemplate.findOne(query, Indicador.class)
@@ -36,7 +36,7 @@ class IndicadorRepositoryService {
     }
 
     @Cacheable(value = CacheData.INDICADOR_CACHE_NAME, key = "#userId", cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    ArrayList<Indicador> listarTodo(Long userId) {
+    ArrayList<Indicador> listar(Long userId) {
         BasicQuery query = new BasicQuery("{owner: " + userId + "}")
         try {
             return mongoTemplate.find(query, Indicador.class)

@@ -9,8 +9,7 @@ class IndicadoresController {
 
     def save() {
         Indicador nuevoIndicador = new Indicador(params.nombre, params.expresion)
-
-        indicadorService.guardarIndicador(nuevoIndicador)
+        indicadorService.guardar(nuevoIndicador)
 
         render(
                 view: "/indicadores/indicadorAgregado",

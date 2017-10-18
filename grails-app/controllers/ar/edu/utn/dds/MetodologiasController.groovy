@@ -12,7 +12,7 @@ class MetodologiasController {
 
     def crear() {
         ArrayList<Indicador> indicadores
-        indicadores = indicadorService.listarTodo().sort{it.nombre}
+        indicadores = indicadorService.listar().sort{it?.nombre}
 
         render(
                 view: "/metodologias",
@@ -28,7 +28,7 @@ class MetodologiasController {
         params
 
         ArrayList<Indicador> indicadores
-        indicadores = indicadorService.listarTodo()
+        indicadores = indicadorService.listar()
 
         render(
                 view: "/metodologias",

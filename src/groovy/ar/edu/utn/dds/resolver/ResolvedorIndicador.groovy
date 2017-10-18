@@ -20,7 +20,7 @@ import static java.lang.Math.sqrt
 class ResolvedorIndicador {
     private Closure<Cuenta> obtenedorDeCuentas
     private Closure<Indicador> obtenedorDeIndicadores
-    private Map<String, Double> resultadosIndicadores
+    private Map<String, Double> resultadosIndicadores = new HashMap<>()
 
     ResolvedorIndicador() {
     }
@@ -44,6 +44,10 @@ class ResolvedorIndicador {
 
     void setObtenedorDeIndicador(Closure<Indicador> obtenedorDeIndicador) {
         this.obtenedorDeIndicadores = obtenedorDeIndicador
+    }
+
+    void limpiarResultados() {
+        resultadosIndicadores = new HashMap<>()
     }
 
     Double resolver(Indicador indicador) {
