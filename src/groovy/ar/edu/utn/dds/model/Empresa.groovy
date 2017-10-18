@@ -84,7 +84,7 @@ public class Empresa implements Serializable {
         periodo.importarCuenta(cuentaString, valorCuentaString);
     }
 
-    public float consultarCuenta(String nombreCuenta, LocalDate fechaDesde, LocalDate fechaHasta) throws PeriodoNoExisteException, CuentaNoExisteException {
+    Double consultarCuenta(String nombreCuenta, LocalDate fechaDesde, LocalDate fechaHasta) throws PeriodoNoExisteException, CuentaNoExisteException {
         Periodo periodo = obtenerPeriodo(fechaDesde, fechaHasta);
 
         if(periodo == null) {

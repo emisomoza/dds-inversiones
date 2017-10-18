@@ -59,10 +59,10 @@ public class Periodo implements Serializable {
         Cuenta cuenta = obtenerCuentaConNombre(nombreCuenta);
 
         if(cuenta == null) {
-            cuenta = new Cuenta(nombreCuenta, Float.parseFloat(valorCuenta));
+            cuenta = new Cuenta(nombreCuenta, Double.parseDouble(valorCuenta));
             agregarCuenta(cuenta);
         } else {
-            cuenta.setValor(Float.parseFloat(valorCuenta));
+            cuenta.setValor(Double.parseDouble(valorCuenta));
         }
     }
 
@@ -97,7 +97,7 @@ public class Periodo implements Serializable {
         cuentas.removeAll(unasCuentas);
     }
 
-    public float consultarCuenta(String nombreCuenta) throws CuentaNoExisteException {
+    public Double consultarCuenta(String nombreCuenta) throws CuentaNoExisteException {
         Cuenta cuenta = obtenerCuentaConNombre(nombreCuenta);
 
         if(cuenta == null) {
