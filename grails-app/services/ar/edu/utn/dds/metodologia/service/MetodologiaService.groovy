@@ -6,7 +6,6 @@ import ar.edu.utn.dds.model.Metodologia
 import ar.edu.utn.dds.resolver.ResolvedorIndicador
 import grails.transaction.Transactional
 
-@Transactional
 class MetodologiaService {
 
     def metodologiaRepositoryService

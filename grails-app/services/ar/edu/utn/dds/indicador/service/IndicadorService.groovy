@@ -6,7 +6,6 @@ import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.resolver.ResolvedorIndicador
 import grails.transaction.Transactional
 
-@Transactional
 class IndicadorService {
     def indicadorRepositoryService
     def springSecurityService
@@ -19,7 +18,7 @@ class IndicadorService {
 
     Double aplicar(Periodo periodo, Indicador indicador) {
         Closure<Cuenta> obtenedorDeCuentas = {String unNombreCuenta -> periodo.getCuentas().find {it.getNombre().equals(unNombreCuenta)}}
-        Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> indicadorRepositoryService.obtener(unNombreIndicador)}
+        Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> this.obtener(unNombreIndicador)}
 
         ResolvedorIndicador resolvedorIndicador = new ResolvedorIndicador(obtenedorDeCuentas, obtenedorDeIndicadores)
 

@@ -15,7 +15,7 @@ class OperadorOrdenSpec extends Specification {
     Indicador indicador2
     Indicador indicador3
 
-    IndicadorService indicadorService
+    IndicadorService indicadors
 
     Empresa empresa1
     Empresa empresa2
@@ -37,14 +37,14 @@ class OperadorOrdenSpec extends Specification {
 
     def setupIndicadorService() {
         IndicadorRepositoryService indicadorRepositoryService = Mock(IndicadorRepositoryService)
-        indicadorRepositoryService.obtener("indicador1") >> indicador1
-        indicadorRepositoryService.obtener("indicador2") >> indicador2
-        indicadorRepositoryService.obtener("indicador3") >> indicador3
+        indicadorRepositoryService.obtener("indicador1", 1) >> indicador1
+        indicadorRepositoryService.obtener("indicador2", 1) >> indicador2
+        indicadorRepositoryService.obtener("indicador3", 1) >> indicador3
 
-        indicadorService = Spy(IndicadorService)
-        indicadorService.obtener("indicador1") >> indicador1
-        indicadorService.obtener("indicador2") >> indicador2
-        indicadorService.obtener("indicador3") >> indicador3
+        indicadors = Spy(IndicadorService)
+        indicadors.obtener("indicador1") >> indicador1
+        indicadors.obtener("indicador2") >> indicador2
+        indicadors.obtener("indicador3") >> indicador3
     }
 
     def setupEmpresas() {
@@ -97,23 +97,23 @@ class OperadorOrdenSpec extends Specification {
 
     def 'Test ordenado menor'() {
         when:
-        OperadorOrdenadorMenor operadorOrdenador = new OperadorOrdenadorMenor();
-        operadorOrdenador.setIndicador("Indicador3");
+        OperadorOrdenadorMenor operadorOrdenador = new OperadorOrdenadorMenor()
+        operadorOrdenador.setIndicador("indicador3")
         operadorOrdenador.setModificador(new ModificadorOrdenadorSum())
 
         then:
-        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa1, empresa2, empresa3], indicadorService);
+        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa1, empresa2, empresa3], indicadors);
         empresasOrdenadas == [empresa3, empresa2, empresa1]
     }
 
     def 'Test ordenado mayor'() {
         when:
         OperadorOrdenadorMayor operadorOrdenador = new OperadorOrdenadorMayor();
-        operadorOrdenador.setIndicador("Indicador1");
+        operadorOrdenador.setIndicador("indicador1");
         operadorOrdenador.setModificador(new ModificadorOrdenadorSum())
 
         then:
-        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa3, empresa2, empresa1], indicadorService);
+        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa3, empresa2, empresa1], indicadors);
         empresasOrdenadas == [empresa1, empresa2, empresa3]
     }
 }
