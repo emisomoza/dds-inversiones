@@ -1,20 +1,53 @@
 package ar.edu.utn.dds.metodologia
 
+import ar.edu.utn.dds.indicador.repository.IndicadorRepositoryService
+import ar.edu.utn.dds.indicador.service.IndicadorService
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
+import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.model.Periodo
 import spock.lang.Specification
 
 import java.time.LocalDate
 
 class OperadorOrdenSpec extends Specification {
+    Indicador indicador1
+    Indicador indicador2
+    Indicador indicador3
+
+    IndicadorService indicadorService
+
     Empresa empresa1
     Empresa empresa2
     Empresa empresa3
 
-    List<Empresa> empresas = new ArrayList<>();
-
     def setup() {
+        setupIndicadores()
+
+        setupIndicadorService()
+
+        setupEmpresas()
+    }
+
+    def setupIndicadores() {
+        indicador1 = new Indicador("indicador1", "cue(Cuenta1) * ind(indicador2)")
+        indicador2 = new Indicador("indicador2", "4^2-5" )
+        indicador3 = new Indicador("indicador3", "4*5+ind(indicador1)" )
+    }
+
+    def setupIndicadorService() {
+        IndicadorRepositoryService indicadorRepositoryService = Mock(IndicadorRepositoryService)
+        indicadorRepositoryService.obtener("indicador1") >> indicador1
+        indicadorRepositoryService.obtener("indicador2") >> indicador2
+        indicadorRepositoryService.obtener("indicador3") >> indicador3
+
+        indicadorService = Spy(IndicadorService)
+        indicadorService.obtener("indicador1") >> indicador1
+        indicadorService.obtener("indicador2") >> indicador2
+        indicadorService.obtener("indicador3") >> indicador3
+    }
+
+    def setupEmpresas() {
         empresa1 = new Empresa("Empresa1");
         empresa2 = new Empresa("Empresa2");
         empresa3 = new Empresa("Empresa3");
@@ -22,54 +55,54 @@ class OperadorOrdenSpec extends Specification {
         Periodo periodo;
 
         periodo = new Periodo(LocalDate.of(2017, 1, 1), LocalDate.of(2017, 1, 31));
-        periodo.agregarCuenta(new Cuenta("Indicador1", 1D));
+        periodo.agregarCuenta(new Cuenta("Cuenta1", 1D));
         empresa1.agregarPeriodo(periodo);
 
         periodo = new Periodo(LocalDate.of(2017, 2, 1), LocalDate.of(2017, 2, 28));
-        periodo.agregarCuenta(new Cuenta("Indicador1", 2D));
+        periodo.agregarCuenta(new Cuenta("Cuenta1", 2D));
         empresa1.agregarPeriodo(periodo);
 
         periodo = new Periodo(LocalDate.of(2017, 3, 1), LocalDate.of(2017, 3, 31));
-        periodo.agregarCuenta(new Cuenta("Indicador1", 3D));
+        periodo.agregarCuenta(new Cuenta("Cuenta1", 3D));
         empresa1.agregarPeriodo(periodo);
 
 
 
         periodo = new Periodo(LocalDate.of(2017, 1, 1), LocalDate.of(2017, 1, 31));
-        periodo.agregarCuenta(new Cuenta("Indicador1", 10D));
+        periodo.agregarCuenta(new Cuenta("Cuenta1", 10D));
         empresa2.agregarPeriodo(periodo);
 
         periodo = new Periodo(LocalDate.of(2017, 2, 1), LocalDate.of(2017, 2, 28));
-        periodo.agregarCuenta(new Cuenta("Indicador1", 11D));
+        periodo.agregarCuenta(new Cuenta("Cuenta1", 11D));
         empresa2.agregarPeriodo(periodo);
 
         periodo = new Periodo(LocalDate.of(2017, 3, 1), LocalDate.of(2017, 3, 31));
-        periodo.agregarCuenta(new Cuenta("Indicador1", 12D));
+        periodo.agregarCuenta(new Cuenta("Cuenta1", 12D));
         empresa2.agregarPeriodo(periodo);
 
 
 
         periodo = new Periodo(LocalDate.of(2017, 1, 1), LocalDate.of(2017, 1, 31));
-        periodo.agregarCuenta(new Cuenta("Indicador1", 20D));
+        periodo.agregarCuenta(new Cuenta("Cuenta1", 20D));
         empresa3.agregarPeriodo(periodo);
 
         periodo = new Periodo(LocalDate.of(2017, 2, 1), LocalDate.of(2017, 2, 28));
-        periodo.agregarCuenta(new Cuenta("Indicador1", 21D));
+        periodo.agregarCuenta(new Cuenta("Cuenta1", 21D));
         empresa3.agregarPeriodo(periodo);
 
         periodo = new Periodo(LocalDate.of(2017, 3, 1), LocalDate.of(2017, 3, 31));
-        periodo.agregarCuenta(new Cuenta("Indicador1", 22D));
+        periodo.agregarCuenta(new Cuenta("Cuenta1", 22D));
         empresa3.agregarPeriodo(periodo);
     }
 
     def 'Test ordenado menor'() {
         when:
         OperadorOrdenadorMenor operadorOrdenador = new OperadorOrdenadorMenor();
-        operadorOrdenador.setIndicador("Indicador1");
+        operadorOrdenador.setIndicador("Indicador3");
         operadorOrdenador.setModificador(new ModificadorOrdenadorSum())
 
         then:
-        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa1, empresa2, empresa3]);
+        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa1, empresa2, empresa3], indicadorService);
         empresasOrdenadas == [empresa3, empresa2, empresa1]
     }
 
@@ -80,7 +113,7 @@ class OperadorOrdenSpec extends Specification {
         operadorOrdenador.setModificador(new ModificadorOrdenadorSum())
 
         then:
-        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa3, empresa2, empresa1]);
+        List<Empresa> empresasOrdenadas =  operadorOrdenador.ordenar([empresa3, empresa2, empresa1], indicadorService);
         empresasOrdenadas == [empresa1, empresa2, empresa3]
     }
 }
