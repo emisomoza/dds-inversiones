@@ -20,7 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Document
         @CompoundIndex(name = "id_idx", def = "{'nombre': 1, 'owner': -1}", unique = true)
 ])
 @JsonIgnoreProperties(ignoreUnknown=true)
-class Indicador implements Serializable, Calculable {
+class Indicador implements Serializable {
 
     @JsonProperty("nombre")
     private String nombre
@@ -55,7 +55,6 @@ class Indicador implements Serializable, Calculable {
         this.dependenciasIndicador = new ArrayList<>(listener.getDependenciasIndicador())
     }
 
-    @Override
     String getNombre() {
         return nombre
     }
@@ -94,15 +93,5 @@ class Indicador implements Serializable, Calculable {
 
     void setOwner(Long owner) {
         this.owner = owner
-    }
-
-    Double aplicar() {
-        return this.getValor()
-    }
-
-    @Override
-    @JsonIgnore
-    Double getValor() {
-        return expresion.getValor()
     }
 }

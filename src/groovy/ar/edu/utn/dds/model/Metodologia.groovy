@@ -60,6 +60,6 @@ class Metodologia implements Serializable {
     }
 
     List<Empresa> ordenar(List<Empresa> empresas, IndicadorService indicadorService) {
-        return this.operadorOrden.ordenar(empresas)
+        return this.operadorOrden.ordenar(empresas, indicadorService)
     }
 }
