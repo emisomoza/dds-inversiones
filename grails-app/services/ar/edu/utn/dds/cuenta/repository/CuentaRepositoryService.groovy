@@ -57,8 +57,7 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
                 TABLE + " JOIN TIPO_CUENTA ON CUENTA_TIPO = TIPO_ID "))
         queryUtils.addWhereParam(COLUMNS.get("empid"), cuenta.getEmpresa())
         queryUtils.addWhereParam(COLUMNS.get("perid"), cuenta.getPeriodo())
-        if(cuenta.getTipo() != null)
-            queryUtils.addWhereParam(COLUMNS.get("cueid"), cuenta.getTipo().getId())
+        queryUtils.addWhereParam(COLUMNS.get("cueid"), cuenta.getTipo()?.getId())
         queryUtils.addWhereParam(COLUMNS.get("valor"), cuenta.getValor())
 
         return queryUtils

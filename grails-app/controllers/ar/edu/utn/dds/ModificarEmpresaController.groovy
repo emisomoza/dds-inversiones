@@ -1,5 +1,6 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.model.Cuenta
 import grails.plugin.springsecurity.annotation.Secured
 
 import java.time.LocalDate
@@ -9,6 +10,7 @@ class ModificarEmpresaController {
 
     def empresaService
     def periodoService
+    def cuentaService
 
     def agregarPeriodo() {
         def empresa = empresaService.obtener(Long.parseLong(params.empresa))
@@ -52,6 +54,23 @@ class ModificarEmpresaController {
                 view: "/modificarPeriodo",
                 model: [
 
+                ]
+        )
+    }
+
+    def agregarCuenta() {
+        Cuenta cuenta = new Cuenta()
+        cuenta.empresa = params.empresa
+
+        def cuentas = cuentaService.listar(cuenta)
+
+        def empresa = empresaService.obtener(Long.parseLong(params.empresa))
+
+        render(
+                view: "/agregarCuenta",
+                model: [
+                        cuentas: cuentas,
+                        empresa: empresa
                 ]
         )
     }

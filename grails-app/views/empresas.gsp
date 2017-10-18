@@ -40,7 +40,7 @@
                 </select>
             </div>
             <div>
-                <g:actionSubmit class="btn btn-primary" value="Agregar cuentas" action="agregarPeriodo"/>
+                <g:actionSubmit class="btn btn-primary" value="Agregar cuentas" action="agregarCuenta"/>
                 <g:actionSubmit class="btn btn-secondary" value="Ver cuentas" action="delete"/>
             </div>
         </div>

@@ -1,42 +1,153 @@
-CREATE DATABASE INVERSIONES;
+-- phpMyAdmin SQL Dump
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: db
+-- Tiempo de generación: 08-10-2017 a las 13:38:51
+-- Versión del servidor: 5.7.19
+-- Versión de PHP: 7.0.21
 
-USE INVERSIONES;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-CREATE TABLE EMPRESA (
-	empresa_id INT NOT NULL AUTO_INCREMENT,
-	empresa_nombre VARCHAR(255) NOT NULL,
-	CONSTRAINT PK_EMPRESA_ID PRIMARY KEY (empresa_id)
-);
 
-CREATE TABLE PERIODO (
-	periodo_id INT NOT NULL AUTO_INCREMENT,
-	fecha_inicio DATE NOT NULL,
-	fecha_fin DATE NOT NULL,
-	CONSTRAINT PK_PERIODO_ID PRIMARY KEY (periodo_id)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-CREATE TABLE CUENTA (
-	cuenta_id INT NOT NULL AUTO_INCREMENT,
-	cuenta_nombre VARCHAR(255) NOT NULL,
-	cuenta_valor DOUBLE PRECISION NOT NULL,
-	CONSTRAINT PK_CUENTA_ID PRIMARY KEY (cuenta_id)
-);
+--
+-- Base de datos: `INVERSIONES`
+--
+CREATE DATABASE IF NOT EXISTS `INVERSIONES` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `INVERSIONES`;
 
-CREATE TABLE CUENTA_PERIODO (
-	cp_id INT NOT NULL AUTO_INCREMENT,
-	cp_periodo_id INT NOT NULL,
-	cp_cuenta_id INT NOT NULL,
-	CONSTRAINT PK_CP_ID PRIMARY KEY (cp_id)
-);
+-- --------------------------------------------------------
 
-CREATE TABLE PERIODO_EMPRESA (
-	pe_id INT NOT NULL AUTO_INCREMENT,
-	pe_empresa_id INT NOT NULL,
-	pe_periodo_id INT NOT NULL,
-	CONSTRAINT PK_PE_ID PRIMARY KEY (pe_id)
-);
+--
+-- Estructura de tabla para la tabla `CUENTA`
+--
 
-ALTER TABLE CUENTA_PERIODO ADD CONSTRAINT FK_CP_CUENTA FOREIGN KEY (cp_cuenta_id) REFERENCES CUENTA(cuenta_id);
-ALTER TABLE CUENTA_PERIODO ADD CONSTRAINT FK_CP_PERIODO FOREIGN KEY (cp_periodo_id) REFERENCES PERIODO(periodo_id);
-ALTER TABLE PERIODO_EMPRESA ADD CONSTRAINT FK_PE_PERIODO FOREIGN KEY (pe_periodo_id) REFERENCES PERIODO(periodo_id);
-ALTER TABLE PERIODO_EMPRESA ADD CONSTRAINT FK_PE_EMPRESA FOREIGN KEY (pe_empresa_id) REFERENCES EMPRESA(empresa_id);
+DROP TABLE IF EXISTS `CUENTA`;
+CREATE TABLE `CUENTA` (
+  `empresa_id` int(11) NOT NULL,
+  `periodo_id` int(11) NOT NULL,
+  `cuenta_tipo` int(11) NOT NULL,
+  `cuenta_valor` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `EMPRESA`
+--
+
+DROP TABLE IF EXISTS `EMPRESA`;
+CREATE TABLE `EMPRESA` (
+  `empresa_id` int(11) NOT NULL,
+  `empresa_nombre` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `EMPRESA`
+--
+
+INSERT INTO `EMPRESA` (`empresa_id`, `empresa_nombre`) VALUES
+(1, 'DDS S.A.'),
+(2, 'SONY');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `PERIODO`
+--
+
+DROP TABLE IF EXISTS `PERIODO`;
+CREATE TABLE `PERIODO` (
+  `periodo_id` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `TIPO_CUENTA`
+--
+
+DROP TABLE IF EXISTS `TIPO_CUENTA`;
+CREATE TABLE `TIPO_CUENTA` (
+  `tipo_id` int(11) NOT NULL,
+  `tipo_descripcion` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `CUENTA`
+--
+ALTER TABLE `CUENTA`
+  ADD PRIMARY KEY (`empresa_id`,`periodo_id`,`cuenta_tipo`),
+  ADD KEY `cuenta_periodo` (`periodo_id`),
+  ADD KEY `cuenta_tipo` (`cuenta_tipo`);
+
+--
+-- Indices de la tabla `EMPRESA`
+--
+ALTER TABLE `EMPRESA`
+  ADD PRIMARY KEY (`empresa_id`);
+
+--
+-- Indices de la tabla `PERIODO`
+--
+ALTER TABLE `PERIODO`
+  ADD PRIMARY KEY (`periodo_id`);
+
+--
+-- Indices de la tabla `TIPO_CUENTA`
+--
+ALTER TABLE `TIPO_CUENTA`
+  ADD PRIMARY KEY (`tipo_id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `EMPRESA`
+--
+ALTER TABLE `EMPRESA`
+  MODIFY `empresa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `PERIODO`
+--
+ALTER TABLE `PERIODO`
+  MODIFY `periodo_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `TIPO_CUENTA`
+--
+ALTER TABLE `TIPO_CUENTA`
+  MODIFY `tipo_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `CUENTA`
+--
+ALTER TABLE `CUENTA`
+  ADD CONSTRAINT `cuenta_empresa` FOREIGN KEY (`empresa_id`) REFERENCES `EMPRESA` (`empresa_id`),
+  ADD CONSTRAINT `cuenta_periodo` FOREIGN KEY (`periodo_id`) REFERENCES `PERIODO` (`periodo_id`),
+  ADD CONSTRAINT `cuenta_tipo` FOREIGN KEY (`cuenta_tipo`) REFERENCES `TIPO_CUENTA` (`tipo_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
