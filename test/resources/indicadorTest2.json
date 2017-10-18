@@ -1,5 +1,6 @@
 {
   "nombre": "Ind1",
+  "owner": null,
   "expresion": {
     "tipo": "mult",
     "expresionIzquierda": {

@@ -1,6 +1,7 @@
 package ar.edu.utn.dds
 
 import ar.edu.utn.dds.model.Indicador
+import ar.edu.utn.dds.resolver.ResolvedorIndicador
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
 import ar.edu.utn.dds.utils.DiffHelper
@@ -27,7 +28,7 @@ class IndicadorSpec extends Specification {
         indicador = objectMapper.readValue(new File("./test/resources/indicadorTest1.json").text, Indicador.class)
 
         expect:
-        indicador.aplicar() == 41
+        new ResolvedorIndicador().resolver(indicador) == 41
 
     }
 

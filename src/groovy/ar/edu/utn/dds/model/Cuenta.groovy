@@ -1,7 +1,7 @@
 package ar.edu.utn.dds.model
 
 
-class Cuenta implements Serializable, Calculable {
+class Cuenta implements Serializable {
 
     private Long id
     private Long empresa
@@ -27,12 +27,10 @@ class Cuenta implements Serializable, Calculable {
         this.id = id
     }
 
-    @Override
     public String getNombre() {
         return tipo.getDescripcion()
     }
 
-    @Override
     public Double getValor() {
         return valor
     }
