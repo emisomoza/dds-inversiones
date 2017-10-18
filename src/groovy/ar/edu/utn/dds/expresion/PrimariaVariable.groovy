@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.expresion
 
-import ar.edu.utn.dds.model.ContenedorCalculables
+
 import com.fasterxml.jackson.annotation.JsonSubTypes
 
 @JsonSubTypes([

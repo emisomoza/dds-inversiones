@@ -1,5 +1,6 @@
 {
 	"nombre": "Id Test 1",
+	"owner": null,
 	"expresion": {
 		"tipo": "suma",
 		"expresionIzquierda": {
