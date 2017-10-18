@@ -23,7 +23,7 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
         return columns
     }.call()
 
-    private static final String TABLE = "PERIODO"
+    private static final String TABLE = "CUENTA"
 
     private RowMapper mapper = new CuentaMapper()
 
@@ -53,17 +53,18 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
         QueryUtils queryUtils = new QueryUtils()
 
         queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement(
-                COLUMNS.values().stream().collect(Collectors.joining(", ")) + "TIPO_ID, TIPO_DESCRIPCION",
-                TABLE + "JOIN TIPO_CUENTA ON CUENTA_TIPO = TIPO_ID"))
+                COLUMNS.values().stream().collect(Collectors.joining(", ")) + " TIPO_ID, TIPO_DESCRIPCION ",
+                TABLE + " JOIN TIPO_CUENTA ON CUENTA_TIPO = TIPO_ID "))
         queryUtils.addWhereParam(COLUMNS.get("empid"), cuenta.getEmpresa())
         queryUtils.addWhereParam(COLUMNS.get("perid"), cuenta.getPeriodo())
-        queryUtils.addWhereParam(COLUMNS.get("cueid"), cuenta.getTipo().getId())
+        if(cuenta.getTipo() != null)
+            queryUtils.addWhereParam(COLUMNS.get("cueid"), cuenta.getTipo().getId())
         queryUtils.addWhereParam(COLUMNS.get("valor"), cuenta.getValor())
 
         return queryUtils
     }
 
-    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, key = "#empId + '-' + #perId + '-' + #cueId", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     Cuenta obtener(Long empId, Long perId, Long cueId) {
         QueryUtils queryUtils = this.obtenerQueryObtener(empId, perId, cueId)
         return this.obtener(queryUtils, mapper)
@@ -107,7 +108,7 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
     private QueryUtils obtenerQueryActualizar(Cuenta cuenta) {
         QueryUtils queryUtils = new QueryUtils()
 
-        queryUtils.setRootStatement(RootStatementBuilder.buildUpdateRootStatement(TABLE))
+        queryUtils.setRootStnatement(RootStatementBuilder.buildUpdateRootStatement(TABLE))
         queryUtils.addParam(COLUMNS.get("valor"), cuenta.getValor())
         queryUtils.addWhereParam(COLUMNS.get("empid"), cuenta.getEmpresa())
         queryUtils.addWhereParam(COLUMNS.get("perid"), cuenta.getPeriodo())

@@ -57,7 +57,7 @@ class PeriodoRepositoryService extends DefaultJDBCRepositoryService<Periodo> {
         return queryUtils
     }
 
-    @Cacheable(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    @Cacheable(cacheNames = CacheData.PERIODO_CACHE_NAME, key = "#id", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     Periodo obtener(Long id) {
         QueryUtils queryUtils = this.obtenerQueryObtener(id)
         return this.obtener(queryUtils, mapper)
