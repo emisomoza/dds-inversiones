@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 class Metodologia implements Serializable {
 
     private String nombre
-    private String owner
+    private Long owner
     private List<OperadorFiltro> operadoresFiltro
     private OperadorOrdenador operadorOrden
 
@@ -27,11 +27,11 @@ class Metodologia implements Serializable {
         this.nombre = nombre
     }
 
-    String getOwner() {
+    Long getOwner() {
         return owner
     }
 
-    void setOwner(String owner) {
+    void setOwner(Long owner) {
         this.owner = owner
     }
 

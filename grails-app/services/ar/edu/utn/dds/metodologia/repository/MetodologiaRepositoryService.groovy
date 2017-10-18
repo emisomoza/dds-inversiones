@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.query.BasicQuery
 
 @Transactional
 class MetodologiaRepositoryService {
@@ -23,19 +24,21 @@ class MetodologiaRepositoryService {
         }
     }
 
-    @Cacheable(cacheNames = CacheData.METODOLOGIA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    Metodologia obtener(String name) {
+    @Cacheable(cacheNames = CacheData.METODOLOGIA_CACHE_NAME, key = "#nombre.concat('-').concat(#userId)", cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    Metodologia obtener(String nombre, Long userId) {
+        BasicQuery query = new BasicQuery("{nombre: '" + nombre + "', owner: " + userId + "}")
         try {
-            return mongoTemplate.findById(name, Metodologia.class)
+            return mongoTemplate.findOne(query, Metodologia.class)
         } catch (Exception e) {
             throw new MongoInaccesibleException("Error al obtener metodologia " + name, e.getCause())
         }
     }
 
-    @Cacheable(cacheNames = CacheData.METODOLOGIA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    ArrayList<Metodologia> listar() {
+    @Cacheable(cacheNames = CacheData.METODOLOGIA_CACHE_NAME, key = "#userId", cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    ArrayList<Metodologia> listar(Long userId) {
+        BasicQuery query = new BasicQuery("{owner: " + userId + "}")
         try {
-            return mongoTemplate.findAll(Metodologia.class)
+            return mongoTemplate.find(query, Metodologia.class)
         } catch (Exception e) {
             throw new MongoInaccesibleException("Error al obtener todas las metodologias", e.getCause())
         }
