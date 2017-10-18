@@ -39,6 +39,8 @@ class DefaultJDBCRepositoryService<T> {
                 ps.setDate(i++, (Date) arg)
             } else if (arg instanceof Timestamp) {
                 ps.setTimestamp(i++, (Timestamp) arg)
+            } else if (arg instanceof Double) {
+                ps.setDouble(i++, (Double) arg)
             }  else {
                 throw new Exception("Unsupported argument " + arg + " of type " + arg.getClass());
             }

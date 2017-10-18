@@ -14,7 +14,6 @@ class CuentaMapper implements RowMapper {
         TipoCuenta tipoCuenta = (TipoCuenta) (new TipoCuentaMapper()).mapRow(resultSet, i)
 
         Cuenta cuenta = new Cuenta()
-        cuenta.setId(resultSet.getLong("cuenta_id"))
         cuenta.setEmpresa(resultSet.getLong("empresa_id"))
         cuenta.setPeriodo(resultSet.getLong("periodo_id"))
         cuenta.setTipo(tipoCuenta)

@@ -36,6 +36,12 @@
 <body>
 <g:form params="[empresa:params.empresa]" method="post" class="form-horizontal" role="form" controller="modificarEmpresa" action="save_cuenta_empresa" onsubmit="return validateForm()">
     <div>
+        <g:if test="${saveCuentaText}">
+            <h2 class="panel-title">${saveCuentaText}</h2></br>
+        </g:if>
+    </div>
+
+    <div>
         <h2 class="panel-title">Agregar cuenta para: ${empresa.nombre}</h2></br>
     </div>
 

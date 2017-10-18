@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.model
 
-class TipoCuenta {
+class TipoCuenta implements Serializable {
 
     private Long id
     private String descripcion

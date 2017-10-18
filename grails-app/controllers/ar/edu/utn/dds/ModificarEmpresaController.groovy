@@ -1,6 +1,7 @@
 package ar.edu.utn.dds
 
 import ar.edu.utn.dds.model.Cuenta
+import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.model.TipoCuenta
 import grails.plugin.springsecurity.annotation.Secured
@@ -27,21 +28,42 @@ class ModificarEmpresaController {
     }
 
     def save_cuenta_empresa() {
+        String saveCuentaText
+        Cuenta cuenta
+        Empresa empresa
 
-        Long idEmpresa = Long.parseLong(params.empresa)
-        Date fechaDesdeDate = params.fechaDesde
-        Date fechaHastaDate = params.fechaHasta
+        try {
+            Long idEmpresa = Long.parseLong(params.empresa)
+            empresa = empresaService.obtener(idEmpresa)
+            Date fechaDesdeDate = params.fechaDesde
+            Date fechaHastaDate = params.fechaHasta
 
-        Periodo periodo = this.guardarPeriodo(fechaDesdeDate, fechaHastaDate)
+            Periodo periodo = this.guardarPeriodo(fechaDesdeDate, fechaHastaDate)
 
-        Cuenta cuenta = this.guardarCuenta(idEmpresa, params.nomCuenta.toString(), periodo.id, Double.parseDouble(params.valor))
+            cuenta = this.guardarCuenta(idEmpresa, params.nomCuenta.toString(), periodo.id, Double.parseDouble(params.valor))
 
-        render(
-                view: "/agregarPeriodo",
-                model: [
-                        cuenta: cuenta
-                ]
-        )
+            saveCuentaText = "Cuenta ${cuenta?.tipo?.descripcion} guardada exitosamente!"
+
+            render(
+                    view: "/agregarCuenta",
+                    model: [
+                            cuenta: cuenta,
+                            saveCuentaText: saveCuentaText,
+                            empresa: empresa
+                    ]
+            )
+        }
+        catch(Exception e){
+            saveCuentaText = "Error guardando cuenta"
+            log.error(saveCuentaText)
+
+            render(
+                    view: "/error",
+                    model: [
+                            exception: e
+                    ]
+            )
+        }
     }
 
     private Cuenta guardarCuenta(Long idEmpresa, String descripcion, Long idPeriodo, Double valor) {

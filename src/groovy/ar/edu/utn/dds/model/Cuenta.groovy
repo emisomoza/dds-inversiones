@@ -3,7 +3,6 @@ package ar.edu.utn.dds.model
 
 class Cuenta implements Serializable {
 
-    private Long id
     private Long empresa
     private Long periodo
     private TipoCuenta tipo
