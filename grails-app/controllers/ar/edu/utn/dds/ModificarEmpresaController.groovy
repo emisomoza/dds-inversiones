@@ -1,6 +1,8 @@
 package ar.edu.utn.dds
 
 import ar.edu.utn.dds.model.Cuenta
+import ar.edu.utn.dds.model.Periodo
+import ar.edu.utn.dds.model.TipoCuenta
 import grails.plugin.springsecurity.annotation.Secured
 
 import java.time.LocalDate
@@ -11,67 +13,63 @@ class ModificarEmpresaController {
     def empresaService
     def periodoService
     def cuentaService
-
-    def agregarPeriodo() {
-        def empresa = empresaService.obtener(Long.parseLong(params.empresa))
-
-        def periodos = new ArrayList()
-
-        render(
-                view: "/agregarPeriodo",
-                model: [
-                        periodos: periodos,
-                        empresa: empresa
-                ]
-        )
-    }
-
-    def save_periodo() {
-
-        Long idEmpresa = Long.parseLong(params.empresa)
-        Date fechaDesdeDate = params.fechaDesde
-        Date fechaHastaDate = params.fechaHasta
-
-        LocalDate fechaDesdeLocalDate = LocalDate.of(fechaDesdeDate.calendarDate.getYear(), fechaDesdeDate.calendarDate.getMonth(), fechaDesdeDate.calendarDate.getDayOfMonth())
-        LocalDate fechaHastaLocalDate = LocalDate.of(fechaHastaDate.calendarDate.getYear(), fechaHastaDate.calendarDate.getMonth(), fechaHastaDate.calendarDate.getDayOfMonth())
-
-        periodoService.guardar(idEmpresa, fechaDesdeLocalDate, fechaHastaLocalDate)
-        def empresa = empresaService.obtener(idEmpresa)
-
-        def periodos = periodoService.obtenerPeriodos(idEmpresa)
-
-        render(
-            view: "/agregarPeriodo",
-            model: [
-                    periodos: periodos,
-                    empresa: empresa
-            ]
-        )
-    }
-
-    def modificarPeriodo(){
-        render(
-                view: "/modificarPeriodo",
-                model: [
-
-                ]
-        )
-    }
+    def tipoCuentaService
 
     def agregarCuenta() {
-        Cuenta cuenta = new Cuenta()
-        cuenta.empresa = params.empresa
-
-        def cuentas = cuentaService.listar(cuenta)
-
         def empresa = empresaService.obtener(Long.parseLong(params.empresa))
 
         render(
                 view: "/agregarCuenta",
                 model: [
-                        cuentas: cuentas,
                         empresa: empresa
                 ]
         )
+    }
+
+    def save_cuenta_empresa() {
+
+        Long idEmpresa = Long.parseLong(params.empresa)
+        Date fechaDesdeDate = params.fechaDesde
+        Date fechaHastaDate = params.fechaHasta
+
+        Periodo periodo = this.guardarPeriodo(fechaDesdeDate, fechaHastaDate)
+
+        Cuenta cuenta = this.guardarCuenta(idEmpresa, params.nomCuenta.toString(), periodo.id, Double.parseDouble(params.valor))
+
+        render(
+                view: "/agregarPeriodo",
+                model: [
+                        cuenta: cuenta
+                ]
+        )
+    }
+
+    private Cuenta guardarCuenta(Long idEmpresa, String descripcion, Long idPeriodo, Double valor) {
+        TipoCuenta tipoCuenta = new TipoCuenta()
+        tipoCuenta.setDescripcion(descripcion)
+        tipoCuentaService.guardar(tipoCuenta)
+        tipoCuenta = tipoCuentaService.listar(tipoCuenta).first() //Esto es para recuperar el id
+
+        Cuenta cuenta = new Cuenta()
+        cuenta.setEmpresa(idEmpresa)
+        cuenta.setTipo(tipoCuenta)
+        cuenta.setPeriodo(idPeriodo)
+        cuenta.setValor(valor)
+        cuentaService.guardar(cuenta)
+
+        List<Cuenta> cuentas = cuentaService.listar(cuenta)
+
+        return cuentas.first()
+    }
+
+    private Periodo guardarPeriodo(Date fechaDesdeDate, Date fechaHastaDate) {
+        LocalDate fechaDesdeLocalDate = LocalDate.of(fechaDesdeDate.calendarDate.getYear(), fechaDesdeDate.calendarDate.getMonth(), fechaDesdeDate.calendarDate.getDayOfMonth())
+        LocalDate fechaHastaLocalDate = LocalDate.of(fechaHastaDate.calendarDate.getYear(), fechaHastaDate.calendarDate.getMonth(), fechaHastaDate.calendarDate.getDayOfMonth())
+
+        Periodo periodo = new Periodo(fechaDesdeLocalDate, fechaHastaLocalDate)
+
+        periodoService.guardar(periodo)
+
+        return periodoService.listar(periodo).first()
     }
 }
