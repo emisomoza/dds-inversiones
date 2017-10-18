@@ -94,4 +94,19 @@ class ModificarEmpresaController {
 
         return periodoService.listar(periodo).first()
     }
+
+    def listarCuentas() {
+        Long idEmpresa = Long.parseLong(params.empresa)
+        Empresa empresa = empresaService.obtener(idEmpresa)
+
+        List<Cuenta> cuentas = cuentaService.listar(new Cuenta())
+
+        render(
+                view: "/listarCuentas",
+                model: [
+                        cuentas: cuentas,
+                        empresa: empresa
+                ]
+        )
+    }
 }

@@ -41,7 +41,7 @@
             </div>
             <div>
                 <g:actionSubmit class="btn btn-primary" value="Agregar cuentas" action="agregarCuenta"/>
-                <g:actionSubmit class="btn btn-secondary" value="Ver cuentas" action="delete"/>
+                <g:actionSubmit class="btn btn-secondary" value="Ver cuentas" action="listarCuentas"/>
             </div>
         </div>
     </g:form>
