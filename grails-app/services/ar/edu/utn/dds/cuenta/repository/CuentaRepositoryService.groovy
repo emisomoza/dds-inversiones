@@ -64,7 +64,7 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
         return queryUtils
     }
 
-    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    @Cacheable(cacheNames = CacheData.CUENTA_CACHE_NAME, key = "#empId + '-' + #perId + '-' + #cueId", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     Cuenta obtener(Long empId, Long perId, Long cueId) {
         QueryUtils queryUtils = this.obtenerQueryObtener(empId, perId, cueId)
         return this.obtener(queryUtils, mapper)
@@ -110,7 +110,7 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
     private QueryUtils obtenerQueryActualizar(Cuenta cuenta) {
         QueryUtils queryUtils = new QueryUtils()
 
-        queryUtils.setRootStatement(RootStatementBuilder.buildUpdateRootStatement(TABLE))
+        queryUtils.setRootStnatement(RootStatementBuilder.buildUpdateRootStatement(TABLE))
         queryUtils.addParam(COLUMNS.get("valor"), cuenta.getValor())
         queryUtils.addWhereParam(COLUMNS.get("empid"), cuenta.getEmpresa())
         queryUtils.addWhereParam(COLUMNS.get("perid"), cuenta.getPeriodo())

@@ -15,11 +15,12 @@ class BootStrap {
         def testUser = new DDSUser('user', 'password').save()
 
         DDSUserDDSRole.create(testAdminUser, adminRole, true)
+        DDSUserDDSRole.create(testAdminUser, userRole, true)
         DDSUserDDSRole.create(testUser, userRole, true)
 
         assert DDSUser.count() == 2
         assert DDSRole.count() == 2
-        assert DDSUserDDSRole.count() == 2
+        assert DDSUserDDSRole.count() == 3
     }
 
     def destroy = {

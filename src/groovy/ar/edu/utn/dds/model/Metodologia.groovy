@@ -3,12 +3,21 @@ package ar.edu.utn.dds.model
 import ar.edu.utn.dds.indicador.service.IndicadorService
 import ar.edu.utn.dds.metodologia.OperadorFiltro
 import ar.edu.utn.dds.metodologia.OperadorOrdenador
+import org.springframework.data.mongodb.core.index.CompoundIndex
+import org.springframework.data.mongodb.core.index.CompoundIndexes
+import org.springframework.data.mongodb.core.mapping.Document
 
-
+@Document(collection = "metodologias")
+@CompoundIndexes([
+        @CompoundIndex(name = "id_idx", def = "{'nombre': 1, 'owner': -1}", unique = true)
+])
 class Metodologia implements Serializable {
+
     private String nombre
+    private Long owner
     private List<OperadorFiltro> operadoresFiltro
     private OperadorOrdenador operadorOrden
+
 
     String getNombre() {
         return nombre
@@ -18,12 +27,20 @@ class Metodologia implements Serializable {
         this.nombre = nombre
     }
 
+    Long getOwner() {
+        return owner
+    }
+
+    void setOwner(Long owner) {
+        this.owner = owner
+    }
+
     List<OperadorFiltro> getOperadoresFiltro() {
-        return operadoresFiltro;
+        return operadoresFiltro
     }
 
     void setOperadoresFiltro(List<OperadorFiltro> operadoresFiltro) {
-        this.operadoresFiltro = operadoresFiltro;
+        this.operadoresFiltro = operadoresFiltro
     }
 
     OperadorOrdenador getOperadorOrden() {
@@ -43,6 +60,6 @@ class Metodologia implements Serializable {
     }
 
     List<Empresa> ordenar(List<Empresa> empresas, IndicadorService indicadorService) {
-        return this.operadorOrden.ordenar(empresas);
+        return this.operadorOrden.ordenar(empresas)
     }
 }

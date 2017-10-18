@@ -9,6 +9,7 @@ import grails.transaction.Transactional
 @Transactional
 class IndicadorService {
     def indicadorRepositoryService
+    def springSecurityService
 
     void aplicar(Periodo periodo, List<Indicador> indicadores) {
         for(Indicador unIndicador : indicadores) {
@@ -26,14 +27,18 @@ class IndicadorService {
     }
 
     void guardar(Indicador indicador) {
+        Long userId = (Long) springSecurityService.getCurrentUserId()
+        indicador.setOwner(userId)
         indicadorRepositoryService.guardar(indicador)
     }
 
     Indicador obtener(String name) {
-        indicadorRepositoryService.obtener(name)
+        Long userId = (Long) springSecurityService.getCurrentUserId()
+        indicadorRepositoryService.obtener(name, userId)
     }
 
     ArrayList<Indicador> listar() {
-        indicadorRepositoryService.listar()
+        Long userId = (Long) springSecurityService.getCurrentUserId()
+        indicadorRepositoryService.listar(userId)
     }
 }

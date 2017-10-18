@@ -13,5 +13,5 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
     @JsonSubTypes.Type(Primaria.class),
     @JsonSubTypes.Type(ExpresionNegada.class)
 ])
-abstract class Expresion {
+abstract class Expresion implements Serializable {
 }

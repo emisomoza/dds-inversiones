@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.query.BasicQuery
 
 @Transactional
 class IndicadorRepositoryService {
+
     @Autowired
     private MongoTemplate mongoTemplate
 
-    @CacheEvict(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
+    @CacheEvict(cacheNames = CacheData.INDICADOR_CACHE_NAME, key = "#indicador.owner", cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
     void guardar(Indicador indicador) {
         try {
             mongoTemplate.save(indicador)
@@ -23,19 +25,21 @@ class IndicadorRepositoryService {
         }
     }
 
-    @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    Indicador obtener(String name) {
+    @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, key = "#nombre.concat('-').concat(#userId)", cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    Indicador obtener(String nombre, Long userId) {
+        BasicQuery query = new BasicQuery("{nombre: '" + nombre + "', owner: " + userId + "}")
         try {
-            return mongoTemplate.findById(name, Indicador.class)
+            return mongoTemplate.findOne(query, Indicador.class)
         } catch (Exception e) {
-            throw new MongoInaccesibleException("Error al obtener indicador " + name, e.getCause())
+            throw new MongoInaccesibleException("Error al obtener indicador " + nombre, e.getCause())
         }
     }
 
-    @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
-    ArrayList<Indicador> listar() {
+    @Cacheable(value = CacheData.INDICADOR_CACHE_NAME, key = "#userId", cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    ArrayList<Indicador> listar(Long userId) {
+        BasicQuery query = new BasicQuery("{owner: " + userId + "}")
         try {
-            return mongoTemplate.findAll(Indicador.class)
+            return mongoTemplate.find(query, Indicador.class)
         } catch (Exception e) {
             throw new MongoInaccesibleException("Error al obtener todos los indicadores", e.getCause())
         }

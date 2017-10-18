@@ -8,19 +8,25 @@ import grails.transaction.Transactional
 
 @Transactional
 class MetodologiaService {
+
     def metodologiaRepositoryService
     def indicadorService
+    def springSecurityService
 
     void guardar(Metodologia metodologia) {
+        Long userId = (Long) springSecurityService.getCurrentUserId()
+        metodologia.setOwner(userId)
         metodologiaRepositoryService.guardar(metodologia)
     }
 
     Metodologia obtener(String name) {
-        metodologiaRepositoryService.obtener(name)
+        Long userId = (Long) springSecurityService.getCurrentUserId()
+        metodologiaRepositoryService.obtener(name, userId)
     }
 
     ArrayList<Metodologia> listar() {
-        metodologiaRepositoryService.listar()
+        Long userId = (Long) springSecurityService.getCurrentUserId()
+        metodologiaRepositoryService.listar(userId)
     }
 
     List<Empresa> comparar(Metodologia metodologia, List<Empresa> empresasAComparar) {
