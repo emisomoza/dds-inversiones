@@ -6,5 +6,5 @@ import ar.edu.utn.dds.model.Periodo
 
 abstract class ModificadorOrdenador {
 
-    abstract Double reducir(List<Periodo> periodos, IndicadorService indicadorService, Indicador indicador);
+    abstract Double reducir(List<Periodo> periodos, IndicadorService indicadorService, Indicador indicador)
 }

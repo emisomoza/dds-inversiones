@@ -15,15 +15,15 @@ class OperadorFiltroMayor extends OperadorFiltro {
     }
 
     OperadorFiltroMayor(Double comparador) {
-        this.comparador = comparador;
+        this.comparador = comparador
     }
 
     Double getComparador() {
-        return comparador;
+        return comparador
     }
 
     void setComparador(Double comparador) {
-        this.comparador = comparador;
+        this.comparador = comparador
     }
 
     @Override
@@ -37,9 +37,9 @@ class OperadorFiltroMayor extends OperadorFiltro {
 
         return periodos.every {
             try {
-                return indicadorService.aplicar(it, indicador) > this.comparador;
+                return indicadorService.aplicar(it, indicador) > this.comparador
             } catch (CuentaNoExisteException e) {
-                throw new MetodologiaException();
+                throw new MetodologiaException()
             }
         }
     }

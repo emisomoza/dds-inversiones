@@ -18,6 +18,6 @@ class ModificadorOrdenadorProm extends ModificadorOrdenador {
             }
         }.sum()
 
-        return suma / periodos.size();
+        return suma / periodos.size()
     }
 }

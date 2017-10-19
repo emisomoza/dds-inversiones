@@ -128,17 +128,10 @@ class DefaultJDBCRepositoryService<T> {
                     throw new SQLException(e)
                 }
             })
-            log.info(String.format("Empresa actualizada: %l", empresa.id))
+            log.info(String.format("%s actualizado", T.getClass().getName()))
         } catch(DataAccessException e) {
-            throw new SQLInaccesibleException("Error al actualizar empresa " + empresa.getId(), e.getCause())
+            throw new SQLInaccesibleException(String.format("Error al actualizar %s", T.getClass().getName()), e.getCause())
         }
     }
 
-    protected QueryUtils obtenerQueryListarTodo(String tableName) {
-        QueryUtils queryUtils = new QueryUtils()
-
-        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement("*", tableName))
-
-        return queryUtils
-    }
 }

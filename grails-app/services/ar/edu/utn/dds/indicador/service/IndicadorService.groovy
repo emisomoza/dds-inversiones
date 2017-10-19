@@ -4,7 +4,6 @@ import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.resolver.ResolvedorIndicador
-import grails.transaction.Transactional
 
 class IndicadorService {
     def indicadorRepositoryService

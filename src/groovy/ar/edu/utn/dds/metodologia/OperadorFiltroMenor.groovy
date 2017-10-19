@@ -9,21 +9,21 @@ import ar.edu.utn.dds.model.Periodo
 
 class OperadorFiltroMenor extends OperadorFiltro {
 
-    private Double comparador;
+    private Double comparador
 
     OperadorFiltroMenor() {
     }
 
     OperadorFiltroMenor(Double comparador) {
-        this.comparador = comparador;
+        this.comparador = comparador
     }
 
     Double getComparador() {
-        return comparador;
+        return comparador
     }
 
     void setComparador(Double comparador) {
-        this.comparador = comparador;
+        this.comparador = comparador
     }
 
     @Override
@@ -37,9 +37,9 @@ class OperadorFiltroMenor extends OperadorFiltro {
 
         return periodos.every {
             try {
-                return indicadorService.aplicar(it, indicador) < this.comparador;
+                return indicadorService.aplicar(it, indicador) < this.comparador
             } catch (CuentaNoExisteException e) {
-                throw new MetodologiaException();
+                throw new MetodologiaException()
             }
         }
     }

@@ -5,15 +5,15 @@ import ar.edu.utn.dds.model.Empresa
 
 abstract class OperadorOrdenador extends Operador {
 
-    private ModificadorOrdenador modificador;
+    private ModificadorOrdenador modificador
 
     ModificadorOrdenador getModificador() {
-        return modificador;
+        return modificador
     }
 
     void setModificador(ModificadorOrdenador modificador) {
-        this.modificador = modificador;
+        this.modificador = modificador
     }
 
-    abstract List<Empresa> ordenar(List<Empresa> empresas, IndicadorService indicadorService);
+    abstract List<Empresa> ordenar(List<Empresa> empresas, IndicadorService indicadorService)
 }

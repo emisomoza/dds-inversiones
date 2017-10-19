@@ -3,11 +3,9 @@ package ar.edu.utn.dds.metodologia
 import ar.edu.utn.dds.exceptions.CuentaNoExisteException
 import ar.edu.utn.dds.exceptions.MetodologiaException
 import ar.edu.utn.dds.indicador.service.IndicadorService
-import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.model.Periodo
-import ar.edu.utn.dds.resolver.ResolvedorIndicador
 
 class OperadorFiltroCreciente extends OperadorFiltro {
 
@@ -25,7 +23,7 @@ class OperadorFiltroCreciente extends OperadorFiltro {
             try {
                 return index <= 0 || indicadorService.aplicar(periodos.get(index - 1), indicador) < indicadorService.aplicar(it, indicador)
             } catch (CuentaNoExisteException e) {
-                throw new MetodologiaException();
+                throw new MetodologiaException()
             }
         }
     }
