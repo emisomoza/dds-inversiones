@@ -31,6 +31,7 @@ class IndexController {
         )
     }
 
+    @Secured('ROLE_ADMIN')
     def agregarCuentas() {
         def empresas = empresaService.listar()
         render(

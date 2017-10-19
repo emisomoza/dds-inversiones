@@ -8,7 +8,7 @@ import grails.plugin.springsecurity.annotation.Secured
 
 import java.time.LocalDate
 
-@Secured('ROLE_USER')
+@Secured('ROLE_ADMIN')
 class ModificarEmpresaController {
 
     def empresaService
