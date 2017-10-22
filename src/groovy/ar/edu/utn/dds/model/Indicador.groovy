@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "indicadores")
 @CompoundIndexes([
-        @CompoundIndex(name = "id_idx", def = "{'nombre': 1, 'owner': -1}", unique = true)
+        @CompoundIndex(name = "id   _idx", def = "{'nombre': 1, 'owner': -1}", unique = true)
 ])
 @JsonIgnoreProperties(ignoreUnknown=true)
 class Indicador implements Serializable {
