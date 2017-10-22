@@ -19,7 +19,7 @@
         <div class="form-group">
             <label for="inputEmpresa" class="col-sm-2 control-label">Nueva empresa</label>
             <div class="col-sm-3">
-                <input id="inputEmpresa" name = "nomEmpresa" class="form-control" placeholder="Empresa">
+                <input id="inputEmpresa" name = "nomEmpres" class="form-control" placeholder="Empresa">
             </div>
             <button type="submit" class="btn btn-primary">Agregar</button>
         </div>
