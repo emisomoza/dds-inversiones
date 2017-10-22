@@ -2,7 +2,7 @@ package ar.edu.utn.dds.tipocuenta.repository
 
 import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
-import ar.edu.utn.dds.mappers.TipoCuentaMapper
+import ar.edu.utn.dds.mappers.jdbc.TipoCuentaMapper
 import ar.edu.utn.dds.model.TipoCuenta
 import ar.edu.utn.dds.utils.queries.QueryUtils
 import ar.edu.utn.dds.utils.queries.builders.RootStatementBuilder

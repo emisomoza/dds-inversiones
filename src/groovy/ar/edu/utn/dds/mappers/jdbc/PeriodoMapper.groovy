@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.mappers
+package ar.edu.utn.dds.mappers.jdbc
 
 import ar.edu.utn.dds.model.Periodo
 import org.springframework.jdbc.core.RowMapper

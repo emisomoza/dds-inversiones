@@ -2,7 +2,7 @@ package ar.edu.utn.dds.periodo.repository
 
 import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
-import ar.edu.utn.dds.mappers.PeriodoMapper
+import ar.edu.utn.dds.mappers.jdbc.PeriodoMapper
 import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.utils.queries.QueryUtils
 import ar.edu.utn.dds.utils.queries.builders.RootStatementBuilder

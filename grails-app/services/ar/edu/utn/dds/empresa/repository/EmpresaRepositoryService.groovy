@@ -2,7 +2,7 @@ package ar.edu.utn.dds.empresa.repository
 
 import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
-import ar.edu.utn.dds.mappers.EmpresaMapper
+import ar.edu.utn.dds.mappers.jdbc.EmpresaMapper
 import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.utils.queries.QueryUtils
 import ar.edu.utn.dds.utils.queries.builders.RootStatementBuilder
