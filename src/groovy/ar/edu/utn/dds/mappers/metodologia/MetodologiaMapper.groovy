@@ -1,15 +1,18 @@
 package ar.edu.utn.dds.mappers.metodologia
 
+import ar.edu.utn.dds.mappers.metodologia.operador.operadorfiltro.*
+import ar.edu.utn.dds.mappers.metodologia.operador.operadorordenador.OperadorOrdenadorMapperStrategy
+import ar.edu.utn.dds.mappers.metodologia.operador.operadorordenador.OperadorOrdenadorMayorMapper
+import ar.edu.utn.dds.mappers.metodologia.operador.operadorordenador.OperadorOrdenadorMenorMapper
 import ar.edu.utn.dds.metodologia.OperadorFiltro
 import ar.edu.utn.dds.metodologia.OperadorOrdenador
-import ar.edu.utn.dds.metodologia.OperadorOrdenadorMenor
 import ar.edu.utn.dds.model.Metodologia
+
+import java.util.stream.Collectors
 
 class MetodologiaMapper {
 
     private static final String NOMBRE_TAG = "nombre"
-    private static final String INDICADOR = "indicador"
-    private static final String VALOR = "valor"
     private static final String OPERADOR = "operador"
 
     private static final String OPERADORES_FILTRO_TAG = "operadoresfiltro"
@@ -23,10 +26,6 @@ class MetodologiaMapper {
     private static final String OPERADOR_ORDENADOR_MAYOR_TAG = ">"
     private static final String OPERADOR_ORDENADOR_MENOR_TAG = "<"
 
-    private static final String MODIFICADOR = "modificador"
-    private static final String MODIFICADOR_FILTRO_SIEMPRE = "siempre"
-    private static final String MODIFICADOR_ORDENADOR_PROM = "promedio"
-    private static final String MODIFICADOR_ORDENADOR_SUM = "suma"
 
     Metodologia mapear(Map<String, Object> rawMetodologia) {
         Metodologia nuevaMetodologia = new Metodologia()
@@ -39,21 +38,38 @@ class MetodologiaMapper {
     }
 
     protected List<OperadorFiltro> mapearOperadoresFiltro(Map<String, Object> rawOperadoresFiltro) {
-        List<OperadorFiltro> operadoresFiltro = new ArrayList<>()
+        return rawOperadoresFiltro.values().parallelStream()
+                .map({rawOperador -> this.mapearOperadorFiltro((Map) rawOperador)})
+                .collect(Collectors.toList())
+    }
 
-        return operadoresFiltro
+    protected OperadorFiltro mapearOperadorFiltro(Map<String, Object> rawOperadorFiltro) {
+        OperadorFiltroMapperStrategy mapper = this.operadorFiltroMapperStrategy().get(rawOperadorFiltro.get(OPERADOR)).newInstance()
+        mapper.mapear(rawOperadorFiltro)
+    }
+
+    protected Map<String, Class<? extends OperadorFiltroMapperStrategy>> operadorFiltroMapperStrategy() {
+        Map<String, Class<? extends OperadorFiltroMapperStrategy>> strategyMap = new HashMap<>()
+
+        strategyMap.put(OPERADOR_FILTRO_CRECIENTE, OperadorFiltroCrecienteMapper.class)
+        strategyMap.put(OPERADOR_FILTRO_DECRECIENTE, OperadorFiltroDecrecienteMapper.class)
+        strategyMap.put(OPERADOR_FILTRO_IGUAL, OperadorFiltroIgualMapper.class)
+        strategyMap.put(OPERADOR_FILTRO_MAYOR, OperadorFiltroMayorMapper.class)
+        strategyMap.put(OPERADOR_FILTRO_MENOR, OperadorFiltroMenorMapper.class)
+
+        return strategyMap
     }
 
     protected OperadorOrdenador mapearOperadorOrden(Map<String, Object> rawOperadoresFiltro) {
-        Class<? extends OperadorOrdenador> claseOperador = this.operadorOrdenadorStrategy().get(rawOperadoresFiltro.get(OPERADOR))
-        OpeardorOrdenador
+        OperadorOrdenadorMapperStrategy mapper = this.operadorOrdenadorMapperStrategy().get(rawOperadoresFiltro.get(OPERADOR)).newInstance()
+        return mapper.mapear(rawOperadoresFiltro)
     }
 
-    protected Map<String, Class<? extends OperadorOrdenador>> operadorOrdenadorStrategy() {
-        Map<String, Class<? extends OperadorOrdenador>> strategyMap = new HashMap<>()
+    protected Map<String, Class<? extends OperadorOrdenadorMapperStrategy>> operadorOrdenadorMapperStrategy() {
+        Map<String, Class<? extends OperadorOrdenadorMapperStrategy>> strategyMap = new HashMap<>()
 
-        strategyMap.put(OPERADOR_ORDENADOR_MENOR_TAG, OperadorOrdenadorMenor.class)
-        strategyMap.put(OPERADOR_ORDENADOR_MENOR_TAG, OperadorOrdenadorMenor.class)
+        strategyMap.put(OPERADOR_ORDENADOR_MAYOR_TAG, OperadorOrdenadorMayorMapper.class)
+        strategyMap.put(OPERADOR_ORDENADOR_MENOR_TAG, OperadorOrdenadorMenorMapper.class)
 
         return strategyMap
     }

@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.mappers.metodologia.operadorordenador
+package ar.edu.utn.dds.mappers.metodologia.operador.operadorordenador
 
 import ar.edu.utn.dds.metodologia.OperadorOrdenador
 import ar.edu.utn.dds.metodologia.OperadorOrdenadorMayor
