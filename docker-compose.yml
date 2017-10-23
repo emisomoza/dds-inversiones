@@ -4,16 +4,20 @@ services:
   app:
     build:
       context: .
-    links:
-      - db-rel
-      - db-doc
-      - cache
+      dockerfile: Dockerfile
+    networks:
+      - network-db-rel
+      - network-db-doc
+      - network-cache
     volumes:
       - .:/app
       - ./dependencies:/root/.m2/repository
-
     ports:
       - 21000:8080
+    depends_on:
+      - db-rel
+      - db-doc
+      - cache
 
 
   #DB----------------------------------------------------------------------------------------------
@@ -21,49 +25,68 @@ services:
     image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password
+    networks:
+      - network-db-rel
     volumes:
       - mysql-data:/var/lib/mysql
-
-#    ports:
-#      - 3306:3306
+      - ./mysqlScript.sql:/docker-entrypoint-initdb.d/mysqlScript.sql
+    ports:
+      - 3306:3306
 
 
   db-doc:
     image: mongo
+    networks:
+      - network-db-doc
     volumes:
       - mongo-data:/data/db
-
-#    ports:
-#      - 27017:27017
+    ports:
+      - 27017:27017
 
 
   #Cache-------------------------------------------------------------------------------------------
   cache:
     image: redis
-
-#    ports:
-#      - 6379:6379
+    networks:
+      - network-cache
+    ports:
+      - 6379:6379
 
 
   #DB UI-------------------------------------------------------------------------------------------
   db-rel-ui:
     image: phpmyadmin/phpmyadmin
-    links:
-      - db-rel:db
-
+    environment:
+      - PMA_HOST=db-rel
+    networks:
+      - network-db-rel
     ports:
       - 20000:80
+    depends_on:
+      - db-rel
 
 
   db-doc-ui:
     image: mongo-express
-    links:
-      - db-doc:mongo
-
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=db-doc
+    networks:
+      - network-db-doc
     ports:
       - 20001:8081
+    depends_on:
+      - db-doc
 
 
 volumes:
   mysql-data:
   mongo-data:
+
+
+networks:
+  network-cache:
+    driver: bridge
+  network-db-rel:
+    driver: bridge
+  network-db-doc:
+    driver: bridge
