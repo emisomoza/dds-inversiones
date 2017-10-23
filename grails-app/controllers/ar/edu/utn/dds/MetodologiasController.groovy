@@ -1,12 +1,15 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.exceptions.MetodologiaExistenteException
 import ar.edu.utn.dds.model.Indicador
+import ar.edu.utn.dds.model.Metodologia
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured('ROLE_USER')
 class MetodologiasController {
 
     def indicadorService
+    def metodologiaService
 
     def index() { }
 
@@ -23,19 +26,27 @@ class MetodologiasController {
     }
 
     def save() {
-        //Guardar metodología
+        try{
+            //Completar con los params del FE
+            ArrayList<Indicador> indicadores
+            indicadores = indicadorService.listar().sort{it?.nombre}
+            metodologiaService.guardar(new Metodologia())
 
-        params
-
-        ArrayList<Indicador> indicadores
-        indicadores = indicadorService.listar()
-
-        render(
-                view: "/metodologias",
-                model: [
-                        indicadores: indicadores,
-                        text: "Metodología $params.nomMetodologia guardada con éxito."
-                ]
-        )
+            render(
+                    view: "/metodologias",
+                    model: [
+                            indicadores: indicadores,
+                            text: "Metodología $params.nomMetodologia guardada con éxito."
+                    ]
+            )
+        } catch(MetodologiaExistenteException e) {
+            render(
+                    view: "/errorGenericoBack",
+                    model: [
+                            text: "Metodología existente",
+                            buttonText: "Volver"
+                    ]
+            )
+        }
     }
 }
