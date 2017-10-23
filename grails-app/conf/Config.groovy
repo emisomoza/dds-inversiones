@@ -153,6 +153,7 @@ log4j.main = {
 
 
 // Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.securityConfigType = SecurityConfigType.Annotation
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'ar.edu.utn.dds.auth.DDSUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'ar.edu.utn.dds.auth.DDSUserDDSRole'

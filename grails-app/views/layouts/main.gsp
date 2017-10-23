@@ -11,7 +11,7 @@
 			<div class="container-fluid">
 				<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="${createLink(controller:'logout')}">Logout ${request.user.username}<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-off"></span></a></li>
+						<li><a href="${createLink(controller:'Logout')}">Logout ${request.user.username}<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-off"></span></a></li>
 						<li><a href="${createLink(controller:'Index', action:'home')}">Página principal<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
 						<li><a href="${createLink(controller:'Index', action:'compararEmpresas')}">Comparar Empresas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-usd"></span></a></li>
 						<li><a href="${createLink(controller:'Index', action:'agregarCuentas')}">Gestión Empresas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a></li>
