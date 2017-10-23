@@ -36,7 +36,7 @@ class IndicadorService {
 
     void validarGuardar(Indicador indicador) {
         if(indicador.getNombre() == null || indicador.getExpresion() == null)
-            throw new IndicadorInvalidoException("El indicador debe tener nombre y exprecion")
+            throw new IndicadorInvalidoException("El indicador debe tener nombre y expresion")
     }
 
     Indicador obtener(String name) {
