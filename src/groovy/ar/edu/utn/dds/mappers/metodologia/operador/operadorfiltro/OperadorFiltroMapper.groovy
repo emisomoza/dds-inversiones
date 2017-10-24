@@ -5,7 +5,7 @@ import ar.edu.utn.dds.metodologia.OperadorFiltro
 
 abstract class OperadorFiltroMapper implements OperadorFiltroMapperStrategy {
 
-    private static final String INDICADOR = "indicador"
+    protected static final String INDICADOR = "indicador"
 
     abstract OperadorFiltro getInstance()
     abstract void initialize(OperadorFiltro operadorFiltro, Map<String, Object> rawOperador)

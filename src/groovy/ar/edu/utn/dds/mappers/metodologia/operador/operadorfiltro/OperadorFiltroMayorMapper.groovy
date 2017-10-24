@@ -5,7 +5,7 @@ import ar.edu.utn.dds.metodologia.OperadorFiltroMayor
 
 class OperadorFiltroMayorMapper extends OperadorFiltroMapper {
 
-    private static final String COMPARADOR = "valor"
+    protected static final String COMPARADOR = "valor"
 
     @Override
     OperadorFiltro getInstance() {

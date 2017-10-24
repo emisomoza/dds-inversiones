@@ -7,11 +7,11 @@ import ar.edu.utn.dds.metodologia.OperadorOrdenador
 
 abstract class OperadorOrdenadorMapper implements OperadorOrdenadorMapperStrategy {
 
-    private static final String INDICADOR = "indicador"
+    protected static final String INDICADOR = "indicador"
 
-    private static final String MODIFICADOR = "modificador"
-    private static final String MODIFICADOR_PROM = "promedio"
-    private static final String MODIFICADOR_SUM = "suma"
+    protected static final String MODIFICADOR = "modificador"
+    protected static final String MODIFICADOR_PROM = "promedio"
+    protected static final String MODIFICADOR_SUM = "suma"
 
     abstract OperadorOrdenador getInstance()
 
