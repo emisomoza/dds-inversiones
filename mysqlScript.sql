@@ -50,14 +50,6 @@ CREATE TABLE `EMPRESA` (
   `empresa_nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `EMPRESA`
---
-
-INSERT INTO `EMPRESA` (`empresa_id`, `empresa_nombre`) VALUES
-(1, 'DDS S.A.'),
-(2, 'SONY');
-
 -- --------------------------------------------------------
 
 --

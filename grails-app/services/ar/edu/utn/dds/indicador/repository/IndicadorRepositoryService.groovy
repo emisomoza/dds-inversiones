@@ -1,12 +1,14 @@
 package ar.edu.utn.dds.indicador.repository
 
 import ar.edu.utn.dds.cache.CacheData
+import ar.edu.utn.dds.exceptions.IndicadorExistenteException
 import ar.edu.utn.dds.exceptions.MongoInaccesibleException
 import ar.edu.utn.dds.model.Indicador
 import grails.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.dao.DuplicateKeyException
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.BasicQuery
 
@@ -20,6 +22,8 @@ class IndicadorRepositoryService {
     void guardar(Indicador indicador) {
         try {
             mongoTemplate.save(indicador)
+        } catch(DuplicateKeyException e) {
+            throw new IndicadorExistenteException(String.format("Ya existe un indicador con nombre %s", indicador.getNombre()), e.getCause())
         } catch (Exception e) {
             throw new MongoInaccesibleException("Error al guardar indicador " + indicador.getNombre(), e.getCause())
         }
