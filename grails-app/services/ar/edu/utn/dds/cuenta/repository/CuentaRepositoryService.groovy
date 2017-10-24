@@ -2,7 +2,7 @@ package ar.edu.utn.dds.cuenta.repository
 
 import ar.edu.utn.dds.jdbc.DefaultJDBCRepositoryService
 import ar.edu.utn.dds.cache.CacheData
-import ar.edu.utn.dds.mappers.CuentaMapper
+import ar.edu.utn.dds.mappers.jdbc.CuentaMapper
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.utils.queries.QueryUtils
 import ar.edu.utn.dds.utils.queries.builders.RootStatementBuilder
