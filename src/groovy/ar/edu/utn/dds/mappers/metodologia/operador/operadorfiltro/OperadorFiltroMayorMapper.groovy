@@ -5,7 +5,7 @@ import ar.edu.utn.dds.metodologia.OperadorFiltroMayor
 
 class OperadorFiltroMayorMapper extends OperadorFiltroMapper {
 
-    protected static final String COMPARADOR = "valor"
+    protected static final String COMPARADOR = "comparador"
 
     @Override
     OperadorFiltro getInstance() {
@@ -15,6 +15,6 @@ class OperadorFiltroMayorMapper extends OperadorFiltroMapper {
     @Override
     void initialize(OperadorFiltro operadorFiltro, Map<String, Object> rawOperador) {
         OperadorFiltroMayor operador = (OperadorFiltroMayor) operadorFiltro
-        operador.setComparador((Double) rawOperador.get(COMPARADOR))
+        operador.setComparador(Double.valueOf((String) rawOperador.get(COMPARADOR)))
     }
 }

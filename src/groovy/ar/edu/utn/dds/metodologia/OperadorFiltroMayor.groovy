@@ -9,7 +9,7 @@ import ar.edu.utn.dds.model.Periodo
 
 class OperadorFiltroMayor extends OperadorFiltro {
 
-    private Double comparador;
+    private Double comparador
 
     OperadorFiltroMayor() {
     }
