@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.mappers.metodologia
 
+
 import ar.edu.utn.dds.mappers.metodologia.operador.operadorfiltro.*
 import ar.edu.utn.dds.mappers.metodologia.operador.operadorordenador.OperadorOrdenadorMapperStrategy
 import ar.edu.utn.dds.mappers.metodologia.operador.operadorordenador.OperadorOrdenadorMayorMapper
@@ -38,14 +39,19 @@ class MetodologiaMapper {
     }
 
     protected List<OperadorFiltro> mapearOperadoresFiltro(Map<String, Object> rawOperadoresFiltro) {
-        return rawOperadoresFiltro.values().parallelStream()
+        return Optional.ofNullable(rawOperadoresFiltro).orElse(new HashMap<String, Object>()).values().parallelStream()
                 .map({rawOperador -> this.mapearOperadorFiltro((Map) rawOperador)})
                 .collect(Collectors.toList())
     }
 
     protected OperadorFiltro mapearOperadorFiltro(Map<String, Object> rawOperadorFiltro) {
-        OperadorFiltroMapperStrategy mapper = this.operadorFiltroMapper((String) rawOperadorFiltro.get(OPERADOR))
-        return mapper.mapear(rawOperadorFiltro)
+        OperadorFiltro operadorFiltro = null
+        if (rawOperadorFiltro.containsKey(OPERADOR)) {
+            OperadorFiltroMapperStrategy mapper = this.operadorFiltroMapper((String) rawOperadorFiltro.get(OPERADOR))
+            operadorFiltro = mapper.mapear(rawOperadorFiltro)
+        }
+
+        return operadorFiltro
     }
 
     protected OperadorFiltroMapperStrategy operadorFiltroMapper(String operador) {
@@ -64,9 +70,15 @@ class MetodologiaMapper {
         return strategyMap
     }
 
-    protected OperadorOrdenador mapearOperadorOrden(Map<String, Object> rawOperadoresFiltro) {
-        OperadorOrdenadorMapperStrategy mapper = this.operadorOrdenadorMapper((String) rawOperadoresFiltro.get(OPERADOR))
-        return mapper.mapear(rawOperadoresFiltro)
+    protected OperadorOrdenador mapearOperadorOrden(Map<String, Object> rawOperadorOrden) {
+        OperadorOrdenador result = null
+
+        if(rawOperadorOrden && rawOperadorOrden.containsKey(OPERADOR)) {
+            OperadorOrdenadorMapperStrategy mapper = this.operadorOrdenadorMapper((String) rawOperadorOrden.get(OPERADOR))
+            result = mapper.mapear(rawOperadorOrden)
+        }
+
+        return result
     }
 
     protected OperadorOrdenadorMapperStrategy operadorOrdenadorMapper(String operador) {

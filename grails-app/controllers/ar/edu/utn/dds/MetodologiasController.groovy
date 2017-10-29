@@ -2,8 +2,8 @@ package ar.edu.utn.dds
 
 import ar.edu.utn.dds.exceptions.MetodologiaExistenteException
 import ar.edu.utn.dds.exceptions.MetodologiaInvalidaException
-import ar.edu.utn.dds.model.Indicador
-import ar.edu.utn.dds.model.Metodologia
+import ar.edu.utn.dds.mappers.metodologia.MetodologiaMapper
+import ar.edu.utn.dds.utils.map.MapNormalizer
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured('ROLE_USER')
@@ -11,12 +11,12 @@ class MetodologiasController {
 
     def indicadorService
     def metodologiaService
+    def mapNormalizer
 
     def index() { }
 
     def crear() {
-        ArrayList<Indicador> indicadores
-        indicadores = indicadorService.listar().sort{it?.nombre}
+        List<String> indicadores = indicadorService.listar().collect({ind -> ind.nombre}).sort()
 
         render(
                 view: "/metodologias",
@@ -32,18 +32,21 @@ class MetodologiasController {
         def model
 
         try{
+            Map<String, Object> normalizedMap = mapNormalizer.normalizeValues(params)
+            normalizedMap = (new MapNormalizer()).normalizeKeys(normalizedMap, ".")
+            MetodologiaMapper mapper = new MetodologiaMapper()
+            metodologiaService.guardar(mapper.mapear(normalizedMap))
 
-            //TODO Completar con los params del FE
-            ArrayList<Indicador> indicadores = indicadorService.listar().sort{it?.nombre}
-            metodologiaService.guardar(new Metodologia())
+            List<String> indicadores = indicadorService.listar().collect({ind -> ind.nombre}).sort()
 
             view = "/metodologias"
             model = [
                     indicadores: indicadores,
-                    text: "Metodología $params.nomMetodologia guardada con éxito."
+                    text: "Metodología $params.nombre guardada con éxito."
             ]
 
         } catch(MetodologiaInvalidaException | MetodologiaExistenteException e) {
+            log.error(e.getMessage(), e)
 
             view = "/errorGenericoBack"
             model = [
