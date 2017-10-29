@@ -46,6 +46,7 @@ class MetodologiasController {
             ]
 
         } catch(MetodologiaInvalidaException | MetodologiaExistenteException e) {
+            log.error(e.getMessage(), e)
 
             view = "/errorGenericoBack"
             model = [

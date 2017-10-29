@@ -19,10 +19,19 @@ abstract class OperadorOrdenadorMapper implements OperadorOrdenadorMapperStrateg
     OperadorOrdenador mapear(Map<String, Object> rawOperador) {
         OperadorOrdenador operador = this.getInstance()
 
-        operador.setModificador(this.modificadorStrategy().get(rawOperador.get(MODIFICADOR)).newInstance())
+        operador.setModificador(this.modificadorOrdenador((String) rawOperador.get(MODIFICADOR)))
         operador.setIndicador((String) rawOperador.get(INDICADOR))
 
         return operador
+    }
+
+    protected ModificadorOrdenador modificadorOrdenador(String strModificador) {
+        ModificadorOrdenador modif = null
+
+        if(strModificador != null)
+            modif = this.modificadorStrategy().get(strModificador).newInstance()
+
+        return modif
     }
 
     private Map<String, Class<? extends ModificadorOrdenador>> modificadorStrategy() {

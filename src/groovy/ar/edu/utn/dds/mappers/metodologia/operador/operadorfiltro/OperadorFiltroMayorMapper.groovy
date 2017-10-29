@@ -14,7 +14,10 @@ class OperadorFiltroMayorMapper extends OperadorFiltroMapper {
 
     @Override
     void initialize(OperadorFiltro operadorFiltro, Map<String, Object> rawOperador) {
-        OperadorFiltroMayor operador = (OperadorFiltroMayor) operadorFiltro
-        operador.setComparador(Double.valueOf((String) rawOperador.get(COMPARADOR)))
+        String strComparador = (String) rawOperador.get(COMPARADOR)
+        if(strComparador != null && strComparador.size() != 0) {
+            OperadorFiltroMayor operador = (OperadorFiltroMayor) operadorFiltro
+            operador.setComparador(Double.valueOf(strComparador))
+        }
     }
 }
