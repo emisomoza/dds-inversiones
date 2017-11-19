@@ -40,7 +40,7 @@ class MetodologiaService {
     }
 
     Boolean estaCompleto(Metodologia metodologia) {
-        return (metodologia.getNombre() == null
+        return !(metodologia.getNombre() == null
             || metodologia.getOperadoresFiltro() == null
             || metodologia.getOperadoresFiltro().size() == 0
             || metodologia.getOperadorOrden() == null)
