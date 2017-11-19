@@ -7,6 +7,7 @@ import grails.plugin.springsecurity.annotation.Secured
 class IndexController {
 
     def empresaService
+    def metodologiaService
 
     def home() {
         render(
@@ -20,10 +21,10 @@ class IndexController {
 
     def compararEmpresas() {
         def empresas = empresaService.listar()
-        ArrayList<Metodologia> metodologias = [new Metodologia(nombre: "Metodología 1"), new Metodologia(nombre: "Metodología 2")]
+        ArrayList<Metodologia> metodologias = metodologiaService.listar()
 
         render(
-                view: "/consultas",
+                view: "/compararEmpresas",
                 model: [
                         empresas: empresas,
                         metodologias: metodologias
