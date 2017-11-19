@@ -2,11 +2,13 @@ package ar.edu.utn.dds
 
 import ar.edu.utn.dds.model.Metodologia
 import grails.plugin.springsecurity.annotation.Secured
+import grails.plugin.springsecurity.userdetails.GrailsUser
 
 @Secured('ROLE_USER')
 class IndexController {
 
     def empresaService
+    def springSecurityService
 
     def home() {
         render(
@@ -43,10 +45,14 @@ class IndexController {
     }
 
     def agregarIndicadores() {
+        List<String> userRoles = ((GrailsUser) springSecurityService.getPrincipal())
+                .getAuthorities()
+                .collect({authority -> authority.getAuthority()})
+
         render(
                 view: "/indicadores/cargaIndicadores",
                 model: [
-
+                    userRoles: userRoles
                 ]
         )
     }

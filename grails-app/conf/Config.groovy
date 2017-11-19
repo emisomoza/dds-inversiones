@@ -157,7 +157,7 @@ grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.securityConfigType = SecurityConfigType.Annotation
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'ar.edu.utn.dds.auth.DDSUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'ar.edu.utn.dds.auth.DDSUserDDSRole'
-grails.plugin.springsecurity.authority.className = 'ar.edu.utn.dds.auth.ddsRole'
+grails.plugin.springsecurity.authority.className = 'ar.edu.utn.dds.auth.DDSRole'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                ['permitAll'],
 	'/index':           ['permitAll'],
