@@ -98,8 +98,10 @@ class ModificarEmpresaController {
     def listarCuentas() {
         Long idEmpresa = Long.parseLong(params.empresa)
         Empresa empresa = empresaService.obtener(idEmpresa)
+        Cuenta cuenta = new Cuenta()
+        cuenta.setEmpresa(empresa.getId())
 
-        List<Cuenta> cuentas = cuentaService.listar(new Cuenta())
+        List<Cuenta> cuentas = cuentaService.listar(cuenta)
 
         render(
                 view: "/listarCuentas",
