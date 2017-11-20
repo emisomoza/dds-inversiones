@@ -133,6 +133,8 @@ class ImportadorCuentas {
             }
 
             return mapasCuentas
+        } catch(InversionesException e) {
+            throw e
         } catch(Exception e) {
             throw new InversionesException("Error parceando cuentas para importar", e)
         }

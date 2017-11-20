@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.importador
 
+import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.utils.DiffHelper
 import spock.lang.Specification
 
@@ -11,7 +12,7 @@ class ImportadorCuentasSpec extends Specification {
         imp = new ImportadorCuentas()
     }
 
-    void "parsear archivo de importacion de cuentas"() {
+    void "parsear archivo"() {
         setup:
         List<Map<String, String>> mapasCuentas = imp.parsearImport(new File(this.getClass().getResource('carga_cuentas.csv').getFile()))
         List<Map<String, String>> mapasCuentasEsperado = new ArrayList<>()
@@ -35,5 +36,34 @@ class ImportadorCuentasSpec extends Specification {
         expect:
         new DiffHelper().diff(mapasCuentas, mapasCuentasEsperado) == []
 
+    }
+
+    void "parsear string csv erroneo"() {
+        setup:
+        String cabecera = "Empresa,Fecha_Desde,Fecha_Hasta,Cuenta,Valor\n"
+
+        when:
+        imp.parsearImport(cabecera + ",,,,")
+
+        then:
+        thrown InversionesException
+
+        when:
+        imp.parsearImport(cabecera + "windows,01/01/2016,01/01/2016,win,asd")
+
+        then:
+        thrown InversionesException
+
+        when:
+        imp.parsearImport(cabecera + "windows,01/01/2016,01/012016,win,7979")
+
+        then:
+        thrown InversionesException
+
+        when:
+        imp.parsearImport(cabecera + "windows,60/01/2016,01/01/2016,win,7979")
+
+        then:
+        thrown InversionesException
     }
 }
