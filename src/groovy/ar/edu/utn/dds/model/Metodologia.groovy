@@ -1,5 +1,7 @@
 package ar.edu.utn.dds.model
 
+import ar.edu.utn.dds.exceptions.ElementoInvalidoException
+import ar.edu.utn.dds.exceptions.MetodologiaInvalidaException
 import ar.edu.utn.dds.indicador.service.IndicadorService
 import ar.edu.utn.dds.metodologia.OperadorFiltro
 import ar.edu.utn.dds.metodologia.OperadorOrdenador
@@ -77,5 +79,31 @@ class Metodologia implements Serializable {
 
     List<Empresa> ordenar(List<Empresa> empresas, IndicadorService indicadorService) {
         return this.operadorOrden.ordenar(empresas, indicadorService)
+    }
+
+    void validarConsistencia() {
+        if(this.getNombre() == null || this.getNombre().size() == 0)
+            throw new MetodologiaInvalidaException("La metodologia debe tener nombre")
+
+        if(this.getOwner() == null)
+            throw new MetodologiaInvalidaException("La metodologia debe tener dueño")
+
+        if(this.getVisibilidad() == null || this.getVisibilidad().size() == 0)
+            throw new MetodologiaInvalidaException("La metodologia debe tener visibilidad")
+
+        if(this.getOperadoresFiltro() == null || this.getOperadoresFiltro().size() == 0)
+            throw new MetodologiaInvalidaException("La metodologia debe tener operadores de filtro")
+
+        if(this.getOperadorOrden() == null)
+            throw new MetodologiaInvalidaException("La metodologia debe tener un operador de orden")
+
+        try {
+            this.getOperadoresFiltro().forEach({ operador -> operador.validarConsistencia() })
+            this.getOperadorOrden().validarConsistencia()
+        } catch(ElementoInvalidoException e) {
+            throw new MetodologiaInvalidaException(e.getMessage(), e)
+        } catch(RuntimeException e) {
+            throw new MetodologiaInvalidaException("Ocurrio un problema validando la metodologia", e)
+        }
     }
 }
