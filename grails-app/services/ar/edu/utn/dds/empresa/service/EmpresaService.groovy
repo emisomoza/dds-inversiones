@@ -1,11 +1,13 @@
 package ar.edu.utn.dds.empresa.service
 
+import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
 
 class EmpresaService {
 
     def empresaRepositoryService
     def cuentaService
+    def periodoService
 
     def existe(Long id) {
         return this.empresaRepositoryService.existe(id)
@@ -33,5 +35,12 @@ class EmpresaService {
 
     def importarCuentas(File archivo) {
         List<Map<String, String>> mapasCuentas = this.cuentaService.parsearImportCuentas(archivo)
+    }
+
+    def obtenerPeriodos(Empresa empresa) {
+        Cuenta cuenta = new Cuenta()
+        cuenta.empresa = empresa.id
+        ArrayList<Cuenta> cuentas = this.cuentaService.listar(cuenta)
+        return cuentas.collect{it -> periodoService.obtener(it.periodo)}
     }
 }

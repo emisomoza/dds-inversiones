@@ -15,7 +15,7 @@ class PeriodoService {
     }
 
     def obtener(Long id) {
-        return this.obtener(id)
+        return this.periodoRepositoryService.obtener(id)
     }
 
     def guardar(Periodo periodo) {

@@ -59,6 +59,7 @@ class ConsultasController {
 
     protected Empresa mapearEmpresa(Map<String, Object> rawEmpresa) {
         Empresa empresa = empresaService.obtener(Long.parseLong(rawEmpresa.get("empresa")))
+        empresa.periodos = empresaService.obtenerPeriodos(empresa)
 
         return empresa
     }
