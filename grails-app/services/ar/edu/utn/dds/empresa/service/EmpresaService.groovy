@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.empresa.service
 
+import ar.edu.utn.dds.cuenta.service.CuentaService
 import ar.edu.utn.dds.model.Empresa
 
 import java.util.stream.Collectors
@@ -57,7 +58,4 @@ class EmpresaService {
         return empresa
     }
 
-    def importarCuentas(File archivo) {
-        List<Map<String, String>> mapasCuentas = this.cuentaService.parsearImportCuentas(archivo)
-    }
 }
