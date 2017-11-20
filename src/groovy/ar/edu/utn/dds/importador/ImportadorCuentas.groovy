@@ -5,8 +5,10 @@ import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.model.TipoCuenta
+import org.springframework.transaction.annotation.Transactional
 
 import java.time.LocalDate
+import java.time.format.DateTimeParseException
 import java.util.stream.Collectors
 
 import static com.xlson.groovycsv.CsvParser.parseCsv
@@ -24,6 +26,7 @@ class ImportadorCuentas {
     def tipoCuentaService
     def cuentaService
 
+    @Transactional
     def importar(String cuentasCSV) {
         List<Map<String, String>> mapasImportar = this.parsearImport(cuentasCSV)
 
@@ -126,11 +129,31 @@ class ImportadorCuentas {
                 mapaCuentas.put(TIPO_TAG, linea.Cuenta)
                 mapaCuentas.put(VALOR_TAG, linea.Valor)
                 mapasCuentas.add(mapaCuentas)
+                this.validarMapa(mapaCuentas)
             }
 
             return mapasCuentas
         } catch(Exception e) {
             throw new InversionesException("Error parceando cuentas para importar", e)
+        }
+    }
+
+    def validarMapa(Map<String, String> mapaImportar) {
+        if(mapaImportar.values().any {value -> value == null || value.size() == 0})
+            throw new InversionesException("El archivo posee una o más filas con columnas vacias")
+
+        try {
+            Long.valueOf(mapaImportar.get(VALOR_TAG))
+        } catch(NumberFormatException e) {
+            throw new InversionesException("El archivo posee una o más filas que tienen un valor no numero en el la columna \"Valor\"", e)
+        }
+
+        try {
+            LocalDate.parse(mapaImportar.get(FECHA_DESDE_TAG))
+            LocalDate.parse(mapaImportar.get(FECHA_HASTA_TAG))
+        } catch(DateTimeParseException e) {
+            throw new InversionesException("El archivo posee una o más filas que tienen un formato de " +
+                    "fecha no valido en la columna \"Fecha_Desde\" o \"Fechca_Hasta\". Solo se aceptan formatos ISO (ej: yyyy/mm/dd).", e)
         }
     }
 }
