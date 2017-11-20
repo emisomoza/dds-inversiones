@@ -51,5 +51,20 @@
             </div>
         </div>
     </g:form>
+
+    <g:form class="form-horizontal" role="form" >
+        <div class="form-group">
+            <div>
+                <h2 class="panel-title">Carga batch de cuentas:</h2></br>
+            </div>
+            <label for="uploadFile" class="col-sm-2 control-label">Subir archivo</label>
+            <g:uploadForm action="upload" id="uploadFile">
+                <fieldset class="col-sm-3">
+                    <input type="file" name="file" />
+                </fieldset>
+                <g:actionSubmit class="btn btn-primary" value="Upload" action="agregarCuenta"/>
+            </g:uploadForm>
+        </div>
+    </g:form>
 </body>
 </html>
