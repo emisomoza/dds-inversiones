@@ -4,6 +4,7 @@ import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.model.Periodo
 
+import java.time.LocalDate
 import java.util.function.Function
 import java.util.stream.Collectors
 
@@ -11,6 +12,10 @@ class PeriodoService {
 
     def periodoRepositoryService
     def cuentaService
+
+    def existe(LocalDate fechaDesde, LocalDate fechaHasta) {
+        return this.periodoRepositoryService.existe(fechaDesde, fechaHasta)
+    }
 
     def listar() {
         return this.listar(new Periodo())
@@ -45,5 +50,12 @@ class PeriodoService {
     def actualizar(Periodo periodo) {
         periodo.validarConsistencia()
         this.periodoRepositoryService.actualizar(periodo)
+    }
+
+    def importarPeriodos(List<Periodo> periodos, Boolean validarExistencia) {
+       periodos.forEach({periodo ->
+            if(!(validarExistencia && this.existe(periodo.getFechaInicio(), periodo.getFechaFin())))
+                this.guardar(periodo)
+        })
     }
 }

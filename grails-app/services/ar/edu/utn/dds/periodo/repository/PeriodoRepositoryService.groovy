@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.jdbc.core.RowMapper
 
 import java.sql.Date
+import java.time.LocalDate
 
 class PeriodoRepositoryService extends DefaultJDBCRepositoryService<Periodo> {
 
@@ -36,6 +37,21 @@ class PeriodoRepositoryService extends DefaultJDBCRepositoryService<Periodo> {
 
         queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement("1", TABLE))
         queryUtils.addWhereParam(COLUMNS.get("id"), id)
+
+        return queryUtils
+    }
+
+    Boolean existe(LocalDate fechaDesde, LocalDate fechaHasta) {
+        QueryUtils queryUtils = this.obtenerQueryExiste(fechaDesde, fechaHasta)
+        this.existe(queryUtils)
+    }
+
+    private QueryUtils obtenerQueryExiste(LocalDate fechaDesde, LocalDate fechaHasta) {
+        QueryUtils queryUtils = new QueryUtils()
+
+        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement("1", TABLE))
+        queryUtils.addWhereParam(COLUMNS.get("finicio"), Date.valueOf(fechaDesde))
+        queryUtils.addWhereParam(COLUMNS.get("ffin"), Date.valueOf(fechaHasta))
 
         return queryUtils
     }
