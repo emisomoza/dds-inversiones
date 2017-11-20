@@ -52,17 +52,17 @@
         </div>
     </g:form>
 
-    <g:form class="form-horizontal" role="form" >
+    <g:form class="form-horizontal" role="form" controller="Empresa" action="upload" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <div>
                 <h2 class="panel-title">Carga batch de cuentas:</h2></br>
             </div>
             <label for="uploadFile" class="col-sm-2 control-label">Subir archivo</label>
-            <g:uploadForm action="upload" id="uploadFile">
+            <g:uploadForm id="uploadFile">
                 <fieldset class="col-sm-3">
                     <input type="file" name="file" />
                 </fieldset>
-                <g:actionSubmit class="btn btn-primary" value="Upload" action="agregarCuenta"/>
+                <g:actionSubmit class="btn btn-primary" value="Upload"/>
             </g:uploadForm>
         </div>
     </g:form>
