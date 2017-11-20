@@ -1,3 +1,4 @@
+import ar.edu.utn.dds.importador.ImportadorCuentas
 import ar.edu.utn.dds.mappers.empresa.EmpresaIdMapper
 import ar.edu.utn.dds.permisos.evaluadores.CustomPermissionEvaluator
 import ar.edu.utn.dds.utils.map.MapNormalizer
@@ -9,6 +10,13 @@ beans = {
 
     jdbcTemplate(JdbcTemplate) {
         dataSource = ref('dataSource')
+    }
+
+    importadorCuentas(ImportadorCuentas) {
+        empresaService = ref('empresaService')
+        periodoService = ref('periodoService')
+        tipoCuentaService = ref('tipoCuentaService')
+        cuentaService = ref('cuentaService')
     }
 
     //Mappers

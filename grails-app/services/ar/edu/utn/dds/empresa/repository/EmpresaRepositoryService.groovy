@@ -37,6 +37,20 @@ class EmpresaRepositoryService extends DefaultJDBCRepositoryService<Empresa> {
         return queryUtils
     }
 
+    Boolean existe(String nombre) {
+        QueryUtils queryUtils = this.obtenerQueryExiste(nombre)
+        this.existe(queryUtils)
+    }
+
+    private QueryUtils obtenerQueryExiste(String nombre) {
+        QueryUtils queryUtils = new QueryUtils()
+
+        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement("1", TABLE))
+        queryUtils.addWhereParam(COLUMNS.get("nombre"), nombre)
+
+        return queryUtils
+    }
+
     @Cacheable(cacheNames = CacheData.EMPRESA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     List<Empresa> listar(Empresa empresa) {
         QueryUtils queryUtils = this.obtenerQueryListar(empresa)

@@ -8,10 +8,13 @@ class EmpresaService {
 
     def empresaRepositoryService
     def periodoService
-    def cuentaService
 
     def existe(Long id) {
         return this.empresaRepositoryService.existe(id)
+    }
+
+    def existe(String nombre) {
+        return this.empresaRepositoryService.existe(nombre)
     }
 
     def listar() {
@@ -57,7 +60,11 @@ class EmpresaService {
         return empresa
     }
 
-    def importarCuentas(File archivo) {
-        List<Map<String, String>> mapasCuentas = this.cuentaService.parsearImportCuentas(archivo)
+    def importarEmpresas(List<Empresa> empresas, Boolean validarExistencia) {
+        empresas.forEach({empresa ->
+            if(!(validarExistencia && this.existe(empresa.getNombre())))
+                this.guardar(empresa)
+        })
     }
+
 }

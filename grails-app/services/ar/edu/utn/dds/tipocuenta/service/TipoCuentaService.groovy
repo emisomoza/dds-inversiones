@@ -6,6 +6,10 @@ class TipoCuentaService {
 
     def tipoCuentaRepositoryService
 
+    def existe(String descripcion) {
+        return this.tipoCuentaRepositoryService.existe(descripcion)
+    }
+
     def listar() {
         return this.listar(new TipoCuenta())
     }
@@ -26,6 +30,13 @@ class TipoCuentaService {
     def actualizar(TipoCuenta tipoCuenta) {
         tipoCuenta.validarConsistencia()
         return this.tipoCuentaRepositoryService.actualizar(tipoCuenta)
+    }
+
+    def importarTipoCuentas(List<TipoCuenta> tipoCuentas, Boolean validarExistencia) {
+        tipoCuentas.forEach({tipoCuenta ->
+            if(!(validarExistencia && this.existe(tipoCuenta.getDescripcion())))
+                this.guardar(tipoCuenta)
+        })
     }
 
 }

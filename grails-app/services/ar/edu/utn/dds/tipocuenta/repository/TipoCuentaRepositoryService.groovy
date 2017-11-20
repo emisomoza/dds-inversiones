@@ -37,6 +37,20 @@ class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuent
         return queryUtils
     }
 
+    Boolean existe(String descripcion) {
+        QueryUtils queryUtils = this.obtenerQueryExiste(descripcion)
+        this.existe(queryUtils)
+    }
+
+    private QueryUtils obtenerQueryExiste(String descripcion) {
+        QueryUtils queryUtils = new QueryUtils()
+
+        queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement("1", TABLE))
+        queryUtils.addWhereParam(COLUMNS.get("descripcion"), descripcion)
+
+        return queryUtils
+    }
+
     @Cacheable(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER)
     List<TipoCuenta> listar(TipoCuenta tipoCuenta) {
         QueryUtils queryUtils = this.obtenerQueryListar(tipoCuenta)
