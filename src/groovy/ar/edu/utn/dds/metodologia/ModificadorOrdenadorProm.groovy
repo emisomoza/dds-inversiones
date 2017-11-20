@@ -12,9 +12,9 @@ class ModificadorOrdenadorProm extends ModificadorOrdenador {
     Double reducir(List<Periodo> periodos, IndicadorService indicadorService, Indicador indicador) {
         def suma = periodos.collect {
             try {
-                return indicadorService.aplicar(it, indicador);
+                return indicadorService.aplicar(it, indicador)
             } catch (CuentaNoExisteException e) {
-                throw new MetodologiaException();
+                throw new MetodologiaException()
             }
         }.sum()
 

@@ -5,6 +5,7 @@ import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.resolver.ResolvedorIndicador
+import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PostFilter
 
 class IndicadorService {
@@ -37,11 +38,11 @@ class IndicadorService {
     }
 
     void validarGuardar(Indicador indicador) {
-        if(indicador.getNombre() == null || indicador.getExpresion() == null || indicador.getOwner() == null)
+        if(indicador.getNombre() == null || indicador.getExpresion() == null || indicador.getOwner() == null || indicador.getVisibilidad() == null)
             throw new IndicadorInvalidoException("El indicador debe tener nombre, expresion y dueño")
     }
 
-    @PostFilter("filterObject.visibilidad == 'ROLE_NULL' || hasRole(filterObject.visibilidad)")
+    @PostAuthorize("returnObject.visibilidad == 'ROLE_NULL' || hasRole(returnObject.visibilidad)")
     Indicador obtener(String name) {
         Long userId = (Long) springSecurityService.getCurrentUserId()
         indicadorRepositoryService.obtener(name, userId)

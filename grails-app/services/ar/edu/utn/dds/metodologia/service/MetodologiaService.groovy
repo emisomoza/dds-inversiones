@@ -3,6 +3,7 @@ package ar.edu.utn.dds.metodologia.service
 import ar.edu.utn.dds.exceptions.MetodologiaInvalidaException
 import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.model.Metodologia
+import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PostFilter
 
 class MetodologiaService {
@@ -25,7 +26,7 @@ class MetodologiaService {
             throw new MetodologiaInvalidaException("La metodologia debe tener nombre, operadores de filtro y operador de ordenamiento")
     }
 
-    @PostFilter("filterObject.visibilidad == 'ROLE_NULL' || hasRole(filterObject.visibilidad)")
+    @PostAuthorize("returnObject.visibilidad == 'ROLE_NULL' || hasRole(returnObject.visibilidad)")
     Metodologia obtener(String name) {
         Long userId = (Long) springSecurityService.getCurrentUserId()
         metodologiaRepositoryService.obtener(name, userId)
@@ -46,6 +47,7 @@ class MetodologiaService {
         return !(metodologia.getNombre() == null
             || metodologia.getOperadoresFiltro() == null
             || metodologia.getOperadoresFiltro().size() == 0
-            || metodologia.getOperadorOrden() == null)
+            || metodologia.getOperadorOrden() == null
+            || metodologia.getVisibilidad() == null)
     }
 }
