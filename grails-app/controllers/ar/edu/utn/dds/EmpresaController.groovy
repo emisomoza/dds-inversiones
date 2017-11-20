@@ -9,7 +9,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 @Secured('ROLE_ADMIN')
 class EmpresaController {
+
     def empresaService
+    def importadorCuentas
 
     def index() { }
 
@@ -50,21 +52,19 @@ class EmpresaController {
         def model
         String text
 
-        try{
-            if(request instanceof MultipartHttpServletRequest)
-            {
-                MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
-                CommonsMultipartFile file = (CommonsMultipartFile) mpr.getFile("file");
+        try {
+            if(request instanceof MultipartHttpServletRequest) {
+                MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request
+                CommonsMultipartFile file = (CommonsMultipartFile) mpr.getFile("file")
 
-                //Acá va el procesamiento del file
-
-                if(!file?.empty)
+                if(!file?.empty) {
+                    importadorCuentas.importar(new String(file.getBytes()))
                     text = "Archivo procesado exitosamente!"
-                else
+                } else
                     text = "El archivo no puede estar vacío."
-            }
-            else
-                text = 'request is not of type MultipartHttpServletRequest'
+
+            } else
+                text = 'Request is not of type MultipartHttpServletRequest'
 
             def empresas = empresaService.listar()
 
@@ -74,12 +74,20 @@ class EmpresaController {
                     text: text
             ]
 
-        } catch( InversionesException | Exception e) {
+        } catch(InversionesException e) {
             log.error(e.getMessage(), e)
 
             view = "/errorGenericoBack"
             model = [
                     text: e.getMessage(),
+                    buttonText: "Volver"
+            ]
+        } catch(Exception e) {
+            log.error(e.getMessage(), e)
+
+            view = "/errorGenericoBack"
+            model = [
+                    text: "Ocurrio un error procesando la carga",
                     buttonText: "Volver"
             ]
         }

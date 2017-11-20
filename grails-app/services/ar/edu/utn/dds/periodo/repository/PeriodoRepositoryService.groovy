@@ -67,8 +67,11 @@ class PeriodoRepositoryService extends DefaultJDBCRepositoryService<Periodo> {
 
         queryUtils.setRootStatement(RootStatementBuilder.buildSelectRootStatement(COLUMNS.values().toList(), TABLE))
         queryUtils.addWhereParam(COLUMNS.get("id"), periodo.getId())
-        queryUtils.addWhereParam(COLUMNS.get("finicio"), Date.valueOf(periodo.getFechaInicio()))
-        queryUtils.addWhereParam(COLUMNS.get("ffin"), Date.valueOf(periodo.getFechaFin()))
+
+        if(periodo.getFechaInicio() != null)
+            queryUtils.addWhereParam(COLUMNS.get("finicio"), Date.valueOf(periodo.getFechaInicio()))
+        if(periodo.getFechaFin() != null)
+            queryUtils.addWhereParam(COLUMNS.get("ffin"), Date.valueOf(periodo.getFechaFin()))
 
         return queryUtils
     }

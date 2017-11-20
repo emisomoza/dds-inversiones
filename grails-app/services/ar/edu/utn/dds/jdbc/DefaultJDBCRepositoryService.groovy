@@ -56,11 +56,11 @@ class DefaultJDBCRepositoryService<T> {
             result = jdbcTemplate.query(queryUtils.getSqlQuery(), queryUtils.getSqlArguments().toArray(), new ResultSetExtractor<Boolean>() {
                 @Override
                 Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                    boolean r = ++rs
+                    boolean r = rs.next()
                     return r
                 }
             })
-            log.info(String.format("Resultado de verificacion de existencia de %s: %l", T.getClass().getName(), result))
+            log.info(String.format("Resultado de verificacion de existencia de %s: %s", T.getClass().getName(), result.toString()))
             return result
         } catch(DataAccessException e) {
             throw new SQLInaccesibleException(String.format("Error al verificar existencia de %s",T.getClass().getName()), e.getCause())

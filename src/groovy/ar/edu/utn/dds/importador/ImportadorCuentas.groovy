@@ -84,7 +84,7 @@ class ImportadorCuentas {
 
     def importarCuentas(List<Map<String, String>> mapasImportar) {
         List<Cuenta> cuentas = this.construirCuentas(mapasImportar)
-        this.cuentaService.importarCuentas(cuentas, true)
+        this.cuentaService.importarCuentas(cuentas)
     }
 
     def construirCuentas(List<Map<String, String>> mapasImportar) {
@@ -155,7 +155,7 @@ class ImportadorCuentas {
             LocalDate.parse(mapaImportar.get(FECHA_HASTA_TAG))
         } catch(DateTimeParseException e) {
             throw new InversionesException("El archivo posee una o más filas que tienen un formato de " +
-                    "fecha no valido en la columna \"Fecha_Desde\" o \"Fechca_Hasta\". Solo se aceptan formatos ISO (ej: yyyy/mm/dd).", e)
+                    "fecha no valido en la columna \"Fecha_Desde\" o \"Fechca_Hasta\". Solo se aceptan formatos ISO (ej: yyyy-mm-dd).", e)
         }
     }
 }
