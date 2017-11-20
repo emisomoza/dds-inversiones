@@ -5,6 +5,7 @@ import ar.edu.utn.dds.exceptions.MetodologiaInvalidaException
 import ar.edu.utn.dds.mappers.metodologia.MetodologiaMapper
 import ar.edu.utn.dds.utils.map.MapNormalizer
 import grails.plugin.springsecurity.annotation.Secured
+import grails.plugin.springsecurity.userdetails.GrailsUser
 
 @Secured('ROLE_USER')
 class MetodologiasController {
@@ -12,16 +13,21 @@ class MetodologiasController {
     def indicadorService
     def metodologiaService
     def mapNormalizer
+    def springSecurityService
 
     def index() { }
 
     def crear() {
         List<String> indicadores = indicadorService.listar().collect({ind -> ind.nombre}).sort()
+        List<String> userRoles = ((GrailsUser) springSecurityService.getPrincipal())
+                .getAuthorities()
+                .collect({authority -> authority.getAuthority()})
 
         render(
                 view: "/metodologias",
                 model: [
-                        indicadores: indicadores
+                        indicadores: indicadores,
+                        userRoles: userRoles
                 ]
         )
     }
@@ -32,16 +38,19 @@ class MetodologiasController {
         def model
 
         try{
-            Map<String, Object> normalizedMap = mapNormalizer.normalizeValues(params)
-            normalizedMap = (new MapNormalizer()).normalizeKeys(normalizedMap, ".")
+            Map<String, Object> normalizedMap = mapNormalizer.normalize(params, ".")
             MetodologiaMapper mapper = new MetodologiaMapper()
             metodologiaService.guardar(mapper.mapear(normalizedMap))
 
             List<String> indicadores = indicadorService.listar().collect({ind -> ind.nombre}).sort()
+            List<String> userRoles = ((GrailsUser) springSecurityService.getPrincipal())
+                    .getAuthorities()
+                    .collect({authority -> authority.getAuthority()})
 
             view = "/metodologias"
             model = [
                     indicadores: indicadores,
+                    userRoles: userRoles,
                     text: "Metodología $params.nombre guardada con éxito."
             ]
 

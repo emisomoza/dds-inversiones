@@ -15,6 +15,7 @@ class MetodologiaMapper {
 
     protected static final String NOMBRE = "nombre"
     protected static final String OPERADOR = "operador"
+    protected static final String VISIBILIDAD = "visibilidad"
 
     protected static final String OPERADORES_FILTRO = "operadoresfiltro"
     protected static final String OPERADOR_FILTRO_CRECIENTE = "creciente"
@@ -32,6 +33,7 @@ class MetodologiaMapper {
         Metodologia nuevaMetodologia = new Metodologia()
 
         nuevaMetodologia.setNombre((String) rawMetodologia.get(NOMBRE))
+        nuevaMetodologia.setVisibilidad((String) rawMetodologia.get(VISIBILIDAD))
         nuevaMetodologia.setOperadoresFiltro(this.mapearOperadoresFiltro((Map<String, Object>) rawMetodologia.get(OPERADORES_FILTRO)))
         nuevaMetodologia.setOperadorOrden(this.mapearOperadorOrden((Map<String, Object>) rawMetodologia.get(OPERADOR_ORDEN)))
 

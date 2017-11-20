@@ -16,16 +16,17 @@ class IndicadoresController {
         def model
 
         try {
-
-            Indicador nuevoIndicador = new Indicador(params.nombre, params.expresion)
+            Indicador nuevoIndicador = new Indicador(params.nombre, params.expresion, params.visibilidad)
             indicadorService.guardar(nuevoIndicador)
 
+            //TODO reemplazar por un texto como en metodologias
             view = "/indicadores/indicadorAgregado"
             model = [
                 indicador: nuevoIndicador
             ]
 
         } catch(IndicadorInvalidoException | IndicadorExistenteException e) {
+            log.error(e.getMessage(), e)
             view = "/errorGenericoBack"
             model = [
                     text: e.getMessage(),

@@ -5,7 +5,6 @@ import ar.edu.utn.dds.antlr.IndicadorParser
 import ar.edu.utn.dds.expresion.Expresion
 import ar.edu.utn.dds.listener.IndicadorCustomListener
 import ar.edu.utn.dds.visitor.IndicadorCustomVisitor
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.antlr.v4.runtime.CharStreams
@@ -26,6 +25,8 @@ class Indicador implements Serializable {
     private String nombre
     @JsonProperty("owner")
     private Long owner
+    @JsonProperty("visibilidad")
+    private String visibilidad
     @JsonProperty("expresion")
     private Expresion expresion
     @JsonProperty("dependenciasIndicador")
@@ -36,8 +37,9 @@ class Indicador implements Serializable {
     Indicador() {
     }
 
-    Indicador(String nombre, String expresion) {
+    Indicador(String nombre, String expresion, String visibilidad) {
         this.nombre = nombre
+        this.visibilidad = visibilidad
 
         IndicadorLexer lexer = new IndicadorLexer(CharStreams.fromString(expresion))
         CommonTokenStream tokens = new CommonTokenStream(lexer)
@@ -63,6 +65,22 @@ class Indicador implements Serializable {
         this.nombre = nombre
     }
 
+    Long getOwner() {
+        return owner
+    }
+
+    void setOwner(Long owner) {
+        this.owner = owner
+    }
+
+    String getVisibilidad() {
+        return visibilidad
+    }
+
+    void setVisibilidad(String visibilidad) {
+        this.visibilidad = visibilidad
+    }
+
     Expresion getExpresion() {
         return expresion
     }
@@ -85,13 +103,5 @@ class Indicador implements Serializable {
 
     void setDependenciasCuenta(List<String> dependenciasCuenta) {
         this.dependenciasCuenta = dependenciasCuenta
-    }
-
-    Long getOwner() {
-        return owner
-    }
-
-    void setOwner(Long owner) {
-        this.owner = owner
     }
 }

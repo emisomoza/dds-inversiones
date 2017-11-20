@@ -113,6 +113,22 @@
         <button type="button" class="btn btn-default" onclick="agregarCampoIndicadorFiltro()">Agregar</button>
     </div>
     <br/>
+    <div>
+        <h1 class="panel-title">Visibilidad</h1><br/>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2">
+            <select class="form-control" name="visibilidad">
+                <option value="ROLE_NULL">Privado</option>
+                <g:if test="${userRoles.contains("ROLE_ADMIN")}">
+                    <g:each var="rol" in="${userRoles}">
+                        <option>${rol}</option>
+                    </g:each>
+                </g:if>
+            </select>
+        </div>
+    </div>
+    <br/>
     <div class="form-group-lg">
         <button type="submit" class="btn btn-primary">Crear</button>
     </div>

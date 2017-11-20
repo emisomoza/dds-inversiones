@@ -31,21 +31,21 @@ class IndicadorRepositoryService {
 
     @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, key = "#nombre.concat('-').concat(#userId)", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     Indicador obtener(String nombre, Long userId) {
-        BasicQuery query = new BasicQuery("{nombre: '" + nombre + "', owner: " + userId + "}")
+        BasicQuery query = new BasicQuery("{\$or: [{nombre: '" + nombre + "', owner: " + userId + "}, {visibilidad: {\$ne: 'ROLE_NULL'}]}")
         try {
             return mongoTemplate.findOne(query, Indicador.class)
         } catch (Exception e) {
-            throw new MongoInaccesibleException("Error al obtener indicador " + nombre, e.getCause())
+            throw new MongoInaccesibleException(String.format("Error al obtener indicador %s de %d", nombre, userId), e.getCause())
         }
     }
 
-    @Cacheable(value = CacheData.INDICADOR_CACHE_NAME, key = "#userId", cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, key = "#userId", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     ArrayList<Indicador> listar(Long userId) {
-        BasicQuery query = new BasicQuery("{owner: " + userId + "}")
+        BasicQuery query = new BasicQuery("{\$or: [{owner: " + userId + "}, {visibilidad: {\$ne: 'ROLE_NULL'}}]}")
         try {
             return mongoTemplate.find(query, Indicador.class)
         } catch (Exception e) {
-            throw new MongoInaccesibleException("Error al obtener todos los indicadores", e.getCause())
+            throw new MongoInaccesibleException(String.format("Error al obtener todos los indicadores de %d", userId), e.getCause())
         }
     }
 }

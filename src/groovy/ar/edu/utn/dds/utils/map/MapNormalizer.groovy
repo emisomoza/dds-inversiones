@@ -4,6 +4,10 @@ import java.util.concurrent.ConcurrentHashMap
 
 class MapNormalizer {
 
+    def normalize(Map<String, Object> map, String str) {
+        return this.normalizeKeys(this.normalizeValues(map), str)
+    }
+
     def normalizeValues(Map<String, Object> map) {
         Map<String, Object> normalizedMap = new ConcurrentHashMap<>()
 
