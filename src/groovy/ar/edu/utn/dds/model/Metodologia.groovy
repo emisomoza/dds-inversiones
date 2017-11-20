@@ -3,6 +3,8 @@ package ar.edu.utn.dds.model
 import ar.edu.utn.dds.indicador.service.IndicadorService
 import ar.edu.utn.dds.metodologia.OperadorFiltro
 import ar.edu.utn.dds.metodologia.OperadorOrdenador
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.data.mongodb.core.index.CompoundIndex
 import org.springframework.data.mongodb.core.index.CompoundIndexes
 import org.springframework.data.mongodb.core.mapping.Document
@@ -11,13 +13,19 @@ import org.springframework.data.mongodb.core.mapping.Document
 @CompoundIndexes([
         @CompoundIndex(name = "id_idx", def = "{'nombre': 1, 'owner': -1}", unique = true)
 ])
+@JsonIgnoreProperties(ignoreUnknown=true)
 class Metodologia implements Serializable {
 
+    @JsonProperty("nombre")
     private String nombre
+    @JsonProperty("owner")
     private Long owner
+    @JsonProperty("visibilidad")
+    private String visibilidad
+    @JsonProperty("operadoresFiltro")
     private List<OperadorFiltro> operadoresFiltro
+    @JsonProperty("operadorOrden")
     private OperadorOrdenador operadorOrden
-
 
     String getNombre() {
         return nombre
@@ -33,6 +41,14 @@ class Metodologia implements Serializable {
 
     void setOwner(Long owner) {
         this.owner = owner
+    }
+
+    String getVisibilidad() {
+        return visibilidad
+    }
+
+    void setVisibilidad(String visibilidad) {
+        this.visibilidad = visibilidad
     }
 
     List<OperadorFiltro> getOperadoresFiltro() {
