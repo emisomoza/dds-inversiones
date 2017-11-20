@@ -37,10 +37,12 @@ class EmpresaService {
     }
 
     def guardar(Empresa empresa) {
+        empresa.validarConsistencia()
         return this.empresaRepositoryService.guardar(empresa)
     }
 
     def actualizar(Empresa empresa) {
+        empresa.validarConsistencia()
         return this.empresaRepositoryService.actualizar(empresa)
     }
 

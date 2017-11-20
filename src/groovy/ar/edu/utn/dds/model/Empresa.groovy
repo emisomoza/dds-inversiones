@@ -1,5 +1,7 @@
 package ar.edu.utn.dds.model
 
+import ar.edu.utn.dds.exceptions.EmpresaInvalidoException
+
 class Empresa implements Serializable {
 
     private Long id
@@ -28,5 +30,10 @@ class Empresa implements Serializable {
 
     void setPeriodos(List<Periodo> periodos) {
         this.periodos = periodos
+    }
+
+    void validarConsistencia() {
+        if(this.getNombre() == null || this.getNombre().size() == 0)
+            throw new EmpresaInvalidoException("La empresa debe tener nombre")
     }
 }

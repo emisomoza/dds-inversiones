@@ -14,6 +14,12 @@
 <body>
     <g:form class="form-horizontal" role="form" controller="Empresa" action="save">
         <div>
+            <g:if test="${text}">
+                <h2 class="panel-title">${text}</h2></br>
+            </g:if>
+        </div>
+        <br/>
+        <div>
             <h2 class="panel-title">Agregar Empresa:</h2></br>
         </div>
         <div class="form-group">

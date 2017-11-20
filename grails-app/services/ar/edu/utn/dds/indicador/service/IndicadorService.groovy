@@ -1,6 +1,5 @@
 package ar.edu.utn.dds.indicador.service
 
-import ar.edu.utn.dds.exceptions.IndicadorInvalidoException
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.model.Periodo
@@ -30,16 +29,10 @@ class IndicadorService {
 
     void guardar(Indicador indicador) {
         Long userId = (Long) springSecurityService.getCurrentUserId()
-
         indicador.setOwner(userId)
 
-        this.validarGuardar(indicador)
+        indicador.validarConsistencia()
         indicadorRepositoryService.guardar(indicador)
-    }
-
-    void validarGuardar(Indicador indicador) {
-        if(indicador.getNombre() == null || indicador.getExpresion() == null || indicador.getOwner() == null || indicador.getVisibilidad() == null)
-            throw new IndicadorInvalidoException("El indicador debe tener nombre, expresion y dueño")
     }
 
     @PostAuthorize("returnObject.visibilidad == 'ROLE_NULL' || hasRole(returnObject.visibilidad)")

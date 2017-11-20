@@ -109,7 +109,7 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
     private QueryUtils obtenerQueryActualizar(Cuenta cuenta) {
         QueryUtils queryUtils = new QueryUtils()
 
-        queryUtils.setRootStnatement(RootStatementBuilder.buildUpdateRootStatement(TABLE))
+        queryUtils.setRootStatement(RootStatementBuilder.buildUpdateRootStatement(TABLE))
         queryUtils.addParam(COLUMNS.get("valor"), cuenta.getValor())
         queryUtils.addWhereParam(COLUMNS.get("empid"), cuenta.getEmpresa())
         queryUtils.addWhereParam(COLUMNS.get("perid"), cuenta.getPeriodo())

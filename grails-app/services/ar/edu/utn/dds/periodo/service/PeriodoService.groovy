@@ -38,10 +38,12 @@ class PeriodoService {
     }
 
     def guardar(Periodo periodo) {
+        periodo.validarConsistencia()
         this.periodoRepositoryService.guardar(periodo)
     }
 
     def actualizar(Periodo periodo) {
+        periodo.validarConsistencia()
         this.periodoRepositoryService.actualizar(periodo)
     }
 }

@@ -35,5 +35,5 @@ class MetodologiaService {
         List<Empresa> empresasFiltradas = metodologia.filtrar(empresasAComparar, indicadorService)
         return metodologia.ordenar(empresasFiltradas, indicadorService)
     }
-    
+
 }
