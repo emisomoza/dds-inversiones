@@ -51,20 +51,20 @@ class EmpresaController {
         String text
 
         try{
-            if(request instanceof MultipartHttpServletRequest)
-            {
-                MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
-                CommonsMultipartFile file = (CommonsMultipartFile) mpr.getFile("file");
+            MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
+            CommonsMultipartFile file = (CommonsMultipartFile) mpr.getFile("file");
 
-                //Acá va el procesamiento del file
+            if(!file?.empty) {
+                if(file.contentType.equals("text/plain") | file.contentType.equals("text/csv")) {
+                    //Acá va el procesamiento del file
 
-                if(!file?.empty)
                     text = "Archivo procesado exitosamente!"
-                else
-                    text = "El archivo no puede estar vacío."
+                } else {
+                    text = "Formato de archivo incorrecto."
+                }
+            } else {
+                text = "El archivo no puede estar vacío."
             }
-            else
-                text = 'request is not of type MultipartHttpServletRequest'
 
             def empresas = empresaService.listar()
 
