@@ -13,7 +13,7 @@ class ImportadorCuentasSpec extends Specification {
 
     void "parsear archivo de importacion de cuentas"() {
         setup:
-        List<Map<String, String>> mapasCuentas = imp.parsearImportCuentas(new File(this.getClass().getResource('carga_cuentas.csv').getFile()))
+        List<Map<String, String>> mapasCuentas = imp.parsearImport(new File(this.getClass().getResource('carga_cuentas.csv').getFile()))
         List<Map<String, String>> mapasCuentasEsperado = new ArrayList<>()
 
         Map<String, String> tmpMap = new HashMap<>()

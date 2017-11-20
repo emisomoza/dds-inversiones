@@ -1,6 +1,5 @@
 package ar.edu.utn.dds.empresa.service
 
-import ar.edu.utn.dds.cuenta.service.CuentaService
 import ar.edu.utn.dds.model.Empresa
 
 import java.util.stream.Collectors
@@ -9,10 +8,13 @@ class EmpresaService {
 
     def empresaRepositoryService
     def periodoService
-    def cuentaService
 
     def existe(Long id) {
         return this.empresaRepositoryService.existe(id)
+    }
+
+    def existe(String nombre) {
+        return this.empresaRepositoryService.existe(nombre)
     }
 
     def listar() {
@@ -56,6 +58,13 @@ class EmpresaService {
     def popular(Empresa empresa) {
         empresa.setPeriodos(this.periodoService.listarPopulado(empresa))
         return empresa
+    }
+
+    def importarEmpresas(List<Empresa> empresas, Boolean validarExistencia) {
+        empresas.forEach({empresa ->
+            if(!(validarExistencia && this.existe(empresa.getNombre())))
+                this.guardar(empresa)
+        })
     }
 
 }
