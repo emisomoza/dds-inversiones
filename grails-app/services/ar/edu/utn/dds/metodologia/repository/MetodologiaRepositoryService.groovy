@@ -30,7 +30,7 @@ class MetodologiaRepositoryService {
 
     @Cacheable(cacheNames = CacheData.METODOLOGIA_CACHE_NAME, key = "#nombre.concat('-').concat(#userId)", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     Metodologia obtener(String nombre, Long userId) {
-        BasicQuery query = new BasicQuery("{nombre: '" + nombre + "', owner: " + userId + "}")
+        BasicQuery query = new BasicQuery("{\$or: [{nombre: '" + nombre + "', owner: " + userId + "}, {visibilidad: {\$ne: 'ROLE_NULL'}]}")
         try {
             return mongoTemplate.findOne(query, Metodologia.class)
         } catch (Exception e) {
@@ -38,9 +38,9 @@ class MetodologiaRepositoryService {
         }
     }
 
-    @Cacheable(cacheNames = CacheData.METODOLOGIA_CACHE_NAME, key = "#userId", cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    @Cacheable(value = CacheData.METODOLOGIA_CACHE_NAME, key = "#userId", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     ArrayList<Metodologia> listar(Long userId) {
-        BasicQuery query = new BasicQuery("{owner: " + userId + "}")
+        BasicQuery query = new BasicQuery("{\$or: [{owner: " + userId + "}, {visibilidad: {\$ne: 'ROLE_NULL'}}]}")
         try {
             return mongoTemplate.find(query, Metodologia.class)
         } catch (Exception e) {

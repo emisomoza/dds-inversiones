@@ -1,4 +1,4 @@
 package ar.edu.utn.dds.metodologia
 
-abstract class Modificador {
+abstract class Modificador implements Serializable {
 }
