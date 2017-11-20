@@ -1,19 +1,19 @@
 package ar.edu.utn.dds.model
 
-import ar.edu.utn.dds.exceptions.CuentaNoExisteException
+import ar.edu.utn.dds.exceptions.PeriodoInvalidoException
 
 import java.time.LocalDate
 
-public class Periodo implements Serializable {
+class Periodo implements Serializable {
 
     private Long id
     private List<Cuenta> cuentas
     private LocalDate fechaInicio
     private LocalDate fechaFin
 
-    public Periodo(){}
+    Periodo(){}
 
-    public Periodo(LocalDate fechaComienzo, LocalDate fechaFin) {
+    Periodo(LocalDate fechaComienzo, LocalDate fechaFin) {
         this.fechaInicio = fechaComienzo
         this.fechaFin = fechaFin
         this.cuentas = new ArrayList<Cuenta>()
@@ -39,72 +39,24 @@ public class Periodo implements Serializable {
         this.fechaInicio = fechaInicio
     }
 
-    public LocalDate getFechaInicio() {
-        return fechaInicio;
+    LocalDate getFechaInicio() {
+        return fechaInicio
     }
 
-    public void getFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    void getFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio
     }
 
-    public LocalDate getFechaFin() {
-        return fechaFin;
+    LocalDate getFechaFin() {
+        return fechaFin
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
+    void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin
     }
 
-    public void importarCuenta(String nombreCuenta, String valorCuenta) {
-        Cuenta cuenta = obtenerCuentaConNombre(nombreCuenta);
-
-        if(cuenta == null) {
-            cuenta = new Cuenta(nombreCuenta, Double.parseDouble(valorCuenta));
-            agregarCuenta(cuenta);
-        } else {
-            cuenta.setValor(Double.parseDouble(valorCuenta));
-        }
+    void validarConsistencia() {
+        if(this.fechaInicio == null || this.fechaFin == null)
+            throw new PeriodoInvalidoException("El periodo debe tener fecha de inicio y fecha de fin")
     }
-
-    public void agregarCuenta(Cuenta cuenta) {
-        cuentas.add(cuenta);
-    }
-
-        public Cuenta obtenerCuentaConNombre(String nombreCuenta) {
-        return this.cuentas.find{unaCuenta -> unaCuenta.getNombre().equals(nombreCuenta)}
-    }
-
-    public List<Cuenta> obtenerCuentasConNombre(List<String> nombres) {
-            return this.cuentas.find{unaCuenta -> nombres.contains(unaCuenta.getNombre())}
-    }
-
-    public void eliminarCuentaConNombre(String nombre) {
-        Cuenta cuentaAEliminar = obtenerCuentaConNombre(nombre);
-        if(cuentaAEliminar != null) {
-            eliminarCuenta(cuentaAEliminar);
-        }
-    }
-
-    public void eliminarCuentasConNombre(List<String> nombres) {
-        eliminarCuentas(obtenerCuentasConNombre(nombres));
-    }
-
-    public void eliminarCuenta(Cuenta cuenta) {
-        cuentas.remove(cuenta);
-    }
-
-    public void eliminarCuentas(List<Cuenta> unasCuentas) {
-        cuentas.removeAll(unasCuentas);
-    }
-
-    public Double consultarCuenta(String nombreCuenta) throws CuentaNoExisteException {
-        Cuenta cuenta = obtenerCuentaConNombre(nombreCuenta);
-
-        if(cuenta == null) {
-            throw new CuentaNoExisteException();
-        }
-
-        return cuenta.getValor();
-    }
-
 }

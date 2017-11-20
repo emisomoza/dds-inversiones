@@ -2,6 +2,7 @@ package ar.edu.utn.dds.model
 
 import ar.edu.utn.dds.antlr.IndicadorLexer
 import ar.edu.utn.dds.antlr.IndicadorParser
+import ar.edu.utn.dds.exceptions.IndicadorInvalidoException
 import ar.edu.utn.dds.expresion.Expresion
 import ar.edu.utn.dds.listener.IndicadorCustomListener
 import ar.edu.utn.dds.visitor.IndicadorCustomVisitor
@@ -103,5 +104,19 @@ class Indicador implements Serializable {
 
     void setDependenciasCuenta(List<String> dependenciasCuenta) {
         this.dependenciasCuenta = dependenciasCuenta
+    }
+
+    void validarConsistencia() {
+        if(this.getNombre() == null || this.getNombre().size() == 0)
+            throw new IndicadorInvalidoException("El indicador debe tener nombre")
+
+        if(this.getExpresion() == null)
+            throw new IndicadorInvalidoException("El indicador debe tener expresion")
+
+        if(this.getOwner() == null)
+            throw new IndicadorInvalidoException("El indicador debe tener dueño")
+
+        if(this.getVisibilidad() == null || this.getVisibilidad().size())
+            throw new IndicadorInvalidoException("El indicador debe tener visibilidad")
     }
 }

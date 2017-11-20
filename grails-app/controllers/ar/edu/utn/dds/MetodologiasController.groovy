@@ -1,9 +1,8 @@
 package ar.edu.utn.dds
 
 import ar.edu.utn.dds.exceptions.MetodologiaExistenteException
-import ar.edu.utn.dds.exceptions.MetodologiaInvalidaException
+import ar.edu.utn.dds.exceptions.MetodologiaInvalidoException
 import ar.edu.utn.dds.mappers.metodologia.MetodologiaMapper
-import ar.edu.utn.dds.utils.map.MapNormalizer
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugin.springsecurity.userdetails.GrailsUser
 
@@ -51,10 +50,10 @@ class MetodologiasController {
             model = [
                     indicadores: indicadores,
                     userRoles: userRoles,
-                    text: "Metodología $params.nombre guardada con éxito."
+                    text: "Metodología \"$params.nombre\" guardada con éxito."
             ]
 
-        } catch(MetodologiaInvalidaException | MetodologiaExistenteException e) {
+        } catch(MetodologiaInvalidoException | MetodologiaExistenteException e) {
             log.error(e.getMessage(), e)
 
             view = "/errorGenericoBack"

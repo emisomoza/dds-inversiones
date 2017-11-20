@@ -1,5 +1,6 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.exceptions.EmpresaInvalidoException
 import ar.edu.utn.dds.model.Empresa
 import grails.plugin.springsecurity.annotation.Secured
 
@@ -10,14 +11,33 @@ class EmpresaController {
     def index() { }
 
     def save() {
-        empresaService.guardar(new Empresa(params.nomEmpresa))
+
+        def view
+        def model
+
+        try{
+        Empresa nuevaEmpresa =  new Empresa()
+        nuevaEmpresa.setNombre(params.nomEmpresa)
+        empresaService.guardar(nuevaEmpresa)
 
         def empresas = empresaService.listar()
-        render(
-                view: "/empresas",
-                model: [
-                    empresas: empresas
-                ]
-        )
+
+        view = "/empresas"
+        model = [
+                empresas: empresas,
+                text: "Empresa \"$nuevaEmpresa.nombre\" guardada con éxito."
+        ]
+
+        } catch(EmpresaInvalidoException e) {
+            log.error(e.getMessage(), e)
+
+            view = "/errorGenericoBack"
+            model = [
+                    text: e.getMessage(),
+                    buttonText: "Volver"
+            ]
+        }
+
+        render(view: view, model: model)
     }
 }

@@ -2,6 +2,7 @@ package ar.edu.utn.dds.cuenta.service
 
 import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.model.Cuenta
+import ar.edu.utn.dds.model.Empresa
 
 import static com.xlson.groovycsv.CsvParser.parseCsv
 
@@ -23,25 +24,31 @@ class CuentaService {
         return this.cuentaRepositoryService.listar(cuenta)
     }
 
+    def listarPopulado(Empresa empresa) {
+        Cuenta queryCuenta = new Cuenta()
+        queryCuenta.setEmpresa(empresa.getId())
+        return this.listar(queryCuenta)
+    }
+
     def obtener(Long empId, Long perId, Long cueId) {
         return this.cuentaRepositoryService.obtener(empId, perId, cueId)
     }
 
     def guardar(Cuenta cuenta) {
-       return this.cuentaRepositoryService.guardar(cuenta)
+        cuenta.validarConsistencia()
+        return this.cuentaRepositoryService.guardar(cuenta)
     }
 
     def actualizar(Cuenta cuenta) {
-       return this.cuentaRepositoryService.actualizar(cuenta)
+        cuenta.validarConsistencia()
+        return this.cuentaRepositoryService.actualizar(cuenta)
     }
-    
+
     def parsearImportCuentas(File archivo) {
         try {
             return this.parsearImportCuentas(archivo.text.toString())
         } catch (Exception e) {
-            String mensaje = "Error importando cuentas desde archivo"
-            log.error(mensaje)
-            throw new InversionesException(mensaje, e.getCause())
+            throw new InversionesException("Error importando cuentas desde archivo", e)
         }
     }
 
@@ -63,7 +70,7 @@ class CuentaService {
 
             return mapasCuentas
         } catch(Exception e) {
-            throw new InversionesException("Error parceando cuentas para importar", e.getCause())
+            throw new InversionesException("Error parceando cuentas para importar", e)
         }
     }
 }

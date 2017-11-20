@@ -60,12 +60,12 @@
 <body>
 <g:form class="form-horizontal" method="post" name="Form" controller="Metodologias" action="save" onsubmit="return validateForm()">
     <div>
-        <div>
-            <g:if test="${text}">
-                <h2 class="panel-title">${text}</h2></br>
-            </g:if>
-        </div>
-
+        <g:if test="${text}">
+            <h2 class="panel-title">${text}</h2></br>
+        </g:if>
+    </div>
+    <br/>
+    <div>
         <div>
             <h1 class="panel-title">Agregar Metodología</h1></br>
         </div>

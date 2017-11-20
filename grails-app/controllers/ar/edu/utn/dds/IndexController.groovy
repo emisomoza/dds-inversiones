@@ -26,7 +26,7 @@ class IndexController {
         ArrayList<Metodologia> metodologias = metodologiaService.listar()
 
         render(
-                view: "/consultas",
+                view: "/compararEmpresas",
                 model: [
                         empresas: empresas,
                         metodologias: metodologias

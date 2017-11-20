@@ -17,6 +17,7 @@ class ModificarEmpresaController {
     def tipoCuentaService
 
     def agregarCuenta() {
+
         def empresa = empresaService.obtener(Long.parseLong(params.empresa))
 
         render(

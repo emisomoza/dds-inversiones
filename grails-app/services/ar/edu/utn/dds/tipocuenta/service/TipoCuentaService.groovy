@@ -19,10 +19,12 @@ class TipoCuentaService {
     }
 
     def guardar(TipoCuenta tipoCuenta) {
+        tipoCuenta.validarConsistencia()
         return this.tipoCuentaRepositoryService.guardar(tipoCuenta)
     }
 
     def actualizar(TipoCuenta tipoCuenta) {
+        tipoCuenta.validarConsistencia()
         return this.tipoCuentaRepositoryService.actualizar(tipoCuenta)
     }
 

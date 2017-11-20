@@ -1,5 +1,7 @@
 package ar.edu.utn.dds.model
 
+import ar.edu.utn.dds.exceptions.TipoCuenaInvalidoException
+
 class TipoCuenta implements Serializable {
 
     private Long id
@@ -19,5 +21,10 @@ class TipoCuenta implements Serializable {
 
     void setDescripcion(String descripcion) {
         this.descripcion = descripcion
+    }
+
+    void validarConsistencia() {
+        if(this.getDescripcion() == null || this.getDescripcion().size() == 0)
+            throw new TipoCuenaInvalidoException("El tipo de cuenta debe tener descripcion")
     }
 }

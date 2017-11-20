@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.metodologia
 
 import ar.edu.utn.dds.exceptions.CuentaNoExisteException
+import ar.edu.utn.dds.exceptions.ElementoInvalidoException
 import ar.edu.utn.dds.exceptions.MetodologiaException
 import ar.edu.utn.dds.indicador.service.IndicadorService
 import ar.edu.utn.dds.model.Empresa
@@ -42,5 +43,12 @@ class OperadorFiltroMenor extends OperadorFiltro {
                 throw new MetodologiaException()
             }
         }
+    }
+
+    @Override
+    void validarConsistencia() {
+        super.validarConsistencia()
+        if(this.getComparador() == null)
+            throw new ElementoInvalidoException("El operador de filtro menor debe tener comparador")
     }
 }

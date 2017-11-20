@@ -53,7 +53,6 @@ class EmpresaRepositoryService extends DefaultJDBCRepositoryService<Empresa> {
         return queryUtils
     }
 
-    @Cacheable(cacheNames = CacheData.EMPRESA_CACHE_NAME, key="#id", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     Empresa obtener(Long id) {
         QueryUtils queryUtils = this.obtenerQueryObtener(id)
         return this.obtener(queryUtils, mapper)

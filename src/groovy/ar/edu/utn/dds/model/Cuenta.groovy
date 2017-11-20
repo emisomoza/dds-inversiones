@@ -1,5 +1,8 @@
 package ar.edu.utn.dds.model
 
+import ar.edu.utn.dds.exceptions.CuentaInvalidoException
+import ar.edu.utn.dds.exceptions.ElementoInvalidoException
+
 
 class Cuenta implements Serializable {
 
@@ -18,23 +21,15 @@ class Cuenta implements Serializable {
         this.setValor(valor)
     }
 
-    Long getId() {
-        return id
-    }
-
-    void setId(Long id) {
-        this.id = id
-    }
-
-    public String getNombre() {
+    String getNombre() {
         return tipo.getDescripcion()
     }
 
-    public Double getValor() {
+    Double getValor() {
         return valor
     }
 
-    public void setValor(Double valor) {
+    void setValor(Double valor) {
         this.valor = valor
     }
 
@@ -60,5 +55,27 @@ class Cuenta implements Serializable {
 
     void setTipo(TipoCuenta tipo) {
         this.tipo = tipo
+    }
+
+    void validarConsistencia() {
+        if(this.getEmpresa() == null)
+            throw new CuentaInvalidoException("La cuenta debe tener una empresa asociada")
+
+        if(this.getPeriodo() == null)
+            throw new CuentaInvalidoException("La cuenta debe tener un periodo asociado")
+
+        if(this.getValor() == null)
+            throw new CuentaInvalidoException("La cuenta debe tener un valor")
+
+        if(this.getTipo() == null)
+            throw new CuentaInvalidoException("La cuenta debe tener un tipo asociado")
+
+        try {
+            this.getTipo().validarConsistencia()
+        } catch (ElementoInvalidoException e) {
+            throw new CuentaInvalidoException(e.getMessage(), e)
+        } catch (RuntimeException e) {
+            throw new CuentaInvalidoException("Ocurrio un problema validando la cuenta", e)
+        }
     }
 }
