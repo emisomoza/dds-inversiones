@@ -68,7 +68,7 @@
         <label for="uploadFile" class="col-sm-3 control-label">Subir archivo (csv/txt)</label>
         <g:uploadForm id="uploadFile" value="sarasa">
             <fieldset class="col-sm-4 btn">
-                <input type="file" name="file"/>
+                <input type="file" name="file" accept=".txt, .csv" multiple="accept"/>
             </fieldset>
             <g:actionSubmit class="btn btn-primary" value="Upload"/>
         </g:uploadForm>
