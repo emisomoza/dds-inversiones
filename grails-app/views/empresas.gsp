@@ -8,7 +8,17 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Cuentas</title>
+    <title>Gestionar empresas</title>
+    <script language="JavaScript">
+        function validateFile()
+        {
+            if (document.forms["upload"]["file"].value == "")
+            {
+                alert("Selecciona un archivo.");
+                return false;
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -51,20 +61,17 @@
         </div>
         </div>
     </g:form>
-
-    <g:form class="form-horizontal" role="form" controller="Empresa" action="upload" method="post" enctype="multipart/form-data">
+    <g:form class="form-horizontal" role="form" name="upload" controller="Empresa" action="upload" method="post" enctype="multipart/form-data"  onsubmit="return validateFile()">
         <div>
             <h2 class="panel-title">Carga batch de cuentas:</h2></br>
         </div>
-        <div class="form-group">
-            <label for="uploadFile" class="col-sm-2 control-label">Subir archivo</label>
-        <g:uploadForm id="uploadFile">
-            <fieldset class="col-sm-3">
-                <input type="file" name="file" />
+        <label for="uploadFile" class="col-sm-3 control-label">Subir archivo (csv/txt)</label>
+        <g:uploadForm id="uploadFile" value="sarasa">
+            <fieldset class="col-sm-4 btn">
+                <input type="file" name="file"/>
             </fieldset>
             <g:actionSubmit class="btn btn-primary" value="Upload"/>
         </g:uploadForm>
-        </div>
     </g:form>
 </body>
 </html>

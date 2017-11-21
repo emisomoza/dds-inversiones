@@ -101,7 +101,7 @@ class ImportadorCuentas {
                         periodo.getFechaInicio() == LocalDate.parse(mapa.get(FECHA_DESDE_TAG)) &&
                         periodo.getFechaFin() == LocalDate.parse(mapa.get(FECHA_HASTA_TAG))
                     }.getId())
-                    cuenta.setValor(Long.valueOf(mapa.get(VALOR_TAG)))
+                    cuenta.setValor(Double.parseDouble(mapa.get(VALOR_TAG)))
                     return cuenta
                 })
                 .collect(Collectors.toList())
@@ -145,7 +145,7 @@ class ImportadorCuentas {
             throw new InversionesException("El archivo posee una o más filas con columnas vacias")
 
         try {
-            Long.valueOf(mapaImportar.get(VALOR_TAG))
+            Double.parseDouble(mapaImportar.get(VALOR_TAG))
         } catch(NumberFormatException e) {
             throw new InversionesException("El archivo posee una o más filas que tienen un valor no numero en el la columna \"Valor\"", e)
         }

@@ -52,19 +52,20 @@ class EmpresaController {
         def model
         String text
 
-        try {
-            if(request instanceof MultipartHttpServletRequest) {
-                MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request
-                CommonsMultipartFile file = (CommonsMultipartFile) mpr.getFile("file")
+        try{
+            MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
+            CommonsMultipartFile file = (CommonsMultipartFile) mpr.getFile("file");
 
-                if(!file?.empty) {
+            if(!file?.empty) {
+                if(file.contentType.equals("text/plain") | file.contentType.equals("text/csv")) {
                     importadorCuentas.importar(new String(file.getBytes()))
                     text = "Archivo procesado exitosamente!"
-                } else
-                    text = "El archivo no puede estar vacío."
-
-            } else
-                text = 'Request is not of type MultipartHttpServletRequest'
+                } else {
+                    text = "Formato de archivo incorrecto."
+                }
+            } else {
+                text = "El archivo no puede estar vacío."
+            }
 
             def empresas = empresaService.listar()
 
