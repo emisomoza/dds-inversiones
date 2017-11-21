@@ -70,6 +70,8 @@ grails.project.dependency.resolution = {
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
         compile 'org.antlr:antlr4-maven-plugin:4.7'
+
+        build 'com.google.guava:guava:18.0'
     }
 
     plugins {
