@@ -42,9 +42,10 @@ class CuentaService {
     def importarCuentas(List<Cuenta> cuentas) {
         cuentas.forEach({cuenta ->
             if(this.existe(cuenta.getEmpresa(), cuenta.getPeriodo(), cuenta.getTipo().getId()))
-                this.guardar(cuenta)
-            else
                 this.actualizar(cuenta)
+            else
+                this.guardar(cuenta)
+
         })
     }
 }

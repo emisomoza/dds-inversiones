@@ -8,15 +8,25 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Cuentas</title>
+    <title>Gestionar empresas</title>
+    <script language="JavaScript">
+        function validateFile()
+        {
+            if (document.forms["upload"]["file"].value == "")
+            {
+                alert("Selecciona un archivo.");
+                return false;
+            }
+        }
+    </script>
 </head>
 
 <body>
     <g:form class="form-horizontal" role="form" controller="Empresa" action="save">
         <div>
-            <g:if test="${text}">
-                <h2 class="panel-title">${text}</h2></br>
-            </g:if>
+        <g:if test="${text}">
+            <h2 class="panel-title">${text}</h2></br>
+        </g:if>
         </div>
         <br/>
         <div>
@@ -40,16 +50,28 @@
             <div class="col-sm-3">
                 <select id="selectEmpresa" name = "empresa" class="form-control">
                     <option value="" disabled selected hidden>Seleccione...</option>
-                        <g:each in="${empresas}">
-                            <option value="${it?.id}">${it?.nombre}</option>
-                        </g:each>
-                </select>
-            </div>
-            <div>
-                <g:actionSubmit class="btn btn-primary" value="Agregar cuentas" action="agregarCuenta"/>
-                <g:actionSubmit class="btn btn-secondary" value="Ver cuentas" action="listarCuentas"/>
-            </div>
+        <g:each in="${empresas}">
+            <option value="${it?.id}">${it?.nombre}</option>
+        </g:each>
+        </select>
+    </div>
+        <div>
+            <g:actionSubmit class="btn btn-primary" value="Agregar cuentas" action="agregarCuenta"/>
+            <g:actionSubmit class="btn btn-secondary" value="Ver cuentas" action="listarCuentas"/>
         </div>
+        </div>
+    </g:form>
+    <g:form class="form-horizontal" role="form" name="upload" controller="Empresa" action="upload" method="post" enctype="multipart/form-data"  onsubmit="return validateFile()">
+        <div>
+            <h2 class="panel-title">Carga batch de cuentas:</h2></br>
+        </div>
+        <label for="uploadFile" class="col-sm-3 control-label">Subir archivo (csv/txt)</label>
+        <g:uploadForm id="uploadFile" value="sarasa">
+            <fieldset class="col-sm-4 btn">
+                <input type="file" name="file"/>
+            </fieldset>
+            <g:actionSubmit class="btn btn-primary" value="Upload"/>
+        </g:uploadForm>
     </g:form>
 </body>
 </html>
