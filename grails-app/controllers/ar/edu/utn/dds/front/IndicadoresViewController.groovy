@@ -2,6 +2,7 @@ package ar.edu.utn.dds.front
 
 import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.utils.helper.RestHelper
+import com.fasterxml.jackson.databind.ObjectMapper
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
@@ -46,9 +47,9 @@ class IndicadoresViewController {
 
         def view
         def model
-        Indicador nuevoIndicador = bindData(new Indicador(), getResponse.getJson().indicador)
+        Indicador nuevoIndicador = new ObjectMapper().readValue(getResponse.getJson().indicador.toString(), Indicador.class)
 
-        view = "/indicadores/indicadorAgregado"
+        view = "/indicadoresView/indicadorAgregado"
         model = [
             indicador: nuevoIndicador
         ]

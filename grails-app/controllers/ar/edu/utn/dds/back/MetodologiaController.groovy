@@ -1,30 +1,28 @@
 package ar.edu.utn.dds.back
 
-import ar.edu.utn.dds.exceptions.IndicadorInvalidoException
+import ar.edu.utn.dds.exceptions.MetodologiaInvalidoException
 import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
-import ar.edu.utn.dds.model.Indicador
-import com.fasterxml.jackson.databind.ObjectMapper
+import ar.edu.utn.dds.model.Metodologia
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
-import org.codehaus.groovy.grails.web.json.JSONObject
 
 @Secured('ROLE_ADMIN')
-class IndicadorController extends RestfulController {
+class MetodologiaController extends RestfulController {
     static responseFormats = ['json']
 
-    def indicadorService
+    def metodologiaService
 
-    IndicadorController() {
-        super(Indicador)
+    MetodologiaController() {
+        super(Metodologia)
     }
 
     def list() {
         try {
-            def indicadores = indicadorService.listar()
+            def metodologias = metodologiaService.listar()
             response.setStatus(200)
-            render([indicadores: indicadores.collect {it -> new JSONObject(new ObjectMapper().writeValueAsString(it))}] as JSON)
+            render([metodologias: metodologias] as JSON)
         } catch(Exception e) {
             response.setStatus(500)
             renderErrorGenerico(e)
@@ -33,17 +31,14 @@ class IndicadorController extends RestfulController {
 
     def save() {
         def jsonObject = request.getJSON()
-        String nombre = jsonObject.nombre
-        String expresion = jsonObject.expresion
-        String visibilidad = jsonObject.visibilidad
 
         try {
-            Indicador nuevoIndicador = new Indicador(nombre, expresion, visibilidad)
-            indicadorService.guardar(nuevoIndicador)
+            Metodologia nuevaMetodologia = new Metodologia(nombre, expresion, visibilidad)
+            metodologiaService.guardar(nuevoIndicador)
             response.addHeader("Location", "/indicador/" + nuevoIndicador.getNombre())
             response.setStatus(201)
             render ""
-        } catch(IndicadorInvalidoException e) {
+        } catch(MetodologiaInvalidoException e) {
             response.setStatus(400)
             renderErrorInversiones(e)
         } catch(Exception e) {
@@ -54,9 +49,9 @@ class IndicadorController extends RestfulController {
 
     def show() {
         try {
-            Indicador indicador = indicadorService.obtener(params.id)
+            Metodologia metodologia = metodologiaService.obtener(params.id)
             response.setStatus(200)
-            render([indicador: new JSONObject(new ObjectMapper().writeValueAsString(indicador))] as JSON)
+            render([metodologia: metodologia] as JSON)
         } catch(RecursoNoEncontradoException e) {
             response.setStatus(404)
             renderErrorInversiones(e)
