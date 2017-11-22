@@ -1,11 +1,6 @@
 package ar.edu.utn.dds.front
 
-import ar.edu.utn.dds.exceptions.MetodologiaExistenteException
-import ar.edu.utn.dds.exceptions.MetodologiaInvalidoException
-import ar.edu.utn.dds.mappers.metodologia.MetodologiaMapper
-import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.model.Indicador
-import ar.edu.utn.dds.model.Metodologia
 import ar.edu.utn.dds.utils.helper.RestHelper
 import com.fasterxml.jackson.databind.ObjectMapper
 import grails.plugin.springsecurity.annotation.Secured
@@ -17,7 +12,7 @@ import grails.plugins.rest.client.RestResponse
 class MetodologiasViewController {
     private String baseUrl = "http://localhost:8080/dds-inversiones"
 
-    def indicadorService
+    def mapNormalizer
     def springSecurityService
 
     def index() { }
@@ -25,7 +20,7 @@ class MetodologiasViewController {
     def crear() {
         String cookie = RestHelper.getJSessionCookieFromRequest(request)
 
-        def listarResponse = new RestBuilder().get(baseUrl + "indicador") {
+        def listarResponse = new RestBuilder().get(baseUrl + "/indicador") {
             header 'Cookie', cookie
             contentType "application/json"
         }
@@ -54,16 +49,12 @@ class MetodologiasViewController {
     def save() {
         String cookie = RestHelper.getJSessionCookieFromRequest(request)
 
-
-        //Map<String, Object> normalizedMap = mapNormalizer.normalize(params, ".")
-        //MetodologiaMapper mapper = new MetodologiaMapper()
-        //metodologiaService.guardar(mapper.mapear(normalizedMap))
-
+        Map<String, Object> normalizedMap = mapNormalizer.normalize(params, ".")
         def postResponse = new RestBuilder().post(baseUrl + "/metodologia") {
             header 'Cookie', cookie
             contentType "application/json"
             json {
-                params = params
+                parametrosMetodologia = normalizedMap
             }
         }
 
@@ -73,19 +64,8 @@ class MetodologiasViewController {
         }
 
 
-        def getResponse = new RestBuilder().get(baseUrl + postResponse.getHeaders().getLocation().getPath()) {
-            header 'Cookie', cookie
-            contentType "application/json"
-        }
 
-        if(!getResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
-            return
-        }
-
-
-
-        def listarResponse = new RestBuilder().get(baseUrl + "indicador") {
+        def listarResponse = new RestBuilder().get(baseUrl + "/indicador") {
             header 'Cookie', cookie
             contentType "application/json"
         }

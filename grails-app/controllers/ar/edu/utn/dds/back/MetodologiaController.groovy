@@ -3,6 +3,7 @@ package ar.edu.utn.dds.back
 import ar.edu.utn.dds.exceptions.MetodologiaInvalidoException
 import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
+import ar.edu.utn.dds.mappers.metodologia.MetodologiaMapper
 import ar.edu.utn.dds.model.Metodologia
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
@@ -33,9 +34,11 @@ class MetodologiaController extends RestfulController {
         def jsonObject = request.getJSON()
 
         try {
-            Metodologia nuevaMetodologia = new Metodologia(nombre, expresion, visibilidad)
-            metodologiaService.guardar(nuevoIndicador)
-            response.addHeader("Location", "/indicador/" + nuevoIndicador.getNombre())
+            MetodologiaMapper mapper = new MetodologiaMapper()
+            Metodologia nuevaMetodologia = mapper.mapear(jsonObject.parametrosMetodologia)
+            metodologiaService.guardar(nuevaMetodologia)
+
+            response.addHeader("Location", "/metodologia/" + nuevaMetodologia.getNombre())
             response.setStatus(201)
             render ""
         } catch(MetodologiaInvalidoException e) {

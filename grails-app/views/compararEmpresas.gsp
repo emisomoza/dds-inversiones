@@ -41,7 +41,7 @@
 </head>
 
 <body>
-    <g:form class="form-horizontal" method="post" name="Form" controller="Consultas" action="comparar">
+    <g:form class="form-horizontal" method="post" name="Form" controller="ConsultasView" action="comparar">
         <div>
             <h1 class="panel-title">Comparar Empresas</h1></br>
         </div>
