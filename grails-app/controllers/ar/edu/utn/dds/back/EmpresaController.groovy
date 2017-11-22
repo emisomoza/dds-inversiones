@@ -3,6 +3,7 @@ package ar.edu.utn.dds.back
 import ar.edu.utn.dds.exceptions.EmpresaInvalidoException
 import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
+import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
@@ -13,6 +14,7 @@ class EmpresaController extends RestfulController {
     static responseFormats = ['json']
 
     def empresaService
+    def cuentaService
     def importadorCuentas
 
     EmpresaController() {
@@ -52,6 +54,24 @@ class EmpresaController extends RestfulController {
             def empresa = empresaService.obtener(params.id as Long)
             response.setStatus(200)
             render([empresa: empresa] as JSON)
+        } catch(RecursoNoEncontradoException e) {
+            response.setStatus(404)
+            renderErrorInversiones(e)
+        } catch(Exception e) {
+            response.setStatus(500)
+            renderErrorGenerico(e)
+        }
+    }
+
+    def showCuentas() {
+        try {
+            Empresa empresa = empresaService.obtener(params.id as Long)
+            Cuenta cuenta = new Cuenta()
+            cuenta.setEmpresa(empresa.getId())
+
+            List<Cuenta> cuentas = cuentaService.listar(cuenta)
+            response.setStatus(200)
+            render([empresa: empresa, cuentas: cuentas] as JSON)
         } catch(RecursoNoEncontradoException e) {
             response.setStatus(404)
             renderErrorInversiones(e)

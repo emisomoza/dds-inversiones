@@ -116,7 +116,7 @@ class Indicador implements Serializable {
         if(this.getOwner() == null)
             throw new IndicadorInvalidoException("El indicador debe tener dueño")
 
-        if(this.getVisibilidad() == null || this.getVisibilidad().size())
+        if(this.getVisibilidad() == null || this.getVisibilidad().isEmpty())
             throw new IndicadorInvalidoException("El indicador debe tener visibilidad")
     }
 }

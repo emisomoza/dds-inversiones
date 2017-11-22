@@ -21,6 +21,19 @@ class Cuenta implements Serializable {
         this.setValor(valor)
     }
 
+    Cuenta(Long empresa, Long periodo, String nombre, Double valor) {
+        this(nombre, valor)
+        this.empresa = empresa
+        this.periodo = periodo
+    }
+
+    Cuenta(Long empresa, Long periodo, TipoCuenta tipoCuenta, Double valor) {
+        this.tipo = tipoCuenta
+        this.valor = valor
+        this.empresa = empresa
+        this.periodo = periodo
+    }
+
     String getNombre() {
         return tipo.getDescripcion()
     }

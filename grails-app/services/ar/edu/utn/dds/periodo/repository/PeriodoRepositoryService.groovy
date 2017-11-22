@@ -92,9 +92,9 @@ class PeriodoRepositoryService extends DefaultJDBCRepositoryService<Periodo> {
     }
 
     @CacheEvict(cacheNames = CacheData.PERIODO_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    void guardar(Periodo periodo) {
+    Long guardar(Periodo periodo) {
         QueryUtils queryUtils = this.obtenerQueryGuardar(periodo)
-        this.guardar(queryUtils)
+        return this.guardarYObtenerId(queryUtils)
     }
 
     private QueryUtils obtenerQueryGuardar(Periodo periodo) {

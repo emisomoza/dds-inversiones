@@ -28,7 +28,7 @@ class EmpresaViewController {
         }
 
         if(!postResponse.getStatus().equals(201)) {
-            renderRespuestaError(postResponse)
+            renderRespuestaErrorGenericoBack(postResponse)
             return
         }
 
@@ -39,7 +39,7 @@ class EmpresaViewController {
         }
 
         if(!getResponse.getStatus().equals(200)) {
-            renderRespuestaError(getResponse)
+            renderRespuestaErrorGenericoBack(getResponse)
             return
         }
 
@@ -50,7 +50,7 @@ class EmpresaViewController {
         }
 
         if(!listarResponse.getStatus().equals(200)) {
-            renderRespuestaError(listarResponse)
+            renderRespuestaErrorGenericoBack(listarResponse)
             return
         }
 
@@ -106,7 +106,7 @@ class EmpresaViewController {
         }
 
         if(!listarResponse.getStatus().equals(200)) {
-            renderRespuestaError(listarResponse)
+            renderRespuestaErrorGenericoBack(listarResponse)
             return
         }
 
@@ -121,7 +121,7 @@ class EmpresaViewController {
         render(view: view, model: model)
     }
 
-    void renderRespuestaError(RestResponse response) {
+    void renderRespuestaErrorGenericoBack(RestResponse response) {
         def view
         def model
 
@@ -129,6 +129,17 @@ class EmpresaViewController {
         model = [
             text: response.getJson().descripcionError.toString(),
             buttonText: "Volver"
+        ]
+        render(view: view, model: model)
+    }
+
+    void renderRespuestaError(RestResponse response) {
+        def view
+        def model
+
+        view = "/error"
+        model = [
+            exception: new Exception(response.getJson().descripcionError.toString()),
         ]
         render(view: view, model: model)
     }

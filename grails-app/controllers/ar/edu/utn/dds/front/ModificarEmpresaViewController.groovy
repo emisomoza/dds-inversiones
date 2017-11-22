@@ -3,113 +3,178 @@ package ar.edu.utn.dds.front
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.model.Periodo
-import ar.edu.utn.dds.model.TipoCuenta
+import ar.edu.utn.dds.utils.helper.RestHelper
 import grails.plugin.springsecurity.annotation.Secured
+import grails.plugins.rest.client.RestBuilder
+import grails.plugins.rest.client.RestResponse
 
-import java.time.LocalDate
+import java.text.SimpleDateFormat
 
 @Secured('ROLE_ADMIN')
 class ModificarEmpresaViewController {
-
-    def empresaService
-    def periodoService
-    def cuentaService
-    def tipoCuentaService
+    private String baseUrl = "http://localhost:8080/dds-inversiones"
 
     def agregarCuenta() {
+        String cookie = RestHelper.getJSessionCookieFromRequest(request)
 
-        def empresa = empresaService.obtener(Long.parseLong(params.empresa))
+        def getResponse = new RestBuilder().get(baseUrl + "/empresa/" + params.empresa) {
+            header 'Cookie', cookie
+            contentType "application/json"
+        }
+
+        if(!getResponse.getStatus().equals(200)) {
+            renderRespuestaErrorGenericoBack(getResponse)
+            return
+        }
+
+        Empresa empresa = bindData(new Empresa(), getResponse.getJson().empresa)
 
         render(
-                view: "/agregarCuenta",
-                model: [
-                        empresa: empresa
-                ]
+            view: "/agregarCuenta",
+            model: [
+                empresa: empresa
+            ]
         )
     }
 
     def save_cuenta_empresa() {
+        String cookie = RestHelper.getJSessionCookieFromRequest(request)
         String saveCuentaText
-        Cuenta cuenta
-        Empresa empresa
 
-        try {
-            Long idEmpresa = Long.parseLong(params.empresa)
-            empresa = empresaService.obtener(idEmpresa)
-            Date fechaDesdeDate = params.fechaDesde
-            Date fechaHastaDate = params.fechaHasta
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy")
+        String fechaDesdeString = format.format(params.fechaDesde)
+        String fechaHastaString = format.format(params.fechaHasta)
 
-            Periodo periodo = this.guardarPeriodo(fechaDesdeDate, fechaHastaDate)
-
-            cuenta = this.guardarCuenta(idEmpresa, params.nomCuenta.toString(), periodo.id, Double.parseDouble(params.valor))
-
-            saveCuentaText = "Cuenta ${cuenta?.tipo?.descripcion} guardada exitosamente!"
-
-            render(
-                    view: "/agregarCuenta",
-                    model: [
-                            cuenta: cuenta,
-                            saveCuentaText: saveCuentaText,
-                            empresa: empresa
-                    ]
-            )
+        def postResponse = new RestBuilder().post(baseUrl + "/periodo") {
+            header 'Cookie', cookie
+            contentType "application/json"
+            json {
+                fechaDesde = fechaDesdeString
+                fechaHasta = fechaHastaString
+            }
         }
-        catch(Exception e){
-            saveCuentaText = "Error guardando cuenta"
-            log.error(saveCuentaText)
 
-            render(
-                    view: "/error",
-                    model: [
-                            exception: e
-                    ]
-            )
+        if(!postResponse.getStatus().equals(201)) {
+            renderRespuestaErrorGenericoBack(postResponse)
+            return
         }
-    }
 
-    private Cuenta guardarCuenta(Long idEmpresa, String descripcion, Long idPeriodo, Double valor) {
-        TipoCuenta tipoCuenta = new TipoCuenta()
-        tipoCuenta.setDescripcion(descripcion)
-        tipoCuentaService.guardar(tipoCuenta)
-        tipoCuenta = tipoCuentaService.listar(tipoCuenta).first() //Esto es para recuperar el id
 
-        Cuenta cuenta = new Cuenta()
-        cuenta.setEmpresa(idEmpresa)
-        cuenta.setTipo(tipoCuenta)
-        cuenta.setPeriodo(idPeriodo)
-        cuenta.setValor(valor)
-        cuentaService.guardar(cuenta)
+        def getResponse = new RestBuilder().get(baseUrl + postResponse.getHeaders().getLocation().getPath()) {
+            header 'Cookie', cookie
+            contentType "application/json"
+        }
 
-        List<Cuenta> cuentas = cuentaService.listar(cuenta)
+        if(!getResponse.getStatus().equals(200)) {
+            renderRespuestaErrorGenericoBack(getResponse)
+            return
+        }
 
-        return cuentas.first()
-    }
+        Periodo nuevoPeriodo = bindData(new Periodo(), getResponse.getJson().periodo)
 
-    private Periodo guardarPeriodo(Date fechaDesdeDate, Date fechaHastaDate) {
-        LocalDate fechaDesdeLocalDate = LocalDate.of(fechaDesdeDate.calendarDate.getYear(), fechaDesdeDate.calendarDate.getMonth(), fechaDesdeDate.calendarDate.getDayOfMonth())
-        LocalDate fechaHastaLocalDate = LocalDate.of(fechaHastaDate.calendarDate.getYear(), fechaHastaDate.calendarDate.getMonth(), fechaHastaDate.calendarDate.getDayOfMonth())
 
-        Periodo periodo = new Periodo(fechaDesdeLocalDate, fechaHastaLocalDate)
+        String idDeEmpresa = params.empresa
+        getResponse = new RestBuilder().get(baseUrl + "/empresa/" + idDeEmpresa) {
+            header 'Cookie', cookie
+            contentType "application/json"
+        }
 
-        periodoService.guardar(periodo)
+        if(!getResponse.getStatus().equals(200)) {
+            renderRespuestaErrorGenericoBack(getResponse)
+            return
+        }
 
-        return periodoService.listar(periodo).first()
+        Empresa empresa = bindData(new Empresa(), getResponse.getJson().empresa)
+
+
+        String nombreCuenta = params.nomCuenta.toString()
+        Double valorCuenta = Double.parseDouble(params.valor)
+
+        postResponse = new RestBuilder().post(baseUrl + "/cuenta") {
+            header 'Cookie', cookie
+            contentType "application/json"
+            json {
+                idEmpresa = empresa.getId()
+                idPeriodo = nuevoPeriodo.getId()
+                nombre = nombreCuenta
+                valor = valorCuenta
+            }
+        }
+
+        if(!postResponse.getStatus().equals(201)) {
+            renderRespuestaErrorGenericoBack(postResponse)
+            return
+        }
+
+
+        getResponse = new RestBuilder().get(baseUrl + postResponse.getHeaders().getLocation().getPath() + "?" + postResponse.getHeaders().getLocation().getQuery()) {
+            header 'Cookie', cookie
+            contentType "application/json"
+        }
+
+        if(!getResponse.getStatus().equals(200)) {
+            renderRespuestaErrorGenericoBack(getResponse)
+            return
+        }
+
+        Cuenta cuenta = bindData(new Cuenta(), getResponse.getJson().cuenta)
+
+        saveCuentaText = "Cuenta ${cuenta?.tipo?.descripcion} guardada exitosamente!"
+        render(
+            view: "/agregarCuenta",
+            model: [
+                cuenta: cuenta,
+                saveCuentaText: saveCuentaText,
+                empresa: empresa
+            ]
+        )
     }
 
     def listarCuentas() {
-        Long idEmpresa = Long.parseLong(params.empresa)
-        Empresa empresa = empresaService.obtener(idEmpresa)
-        Cuenta cuenta = new Cuenta()
-        cuenta.setEmpresa(empresa.getId())
+        String cookie = RestHelper.getJSessionCookieFromRequest(request)
+        String idEmpresa = params.empresa
+        def getResponse = new RestBuilder().get(baseUrl + "/empresa/" + idEmpresa + "/cuentas") {
+            header 'Cookie', cookie
+            contentType "application/json"
+        }
 
-        List<Cuenta> cuentas = cuentaService.listar(cuenta)
+        if(!getResponse.getStatus().equals(200)) {
+            renderRespuestaErrorGenericoBack(getResponse)
+            return
+        }
+
+        Empresa empresa = bindData(new Empresa(), getResponse.getJson().empresa)
+        List<Cuenta> cuentas = getResponse.getJson().cuentas.collect {it -> bindData(new Cuenta(), it)}
 
         render(
             view: "/listarCuentas",
             model: [
-                    cuentas: cuentas,
-                    empresa: empresa
+                cuentas: cuentas,
+                empresa: empresa
             ]
         )
+    }
+
+    void renderRespuestaErrorGenericoBack(RestResponse response) {
+        def view
+        def model
+
+        view = "/errorGenericoBack"
+        model = [
+                text: response.getJson().descripcionError.toString(),
+                buttonText: "Volver"
+        ]
+        render(view: view, model: model)
+    }
+
+    void renderRespuestaError(RestResponse response) {
+        def view
+        def model
+
+        view = "/error"
+        model = [
+                exception: new Exception(response.getJson().descripcionError.toString()),
+        ]
+        render(view: view, model: model)
     }
 }
