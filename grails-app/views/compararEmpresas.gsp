@@ -10,7 +10,7 @@
     <meta name="layout" content="main"/>
     <title>Consultas</title>
     <script language="JavaScript">
-        var empresasCounter = 2;
+        var empresasCounter = 3;
 
         function validateForm() {
             var a=document.forms["Form"]["nomMetodologia"].value;

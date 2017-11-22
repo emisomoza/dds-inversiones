@@ -20,7 +20,7 @@ class IndicadorService {
         }
     }
 
-    @Cacheable(cacheNames = CacheData.RESULTADO_INDICADOR_CACHE_NAME, key = "#periodo.id + '-' + #indicador.nombre", cacheManager = CacheData.REDIS_CACHE_MANAGER)
+    //@Cacheable(cacheNames = CacheData.RESULTADO_INDICADOR_CACHE_NAME, key = "#periodo.id + '-' + #indicador.nombre", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     Double aplicar(Periodo periodo, Indicador indicador) {
         Closure<Cuenta> obtenedorDeCuentas = {String unNombreCuenta -> periodo.getCuentas().find {it.getNombre().equals(unNombreCuenta)}}
         Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> this.obtener(unNombreIndicador)}
