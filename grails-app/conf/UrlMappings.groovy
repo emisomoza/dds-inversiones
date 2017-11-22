@@ -26,6 +26,10 @@ class UrlMappings {
         "/indicador"(controller: "indicador", method: "GET", action: "list")
         "/indicador/$id"(controller: "indicador", method: "GET", action: "show")
 
+        "/metodologia"(controller: "indicador", method: "POST", action: "save")
+        "/metodologia"(controller: "indicador", method: "GET", action: "list")
+        "/metodologia/$id"(controller: "indicador", method: "GET", action: "show")
+
         "500"(view:'/error')
     }
 }

@@ -18,8 +18,6 @@ class MetodologiasViewController {
     private String baseUrl = "http://localhost:8080/dds-inversiones"
 
     def indicadorService
-    def metodologiaService
-    def mapNormalizer
     def springSecurityService
 
     def index() { }
