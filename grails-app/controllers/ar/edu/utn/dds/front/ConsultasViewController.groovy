@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.front
 
 import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.model.Metodologia
@@ -7,7 +7,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import java.util.stream.Collectors
 
 @Secured('ROLE_USER')
-class ConsultasController {
+class ConsultasViewController {
 
     def mapNormalizer
     def empIdMapper

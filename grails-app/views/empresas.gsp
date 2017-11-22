@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <g:form class="form-horizontal" role="form" controller="Empresa" action="save">
+    <g:form class="form-horizontal" role="form" controller="EmpresaView" action="save">
         <div>
         <g:if test="${text}">
             <h2 class="panel-title">${text}</h2></br>
@@ -41,7 +41,7 @@
         </div>
     </g:form>
 
-    <g:form class="form-horizontal" role="form" controller="ModificarEmpresa">
+    <g:form class="form-horizontal" role="form" controller="ModificarEmpresaView">
         <div>
             <h2 class="panel-title">Gestionar Empresas:</h2></br>
         </div>
@@ -61,7 +61,7 @@
         </div>
         </div>
     </g:form>
-    <g:form class="form-horizontal" role="form" name="upload" controller="Empresa" action="upload" method="post" enctype="multipart/form-data"  onsubmit="return validateFile()">
+    <g:form class="form-horizontal" role="form" name="upload" controller="EmpresaView" action="upload" method="post" enctype="multipart/form-data"  onsubmit="return validateFile()">
         <div>
             <h2 class="panel-title">Carga batch de cuentas:</h2></br>
         </div>

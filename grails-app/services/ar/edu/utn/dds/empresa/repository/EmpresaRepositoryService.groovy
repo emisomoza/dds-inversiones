@@ -82,9 +82,9 @@ class EmpresaRepositoryService extends DefaultJDBCRepositoryService<Empresa> {
     }
 
     @CacheEvict(cacheNames = CacheData.EMPRESA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    void guardar(Empresa empresa) {
+    Long guardar(Empresa empresa) {
         QueryUtils queryUtils = this.obtenerQueryGuardar(empresa)
-        this.guardar(queryUtils)
+        return this.guardarYObtenerId(queryUtils)
     }
 
     private QueryUtils obtenerQueryGuardar(Empresa empresa) {

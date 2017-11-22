@@ -8,6 +8,13 @@ class Empresa implements Serializable {
     private String nombre
     private List<Periodo> periodos
 
+    Empresa() {
+    }
+
+    Empresa(String nombre) {
+        this.nombre = nombre
+    }
+
     Long getId() {
         return id
     }

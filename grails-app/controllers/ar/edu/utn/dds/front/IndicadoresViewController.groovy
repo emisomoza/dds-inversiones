@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.front
 
 import ar.edu.utn.dds.exceptions.IndicadorExistenteException
 import ar.edu.utn.dds.exceptions.IndicadorInvalidoException
@@ -6,7 +6,7 @@ import ar.edu.utn.dds.model.Indicador
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured('ROLE_USER')
-class IndicadoresController {
+class IndicadoresViewController {
 
     def indicadorService
 

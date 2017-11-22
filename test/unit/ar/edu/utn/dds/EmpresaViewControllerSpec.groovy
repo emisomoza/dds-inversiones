@@ -1,13 +1,14 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.front.EmpresaViewController
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
-@TestFor(EmpresaController)
-class EmpresaControllerSpec extends Specification {
+@TestFor(EmpresaViewController)
+class EmpresaViewControllerSpec extends Specification {
 
     def setup() {
     }

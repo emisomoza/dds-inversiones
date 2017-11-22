@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.front
 
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
@@ -9,7 +9,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import java.time.LocalDate
 
 @Secured('ROLE_ADMIN')
-class ModificarEmpresaController {
+class ModificarEmpresaViewController {
 
     def empresaService
     def periodoService
@@ -105,11 +105,11 @@ class ModificarEmpresaController {
         List<Cuenta> cuentas = cuentaService.listar(cuenta)
 
         render(
-                view: "/listarCuentas",
-                model: [
-                        cuentas: cuentas,
-                        empresa: empresa
-                ]
+            view: "/listarCuentas",
+            model: [
+                    cuentas: cuentas,
+                    empresa: empresa
+            ]
         )
     }
 }

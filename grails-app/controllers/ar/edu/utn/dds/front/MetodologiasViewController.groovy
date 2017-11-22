@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.front
 
 import ar.edu.utn.dds.exceptions.MetodologiaExistenteException
 import ar.edu.utn.dds.exceptions.MetodologiaInvalidoException
@@ -7,7 +7,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.plugin.springsecurity.userdetails.GrailsUser
 
 @Secured('ROLE_USER')
-class MetodologiasController {
+class MetodologiasViewController {
 
     def indicadorService
     def metodologiaService
