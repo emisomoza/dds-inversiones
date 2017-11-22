@@ -2,15 +2,13 @@ version: "3"
 services:
 
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: aemartinez/dds-inversiones:0.1
     networks:
       - network-db-rel
       - network-db-doc
       - network-cache
     volumes:
-      - .:/app
+      - .:/apptr
       - ./dependencies:/root/.m2/repository
     ports:
       - 21000:8080
@@ -29,9 +27,7 @@ services:
       - network-db-rel
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./mysqlScript.sql:/docker-entrypoint-initdb.d/mysqlScript.sql
-    ports:
-      - 3306:3306
+      - ./mysql-init:/docker-entrypoint-initdb.d
 
 
   db-doc:
@@ -40,8 +36,6 @@ services:
       - network-db-doc
     volumes:
       - mongo-data:/data/db
-    ports:
-      - 27017:27017
 
 
   #Cache-------------------------------------------------------------------------------------------
@@ -49,8 +43,6 @@ services:
     image: redis
     networks:
       - network-cache
-    ports:
-      - 6379:6379
 
 
   #DB UI-------------------------------------------------------------------------------------------
@@ -60,8 +52,6 @@ services:
       - PMA_HOST=db-rel
     networks:
       - network-db-rel
-    ports:
-      - 20000:80
     depends_on:
       - db-rel
 
@@ -72,8 +62,6 @@ services:
       - ME_CONFIG_MONGODB_SERVER=db-doc
     networks:
       - network-db-doc
-    ports:
-      - 20001:8081
     depends_on:
       - db-doc
 
