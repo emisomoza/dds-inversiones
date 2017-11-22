@@ -33,6 +33,12 @@
                     <option value="${it?.nombre}">${it?.valor}</option>
                 </g:each>
             </div>
+            <div class="col-md-2">
+                <strong>Periodo</strong>
+                <g:each in="${cuentas}">
+                    <option value="${it?.periodo}">${it?.periodo}</option>
+                </g:each>
+            </div>
         </div>
     </g:form>
     </main>

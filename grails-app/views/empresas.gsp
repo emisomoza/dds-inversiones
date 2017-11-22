@@ -18,6 +18,15 @@
                 return false;
             }
         }
+
+        function validateGestionar()
+        {
+            if (document.forms["gestionar"]["empresa"].value == "")
+            {
+                alert("Selecciona una empresa.");
+                return false;
+            }
+        }
     </script>
 </head>
 
@@ -41,7 +50,7 @@
         </div>
     </g:form>
 
-    <g:form class="form-horizontal" role="form" controller="ModificarEmpresa">
+    <g:form class="form-horizontal" name="gestionar" role="form" controller="ModificarEmpresa" onsubmit="return validateGestionar()">
         <div>
             <h2 class="panel-title">Gestionar Empresas:</h2></br>
         </div>
@@ -50,11 +59,11 @@
             <div class="col-sm-3">
                 <select id="selectEmpresa" name = "empresa" class="form-control">
                     <option value="" disabled selected hidden>Seleccione...</option>
-        <g:each in="${empresas}">
-            <option value="${it?.id}">${it?.nombre}</option>
-        </g:each>
-        </select>
-    </div>
+                    <g:each in="${empresas}">
+                        <option value="${it?.id}">${it?.nombre}</option>
+                    </g:each>
+                </select>
+            </div>
         <div>
             <g:actionSubmit class="btn btn-primary" value="Agregar cuentas" action="agregarCuenta"/>
             <g:actionSubmit class="btn btn-secondary" value="Ver cuentas" action="listarCuentas"/>
