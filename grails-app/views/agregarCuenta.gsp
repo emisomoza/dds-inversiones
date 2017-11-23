@@ -55,7 +55,7 @@
     <div class="form-group">
         <label for="inputValor" class="col-sm-1 control-label">Valor</label>
         <div class="col-sm-3">
-            <input id="inputValor" name = "valor" class="form-control" placeholder="Valor" onKeyPress="return checkIt(event)">
+            <input id="inputValor" name = "valor" class="form-control" maxlength="10" placeholder="Valor" onKeyPress="return checkIt(event)">
         </div>
     </div>
 
@@ -77,9 +77,9 @@
             <g:datePicker id="inputPeriodoHasta" name="fechaHasta" value="${new Date()}" precision="month" years="${1970..2020}"/>
         </div>
     </div>
-
     <div>
-        <button type="submit" class="btn btn-primary">Agregar</button>
+        <button type="submit" class="btn btn-primary" style="margin-left:40px">Agregar</button>
+        <a href="${createLink(controller:'Index', action:'agregarCuentas')}" class="btn btn-primary" style="margin-left:130px">Volver</a>
     </div>
 </g:form>
 </body>

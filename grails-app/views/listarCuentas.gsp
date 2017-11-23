@@ -40,6 +40,9 @@
                 </g:each>
             </div>
         </div>
+        <div>
+            </br></br><a href="javascript:history.back()" class="btn btn-primary">Volver</a>
+        </div>
     </g:form>
     </main>
 </body>
