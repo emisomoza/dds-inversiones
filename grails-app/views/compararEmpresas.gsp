@@ -13,9 +13,9 @@
         var empresasCounter = 2;
 
         function validateForm() {
-            var a=document.forms["Form"]["nomMetodologia"].value;
-            var b=document.forms["Form"]["indicadorOrden"].value;
-            var c=document.forms["Form"]["condicion"].value;
+            var a=document.forms["Form"]["empresas.1.empresa"].value;
+            var b=document.forms["Form"]["empresas.2.empresa"].value;
+            var c=document.forms["Form"]["metodologia"].value;
             if (a==null || a=="",b==null || b=="",c==null || c=="")
             {
                 alert("Completa los campos requeridos");
@@ -41,7 +41,7 @@
 </head>
 
 <body>
-    <g:form class="form-horizontal" method="post" name="Form" controller="Consultas" action="comparar">
+    <g:form class="form-horizontal" method="post" name="Form" controller="Consultas" action="comparar" onsubmit="return validateForm()">
         <div>
             <h1 class="panel-title">Comparar Empresas</h1></br>
         </div>
