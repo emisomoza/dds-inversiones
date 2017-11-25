@@ -7,6 +7,7 @@ import ar.edu.utn.dds.model.TipoCuenta
 import grails.plugin.springsecurity.annotation.Secured
 
 import java.time.LocalDate
+import java.util.stream.Collectors
 
 @Secured('ROLE_ADMIN')
 class ModificarEmpresaController {
@@ -98,17 +99,23 @@ class ModificarEmpresaController {
 
     def listarCuentas() {
         Long idEmpresa = Long.parseLong(params.empresa)
-        Empresa empresa = empresaService.obtener(idEmpresa)
-        Cuenta cuenta = new Cuenta()
-        cuenta.setEmpresa(empresa.getId())
 
-        List<Cuenta> cuentas = cuentaService.listar(cuenta)
+        Empresa empresa = empresaService.obtenerPopulado(idEmpresa)
+
+        def periodos = empresa.periodos.stream()
+                .map{periodo -> [
+                inicio:periodo.fechaInicio, fin:periodo.fechaFin,
+                cuentas:periodo.cuentas.stream().map{cuenta -> [
+                        nombre:cuenta.tipo.descripcion,
+                        valor:cuenta.valor]}
+                .collect(Collectors.toList())]}
+        .collect(Collectors.toList())
 
         render(
                 view: "/listarCuentas",
                 model: [
-                        cuentas: cuentas,
-                        empresa: empresa
+                        periodos: periodos,
+                        empresa: empresa.nombre
                 ]
         )
     }
