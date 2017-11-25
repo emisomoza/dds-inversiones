@@ -27,9 +27,13 @@ class ConsultasController {
                     .collect(Collectors.toList())
             ArrayList<Empresa> empresasOrdenadas = metodologiaService.comparar(metodologia, empresas)
 
+            def empresasIndexadas = empresasOrdenadas.indexed().collect{
+                index, item -> [indice:index + 1, nombre:item.nombre]
+            }
+
             view = "/resultadoComparacion"
             model = [
-                    empresas: empresasOrdenadas
+                    empresas: empresasIndexadas
             ]
 
         } catch(Exception e) {
