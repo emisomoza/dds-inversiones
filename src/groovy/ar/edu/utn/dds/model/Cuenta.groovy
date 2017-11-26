@@ -2,8 +2,10 @@ package ar.edu.utn.dds.model
 
 import ar.edu.utn.dds.exceptions.CuentaInvalidoException
 import ar.edu.utn.dds.exceptions.ElementoInvalidoException
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 class Cuenta implements Serializable {
 
     private Long empresa

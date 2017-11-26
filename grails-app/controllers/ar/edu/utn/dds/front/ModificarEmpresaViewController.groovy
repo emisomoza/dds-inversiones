@@ -2,13 +2,16 @@ package ar.edu.utn.dds.front
 
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
+import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.utils.helper.RestHelper
+import com.fasterxml.jackson.databind.ObjectMapper
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
 
 import java.text.SimpleDateFormat
+import java.util.stream.Collectors
 
 @Secured('ROLE_ADMIN')
 class ModificarEmpresaViewController {
@@ -133,7 +136,7 @@ class ModificarEmpresaViewController {
     def listarCuentas() {
         String cookie = RestHelper.getJSessionCookieFromRequest(request)
         String idEmpresa = params.empresa
-        def getResponse = new RestBuilder().get(baseUrl + "/empresa/" + idEmpresa + "/cuentas") {
+        def getResponse = new RestBuilder().get(baseUrl + "/empresa/" + idEmpresa) {
             header 'Cookie', cookie
             contentType "application/json"
         }
@@ -143,14 +146,22 @@ class ModificarEmpresaViewController {
             return
         }
 
-        Empresa empresa = bindData(new Empresa(), getResponse.getJson().empresa)
-        List<Cuenta> cuentas = getResponse.getJson().cuentas.collect {it -> bindData(new Cuenta(), it)}
+        Empresa empresa = new ObjectMapper().readValue(getResponse.getJson().empresa.toString(), Empresa.class)
+
+        def periodos = empresa.periodos.stream()
+                .map{periodo -> [
+                inicio:periodo.fechaInicio, fin:periodo.fechaFin,
+                cuentas:periodo.cuentas.stream().map{cuenta -> [
+                    nombre:cuenta.tipo.descripcion,
+                    valor:cuenta.valor]}
+                .collect(Collectors.toList())]}
+        .collect(Collectors.toList())
 
         render(
             view: "/listarCuentas",
             model: [
-                cuentas: cuentas,
-                empresa: empresa
+                periodos: periodos,
+                empresa: empresa.getNombre()
             ]
         )
     }

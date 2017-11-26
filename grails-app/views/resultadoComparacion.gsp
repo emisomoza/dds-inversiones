@@ -12,8 +12,16 @@
     <div>
         <h2 class="panel-title">Empresas Ordenadas:</h2></br>
     </div>
-    <div class="form-group">
-        <div class="col-sm-3">
+
+    <div class="row" style="margin-left: auto">
+        <div class="col-md-1">
+            <strong>Posición</strong><br/>
+            <g:each in="${empresas}">
+                ${it?.indice}<br/>
+            </g:each>
+        </div>
+        <div class="col-md-3">
+            <strong>Empresa</strong><br/>
             <g:each in="${empresas}">
                 ${it?.nombre}<br/>
             </g:each>

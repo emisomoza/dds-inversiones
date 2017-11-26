@@ -107,7 +107,7 @@ class Indicador implements Serializable {
     }
 
     void validarConsistencia() {
-        if(this.getNombre() == null || this.getNombre().size() == 0)
+        if(this.getNombre() == null || this.getNombre().isEmpty())
             throw new IndicadorInvalidoException("El indicador debe tener nombre")
 
         if(this.getExpresion() == null)

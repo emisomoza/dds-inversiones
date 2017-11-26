@@ -26,7 +26,7 @@ class MetodologiasViewController {
         }
 
         if(!listarResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
+            renderRespuestaErrorGenericoBack(listarResponse)
             return
         }
 
@@ -71,7 +71,7 @@ class MetodologiasViewController {
         }
 
         if(!listarResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
+            renderRespuestaErrorGenericoBack(listarResponse)
             return
         }
 
