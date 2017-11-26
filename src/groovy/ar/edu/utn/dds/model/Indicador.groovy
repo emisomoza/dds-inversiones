@@ -107,7 +107,7 @@ class Indicador implements Serializable {
     }
 
     void validarConsistencia() {
-        if(this.getNombre() == null || this.getNombre().size() == 0)
+        if(this.getNombre() == null || this.getNombre().isEmpty())
             throw new IndicadorInvalidoException("El indicador debe tener nombre")
 
         if(this.getExpresion() == null)
@@ -116,7 +116,7 @@ class Indicador implements Serializable {
         if(this.getOwner() == null)
             throw new IndicadorInvalidoException("El indicador debe tener dueño")
 
-        if(this.getVisibilidad() == null || this.getVisibilidad().size() == 0)
+        if(this.getVisibilidad() == null || this.getVisibilidad().isEmpty())
             throw new IndicadorInvalidoException("El indicador debe tener visibilidad")
     }
 }

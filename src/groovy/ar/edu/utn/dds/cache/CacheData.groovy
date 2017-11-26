@@ -9,9 +9,10 @@ class CacheData {
     public static final String CUENTA_CACHE_NAME = "cuenta"
     public static final String TIPO_CUENTA_CACHE_NAME = "tipocuenta"
     public static final String INDICADOR_CACHE_NAME = "indicador"
+    public static final String RESULTADO_INDICADOR_CACHE_NAME = "resultado_indicador"
     public static final String METODOLOGIA_CACHE_NAME = "metodologia"
 
     public static final List<String> getAllCacheNames() {
-        return [DEFAULT_CACHE_NAME, EMPRESA_CACHE_NAME, PERIODO_CACHE_NAME, CUENTA_CACHE_NAME, TIPO_CUENTA_CACHE_NAME, INDICADOR_CACHE_NAME, METODOLOGIA_CACHE_NAME]
+        return [DEFAULT_CACHE_NAME, EMPRESA_CACHE_NAME, PERIODO_CACHE_NAME, CUENTA_CACHE_NAME, TIPO_CUENTA_CACHE_NAME, INDICADOR_CACHE_NAME, RESULTADO_INDICADOR_CACHE_NAME, METODOLOGIA_CACHE_NAME]
     }
 }

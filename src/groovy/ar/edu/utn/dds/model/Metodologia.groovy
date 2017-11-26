@@ -29,6 +29,9 @@ class Metodologia implements Serializable {
     @JsonProperty("operadorOrden")
     private OperadorOrdenador operadorOrden
 
+    Metodologia() {
+    }
+
     String getNombre() {
         return nombre
     }

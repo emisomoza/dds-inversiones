@@ -1,9 +1,11 @@
 package ar.edu.utn.dds.indicador.service
 
+import ar.edu.utn.dds.cache.CacheData
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.resolver.ResolvedorIndicador
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PostFilter
 
@@ -18,6 +20,7 @@ class IndicadorService {
         }
     }
 
+    //@Cacheable(cacheNames = CacheData.RESULTADO_INDICADOR_CACHE_NAME, key = "#periodo.id + '-' + #indicador.nombre", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     Double aplicar(Periodo periodo, Indicador indicador) {
         Closure<Cuenta> obtenedorDeCuentas = {String unNombreCuenta -> periodo.getCuentas().find {it.getNombre().equals(unNombreCuenta)}}
         Closure<Indicador> obtenedorDeIndicadores = {String unNombreIndicador -> this.obtener(unNombreIndicador)}

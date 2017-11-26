@@ -7,13 +7,17 @@ import ar.edu.utn.dds.utils.queries.builders.RootStatementBuilder
 import grails.transaction.Transactional
 import org.springframework.dao.DataAccessException
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.jdbc.core.PreparedStatementCreator
 import org.springframework.jdbc.core.ResultSetExtractor
 import org.springframework.jdbc.core.RowMapper
+import org.springframework.jdbc.support.GeneratedKeyHolder
 
+import java.sql.Connection
 import java.sql.Date
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.SQLException
+import java.sql.Statement
 import java.sql.Timestamp
 import java.util.stream.Collectors
 
@@ -112,6 +116,30 @@ class DefaultJDBCRepositoryService<T> {
                 }
             })
             log.info(String.format("%s guardado", T.getClass().getName()))
+        } catch(DataAccessException e) {
+            throw new SQLInaccesibleException(String.format("Error al guardar %s", T.getClass().getName()), e.getCause())
+        }
+    }
+
+    Long guardarYObtenerId(QueryUtils queryUtils) {
+        log.info(String.format("Guardando %s", T.getClass().getName()))
+        log.debug(String.format("Query: %s", queryUtils.getSqlQuery()))
+        String query =
+                queryUtils.getRootStatement() + "( " + queryUtils.getParams().stream().collect(Collectors.joining(", ")) + " ) VALUES (" +
+                        queryUtils.getParams().collect {p -> " ? "}.stream().collect(Collectors.joining(", ")) + ")"
+        try {
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder()
+            jdbcTemplate.update(
+                    new PreparedStatementCreator() {
+                        PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
+                            setPSArgs(ps, queryUtils.getSqlArguments())
+                            return ps
+                        }
+                    }, keyHolder)
+            log.info(String.format("%s guardado", T.getClass().getName()))
+
+            return keyHolder.getKey().longValue()
         } catch(DataAccessException e) {
             throw new SQLInaccesibleException(String.format("Error al guardar %s", T.getClass().getName()), e.getCause())
         }

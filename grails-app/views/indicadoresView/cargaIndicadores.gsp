@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <g:form class="form-horizontal" role="form" controller="Indicadores" action="save">
+    <g:form class="form-horizontal" role="form" controller="IndicadoresView" action="save">
         <div>
             <h2 class="panel-title">Agregar Indicador</h2><br/>
         </div>

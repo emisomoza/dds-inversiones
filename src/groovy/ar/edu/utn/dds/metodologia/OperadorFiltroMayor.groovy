@@ -40,7 +40,7 @@ class OperadorFiltroMayor extends OperadorFiltro {
             try {
                 return indicadorService.aplicar(it, indicador) > this.comparador
             } catch (CuentaNoExisteException e) {
-                throw new MetodologiaException()
+                throw new MetodologiaException("No se puede aplicar la metodologia porque no se encontro una cuenta")
             }
         }
     }

@@ -7,6 +7,13 @@ class TipoCuenta implements Serializable {
     private Long id
     private String descripcion
 
+    TipoCuenta() {
+    }
+
+    TipoCuenta(String descripcion) {
+        this.descripcion = descripcion
+    }
+
     Long getId() {
         return id
     }

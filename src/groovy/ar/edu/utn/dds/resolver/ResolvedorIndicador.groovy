@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.resolver
 
+import ar.edu.utn.dds.exceptions.CuentaNoExisteException
 import ar.edu.utn.dds.expresion.ExpresionNegada
 import ar.edu.utn.dds.expresion.FuncionBinaria
 import ar.edu.utn.dds.expresion.FuncionEstatica
@@ -112,7 +113,12 @@ class ResolvedorIndicador {
     }
 
     Double resolver(PrimariaCuenta expresion) {
-        return obtenedorDeCuentas.call(expresion.getNombre()).getValor()
+        Cuenta cuenta = obtenedorDeCuentas.call(expresion.getNombre())
+
+        if(cuenta == null) {
+            throw new CuentaNoExisteException()
+        }
+        return cuenta.getValor()
     }
 
     Double resolver(PrimariaIndicador expresion) {

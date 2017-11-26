@@ -31,7 +31,7 @@ class IndicadorRepositoryService {
 
     @Cacheable(cacheNames = CacheData.INDICADOR_CACHE_NAME, key = "#nombre.concat('-').concat(#userId)", cacheManager = CacheData.REDIS_CACHE_MANAGER)
     Indicador obtener(String nombre, Long userId) {
-        BasicQuery query = new BasicQuery("{\$or: [{nombre: '" + nombre + "', owner: " + userId + "}, {visibilidad: {\$ne: 'ROLE_NULL'}}]}")
+        BasicQuery query = new BasicQuery("{nombre: '" + nombre + "', owner: " + userId + "}")
         try {
             return mongoTemplate.findOne(query, Indicador.class)
         } catch (Exception e) {

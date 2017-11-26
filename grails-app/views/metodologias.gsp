@@ -58,7 +58,7 @@
 </head>
 
 <body>
-<g:form class="form-horizontal" method="post" name="Form" controller="Metodologias" action="save" onsubmit="return validateForm()">
+<g:form class="form-horizontal" method="post" name="Form" controller="MetodologiasView" action="save" onsubmit="return validateForm()">
     <div>
         <g:if test="${text}">
             <h2 class="panel-title">${text}</h2></br>
