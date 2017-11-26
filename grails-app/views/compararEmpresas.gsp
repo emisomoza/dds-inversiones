@@ -10,7 +10,7 @@
     <meta name="layout" content="main"/>
     <title>Consultas</title>
     <script language="JavaScript">
-        var empresasCounter = 2;
+        var empresasCounter = 3;
 
         function validateForm() {
             var a=document.forms["Form"]["empresas.1.empresa"].value;
@@ -41,7 +41,7 @@
 </head>
 
 <body>
-    <g:form class="form-horizontal" method="post" name="Form" controller="Consultas" action="comparar" onsubmit="return validateForm()">
+    <g:form class="form-horizontal" method="post" name="Form" controller="ConsultasView" action="comparar">
         <div>
             <h1 class="panel-title">Comparar Empresas</h1></br>
         </div>

@@ -2,8 +2,10 @@ package ar.edu.utn.dds.model
 
 import ar.edu.utn.dds.exceptions.CuentaInvalidoException
 import ar.edu.utn.dds.exceptions.ElementoInvalidoException
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 class Cuenta implements Serializable {
 
     private Long empresa
@@ -19,6 +21,19 @@ class Cuenta implements Serializable {
         this.setTipo(new TipoCuenta())
         this.getTipo().setDescripcion(nombre)
         this.setValor(valor)
+    }
+
+    Cuenta(Long empresa, Long periodo, String nombre, Double valor) {
+        this(nombre, valor)
+        this.empresa = empresa
+        this.periodo = periodo
+    }
+
+    Cuenta(Long empresa, Long periodo, TipoCuenta tipoCuenta, Double valor) {
+        this.tipo = tipoCuenta
+        this.valor = valor
+        this.empresa = empresa
+        this.periodo = periodo
     }
 
     String getNombre() {

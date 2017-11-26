@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.back
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification
@@ -6,8 +6,8 @@ import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
-@TestFor(EmpresaController)
-class EmpresaControllerSpec extends Specification {
+@TestFor(MetodologiaController)
+class MetodologiaControllerSpec extends Specification {
 
     def setup() {
     }

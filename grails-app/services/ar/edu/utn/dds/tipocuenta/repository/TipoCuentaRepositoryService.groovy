@@ -83,9 +83,9 @@ class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuent
     }
 
     @CacheEvict(cacheNames = CacheData.TIPO_CUENTA_CACHE_NAME, cacheManager = CacheData.REDIS_CACHE_MANAGER, allEntries = true)
-    void guardar(TipoCuenta tipoCuenta) {
+    Long guardar(TipoCuenta tipoCuenta) {
         QueryUtils queryUtils = this.obtenerQueryGuardar(tipoCuenta)
-        this.guardar(queryUtils)
+        return this.guardarYObtenerId(queryUtils)
     }
 
     private QueryUtils obtenerQueryGuardar(TipoCuenta tipoCuenta) {

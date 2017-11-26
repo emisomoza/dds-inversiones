@@ -126,11 +126,23 @@
           <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-commons/1.13.6.RELEASE/spring-data-commons-1.13.6.RELEASE.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.2/commons-logging-1.2.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/4.3.10.RELEASE/spring-core-4.3.10.RELEASE.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-pool2/2.0/commons-pool2-2.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/redis/clients/jedis/2.6.0/jedis-2.6.0.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/plexus/plexus-interpolation/1.11/plexus-interpolation-1.11.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/apache/maven/maven-plugin-registry/2.2.1/maven-plugin-registry-2.2.1.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/6.0.6/mysql-connector-java-6.0.6.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.8.6/jackson-datatype-jsr310-2.8.6.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-pool2/2.4.2/commons-pool2-2.4.2.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/redis/clients/jedis/2.9.0/jedis-2.9.0.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-oxm/4.3.10.RELEASE/spring-oxm-4.3.10.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-keyvalue/1.2.6.RELEASE/spring-data-keyvalue-1.2.6.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-redis/1.8.6.RELEASE/spring-data-redis-1.8.6.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/4.3.10.RELEASE/spring-aop-4.3.10.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/4.3.10.RELEASE/spring-beans-4.3.10.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context-support/4.3.10.RELEASE/spring-context-support-4.3.10.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.10.RELEASE/spring-context-4.3.10.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/grails/grails-datastore-rest-client/3.1.4.RELEASE/grails-datastore-rest-client-3.1.4.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-acl/3.2.9.RELEASE/spring-security-acl-3.2.9.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/3.2.9.RELEASE/spring-security-web-3.2.9.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/3.2.9.RELEASE/spring-security-core-3.2.9.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>

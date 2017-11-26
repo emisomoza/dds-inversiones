@@ -1,4 +1,4 @@
-package ar.edu.utn.dds
+package ar.edu.utn.dds.front
 
 import ar.edu.utn.dds.model.Metodologia
 import grails.plugin.springsecurity.annotation.Secured
@@ -51,7 +51,7 @@ class IndexController {
                 .collect({authority -> authority.getAuthority()})
 
         render(
-                view: "/indicadores/cargaIndicadores",
+                view: "/indicadoresView/cargaIndicadores",
                 model: [
                     userRoles: userRoles
                 ]

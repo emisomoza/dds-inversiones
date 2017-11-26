@@ -17,9 +17,9 @@ class OperadorFiltroSpec extends Specification {
     def setup() {
         empresa = new Empresa("Empresa1");
 
-        indicador = new Indicador("indicador", "4*5+ind(indicador1)" )
-        def indicador1 = new Indicador("indicador1", "cue(Cuenta1) * ind(indicador2)")
-        def indicador2 = new Indicador("indicador2", "4^2-5" )
+        indicador = new Indicador("indicador", "4*5+ind(indicador1)", "")
+        def indicador1 = new Indicador("indicador1", "cue(Cuenta1) * ind(indicador2)", "")
+        def indicador2 = new Indicador("indicador2", "4^2-5", "" )
 
         indicadorServ = Spy(IndicadorService) {
             obtener("indicador") >> indicador

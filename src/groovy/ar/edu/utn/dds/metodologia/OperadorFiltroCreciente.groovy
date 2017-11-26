@@ -23,7 +23,7 @@ class OperadorFiltroCreciente extends OperadorFiltro {
             try {
                 return index <= 0 || indicadorService.aplicar(periodos.get(index - 1), indicador) < indicadorService.aplicar(it, indicador)
             } catch (CuentaNoExisteException e) {
-                throw new MetodologiaException()
+                throw new MetodologiaException("No se puede aplicar la metodologia porque no se encontro una cuenta")
             }
         }
     }

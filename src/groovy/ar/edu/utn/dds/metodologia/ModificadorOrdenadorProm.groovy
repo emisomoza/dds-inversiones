@@ -14,7 +14,7 @@ class ModificadorOrdenadorProm extends ModificadorOrdenador {
             try {
                 return indicadorService.aplicar(it, indicador)
             } catch (CuentaNoExisteException e) {
-                throw new MetodologiaException()
+                throw new MetodologiaException("No se puede aplicar la metodologia porque no se encontro una cuenta")
             }
         }.sum()
 

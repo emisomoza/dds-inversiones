@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.expresion
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonSubTypes
 
 @JsonSubTypes([
@@ -22,6 +22,7 @@ abstract class PrimariaVariable extends Primaria {
         this.nombre = nombre
     }
 
+    @JsonIgnore(true)
     @Override
     abstract Double getValor()
 }

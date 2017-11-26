@@ -69,6 +69,7 @@ grails.project.dependency.resolution = {
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
         compile "com.xlson.groovycsv:groovycsv:1.0"
         compile 'com.fasterxml.jackson.core:jackson-databind:jar:2.8.6'
+        compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.8.6'
         compile 'org.antlr:antlr4-maven-plugin:4.7'
 
         build 'com.google.guava:guava:18.0'
@@ -97,6 +98,8 @@ grails.project.dependency.resolution = {
 
         compile "org.grails.plugins:spring-security-core:2.0.0"
         compile "org.grails.plugins:spring-security-acl:2.0.1"
+
+        compile "org.grails.plugins:rest-client-builder:2.1.1"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
