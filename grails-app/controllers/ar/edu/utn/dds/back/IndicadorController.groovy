@@ -10,7 +10,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 import org.codehaus.groovy.grails.web.json.JSONObject
 
-@Secured('ROLE_ADMIN')
+@Secured('ROLE_USER')
 class IndicadorController extends RestfulController {
     static responseFormats = ['json']
 
@@ -40,7 +40,7 @@ class IndicadorController extends RestfulController {
         try {
             Indicador nuevoIndicador = new Indicador(nombre, expresion, visibilidad)
             indicadorService.guardar(nuevoIndicador)
-            response.addHeader("Location", "/indicador/" + nuevoIndicador.getNombre())
+            response.addHeader("Location", URLEncoder.encode("/indicador/" + nuevoIndicador.getNombre(), "UTF-8"))
             response.setStatus(201)
             render ""
         } catch(IndicadorInvalidoException e) {

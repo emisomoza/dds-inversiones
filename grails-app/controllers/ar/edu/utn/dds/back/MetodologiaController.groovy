@@ -12,7 +12,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 import org.codehaus.groovy.grails.web.json.JSONObject
 
-@Secured('ROLE_ADMIN')
+@Secured('ROLE_USER')
 class MetodologiaController extends RestfulController {
     static responseFormats = ['json']
 
@@ -42,7 +42,7 @@ class MetodologiaController extends RestfulController {
             Metodologia nuevaMetodologia = mapper.mapear(jsonObject.parametrosMetodologia)
             metodologiaService.guardar(nuevaMetodologia)
 
-            response.addHeader("Location", "/metodologia/" + nuevaMetodologia.getNombre())
+            response.addHeader("Location", URLEncoder.encode("/metodologia/" + nuevaMetodologia.getNombre(), "UTF-8"))
             response.setStatus(201)
             render ""
         } catch(MetodologiaInvalidoException e) {

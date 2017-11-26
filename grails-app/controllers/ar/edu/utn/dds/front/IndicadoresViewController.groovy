@@ -78,4 +78,15 @@ class IndicadoresViewController {
         ]
         render(view: view, model: model)
     }
+
+    def listarIndicadores() {
+        def indicadores = indicadorService.listar().collect({ind -> [nombre:ind.nombre, expresion:ind.expresionString]}).sort()
+
+        render(
+                view: "/listarIndicadores",
+                model: [
+                        indicadores: indicadores
+                ]
+        )
+    }
 }
