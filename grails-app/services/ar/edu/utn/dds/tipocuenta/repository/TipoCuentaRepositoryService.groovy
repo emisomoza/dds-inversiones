@@ -23,6 +23,11 @@ class TipoCuentaRepositoryService extends DefaultJDBCRepositoryService<TipoCuent
 
     private RowMapper mapper = new TipoCuentaMapper()
 
+    @Override
+    String nombreEntidad() {
+        return TipoCuenta.getName()
+    }
+
     Boolean existe(Long id) {
         QueryUtils queryUtils = this.obtenerQueryExiste(id)
         this.existe(queryUtils)

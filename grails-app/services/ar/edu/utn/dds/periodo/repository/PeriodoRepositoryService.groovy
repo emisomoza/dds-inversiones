@@ -27,6 +27,11 @@ class PeriodoRepositoryService extends DefaultJDBCRepositoryService<Periodo> {
 
     private RowMapper mapper = new PeriodoMapper()
 
+    @Override
+    String nombreEntidad() {
+        return Periodo.getName()
+    }
+
     Boolean existe(Long id) {
         QueryUtils queryUtils = this.obtenerQueryExiste(id)
         this.existe(queryUtils)

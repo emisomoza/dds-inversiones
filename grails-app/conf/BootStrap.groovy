@@ -5,7 +5,6 @@ import ar.edu.utn.dds.auth.DDSUserDDSRole
 class BootStrap {
 
     def init = { servletContext ->
-
         // test users initialization - esto esta solo porque es un tp,
         // si fuera productivo claramente autenticariamos contra un oauth, eldap o blah
         def adminRole = new DDSRole('ROLE_ADMIN').save()
