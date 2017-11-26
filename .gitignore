@@ -97,3 +97,6 @@ src/java/ar/utn/edu/dds/antlr/*
 
 # Compose
 dependencies/
+
+# Counts import
+import/

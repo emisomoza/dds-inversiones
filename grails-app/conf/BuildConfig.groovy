@@ -51,12 +51,16 @@ grails.project.dependency.resolution = {
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
-        compile 'org.springframework:spring-core:jar:4.3.10.RELEASE'
-        compile 'org.springframework:spring-context:jar:4.3.10.RELEASE'
-        compile 'org.springframework:spring-context-support:jar:4.3.10.RELEASE'
-        compile 'org.springframework:spring-beans:jar:4.3.10.RELEASE'
-        compile 'org.springframework:spring-aop:jar:4.3.10.RELEASE'
+        compile 'org.springframework:spring-core:jar:4.3.12.RELEASE'
+        compile 'org.springframework:spring-context:jar:4.3.12.RELEASE'
+        compile 'org.springframework:spring-context-support:jar:4.3.12.RELEASE'
+        compile 'org.springframework:spring-beans:jar:4.3.12.RELEASE'
+        compile 'org.springframework:spring-aop:jar:4.3.12.RELEASE'
         compile 'org.springframework.data:spring-data-commons:jar:1.13.6.RELEASE'
+        compile 'org.springframework.integration:spring-integration-core:jar:4.3.12.RELEASE'
+        compile 'org.springframework.integration:spring-integration-java-dsl:jar:1.2.1.RELEASE'
+        compile 'org.springframework.integration:spring-integration-file:jar:4.3.12.RELEASE'
+//        compile 'org.springframework.integration:spring-integration-dsl-groovy-core:jar:1.0.0.M1'
 
         compile 'org.springframework.data:spring-data-mongodb:1.10.6.RELEASE'
         compile 'org.mongodb:mongo-java-driver:jar:3.5.0'
