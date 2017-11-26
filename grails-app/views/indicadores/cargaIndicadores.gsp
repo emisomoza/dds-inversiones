@@ -42,7 +42,8 @@
             </div>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <g:actionSubmit class="btn btn-primary" value="Guardar" action="save"/>
+            <g:actionSubmit class="btn btn-secondary" value="Ver indicadores" action="listarIndicadores"/>
         </div>
     </g:form>
 </body>

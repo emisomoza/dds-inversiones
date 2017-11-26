@@ -30,6 +30,8 @@ class Indicador implements Serializable {
     private String visibilidad
     @JsonProperty("expresion")
     private Expresion expresion
+    @JsonProperty("expresionString")
+    private String expresionString
     @JsonProperty("dependenciasIndicador")
     private List<String> dependenciasIndicador
     @JsonProperty("dependenciasCuenta")
@@ -40,6 +42,7 @@ class Indicador implements Serializable {
 
     Indicador(String nombre, String expresion, String visibilidad) {
         this.nombre = nombre
+        this.expresionString = expresion
         this.visibilidad = visibilidad
 
         IndicadorLexer lexer = new IndicadorLexer(CharStreams.fromString(expresion))
