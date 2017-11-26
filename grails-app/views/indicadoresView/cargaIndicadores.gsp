@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <g:form class="form-horizontal" role="form" controller="IndicadoresView" action="save">
+    <g:form class="form-horizontal" role="form" controller="IndicadoresView">
         <div>
             <h2 class="panel-title">Agregar Indicador</h2><br/>
         </div>
@@ -42,7 +42,8 @@
             </div>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <g:actionSubmit class="btn btn-primary" value="Guardar" action="save"/>
+            <g:actionSubmit class="btn btn-secondary" value="Ver indicadores" action="listarIndicadores"/>
         </div>
     </g:form>
 </body>

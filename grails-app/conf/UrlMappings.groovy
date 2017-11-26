@@ -29,6 +29,7 @@ class UrlMappings {
         "/metodologia"(controller: "metodologia", method: "POST", action: "save")
         "/metodologia"(controller: "metodologia", method: "GET", action: "list")
         "/metodologia/$id"(controller: "metodologia", method: "GET", action: "show")
+        "/metodologia/comparar"(controller: "metodologia", method: "GET", action: "compare")
 
         "500"(view:'/error')
     }

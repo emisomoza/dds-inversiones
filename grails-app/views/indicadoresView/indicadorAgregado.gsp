@@ -7,7 +7,7 @@
 <body>
 <g:form class="form-horizontal">
     <div id="main">
-        <h1>Indicador guardado con éxito</h1>
+        <h1>Indicador "${indicador.nombre}" guardado con éxito</h1>
     </div>
     <div>
         <a href="javascript:history.back()" class="btn btn-primary">Volver</a>

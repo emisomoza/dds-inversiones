@@ -5,9 +5,11 @@ import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
+import com.fasterxml.jackson.databind.ObjectMapper
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
+import org.codehaus.groovy.grails.web.json.JSONObject
 
 @Secured('ROLE_ADMIN')
 class EmpresaController extends RestfulController {
@@ -51,9 +53,9 @@ class EmpresaController extends RestfulController {
 
     def show() {
         try {
-            def empresa = empresaService.obtener(params.id as Long)
+            def empresa = empresaService.obtenerPopulado(params.id as Long)
             response.setStatus(200)
-            render([empresa: empresa] as JSON)
+            render([empresa: new JSONObject(new ObjectMapper().writeValueAsString(empresa))] as JSON)
         } catch(RecursoNoEncontradoException e) {
             response.setStatus(404)
             renderErrorInversiones(e)

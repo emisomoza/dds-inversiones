@@ -1,7 +1,9 @@
 package ar.edu.utn.dds.model
 
 import ar.edu.utn.dds.exceptions.EmpresaInvalidoException
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 class Empresa implements Serializable {
 
     private Long id
