@@ -27,6 +27,11 @@ class CuentaRepositoryService extends DefaultJDBCRepositoryService<Cuenta> {
 
     private RowMapper mapper = new CuentaMapper()
 
+    @Override
+    String nombreEntidad() {
+        return Cuenta.getName()
+    }
+
     Boolean existe(Long empId, Long perId, Long cueId) {
         QueryUtils queryUtils = this.obtenerQueryExiste(empId, perId, cueId)
         this.existe(queryUtils)
