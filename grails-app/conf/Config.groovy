@@ -108,6 +108,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails.serverURL = "http://localhost:8080/dds-inversiones"
 
         dataSource {
             url = "jdbc:mysql://localhost:3306/INVERSIONES?useSSL=false"
@@ -119,7 +120,7 @@ environments {
 
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails.serverURL = "http://localhost:8080/ddsinversiones"
 
         dataSource {
             url = "jdbc:mysql://db-rel:3306/INVERSIONES?useSSL=false"
@@ -127,6 +128,12 @@ environments {
 
         mongo.url = "db-doc"
         redis.url = "cache"
+
+        app {
+            port = "8080"
+            ip = "localhost"
+            baseUrl = "http://{ip}:{port}/ddsinversiones"
+        }
     }
 }
 

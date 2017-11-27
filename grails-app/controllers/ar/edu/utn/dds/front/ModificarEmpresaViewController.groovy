@@ -1,191 +1,158 @@
 package ar.edu.utn.dds.front
 
+import ar.edu.utn.dds.exceptions.RequestInvalidoException
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
-import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.model.Periodo
-import ar.edu.utn.dds.utils.helper.RestHelper
-import com.fasterxml.jackson.databind.ObjectMapper
 import grails.plugin.springsecurity.annotation.Secured
-import grails.plugins.rest.client.RestBuilder
-import grails.plugins.rest.client.RestResponse
 
 import java.text.SimpleDateFormat
 import java.util.stream.Collectors
 
 @Secured('ROLE_ADMIN')
-class ModificarEmpresaViewController {
-    private String baseUrl = "http://localhost:8080/dds-inversiones"
+class ModificarEmpresaViewController extends AbstractViewController {
 
     def agregarCuenta() {
-        String cookie = RestHelper.getJSessionCookieFromRequest(request)
+        try {
+            validarParametrosAgregarCuenta(params)
 
-        def getResponse = new RestBuilder().get(baseUrl + "/empresa/" + params.empresa) {
-            header 'Cookie', cookie
-            contentType "application/json"
+            def getResponse = get("/empresa/" + params.empresa)
+
+            Empresa empresa = mapearAObjeto(getResponse.getJson().empresa, Empresa.class)
+
+            render(
+                view: "/agregarCuenta",
+                model: [
+                    empresa: empresa
+                ]
+            )
+        } catch(Exception e) {
+            renderRespuestaErrorGenericoBack(e.getMessage())
         }
+    }
 
-        if(!getResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
-            return
+    void validarParametrosAgregarCuenta(Map params) {
+        String empresaId = params.containsKey("empresa") ? params.empresa : null
+
+        if(empresaId == null || empresaId.isEmpty()) {
+            throw new RequestInvalidoException("No se ingreso ninguna empresa")
         }
-
-        Empresa empresa = bindData(new Empresa(), getResponse.getJson().empresa)
-
-        render(
-            view: "/agregarCuenta",
-            model: [
-                empresa: empresa
-            ]
-        )
     }
 
     def save_cuenta_empresa() {
-        String cookie = RestHelper.getJSessionCookieFromRequest(request)
-        String saveCuentaText
+        try {
+            validarParametrosSaveCuentaEmpresa(params)
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy")
-        String fechaDesdeString = format.format(params.fechaDesde)
-        String fechaHastaString = format.format(params.fechaHasta)
+            String saveCuentaText
 
-        def postResponse = new RestBuilder().post(baseUrl + "/periodo") {
-            header 'Cookie', cookie
-            contentType "application/json"
-            json {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy")
+            String fechaDesdeString = format.format(params.fechaDesde)
+            String fechaHastaString = format.format(params.fechaHasta)
+
+            def postResponse = post("/periodo", {
                 fechaDesde = fechaDesdeString
                 fechaHasta = fechaHastaString
-            }
-        }
+            })
 
-        if(!postResponse.getStatus().equals(201)) {
-            renderRespuestaErrorGenericoBack(postResponse)
-            return
-        }
+            def getResponse = get(postResponse.getHeaders().getLocation().getPath())
 
+            Periodo nuevoPeriodo = mapearAObjeto(getResponse.getJson().periodo, Periodo.class)
 
-        def getResponse = new RestBuilder().get(baseUrl + postResponse.getHeaders().getLocation().getPath()) {
-            header 'Cookie', cookie
-            contentType "application/json"
-        }
+            String idDeEmpresa = params.empresa
+            getResponse = get("/empresa/" + idDeEmpresa)
 
-        if(!getResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
-            return
-        }
+            Empresa empresa = mapearAObjeto(getResponse.getJson().empresa, Empresa.class)
 
-        Periodo nuevoPeriodo = bindData(new Periodo(), getResponse.getJson().periodo)
+            String nombreCuenta = params.nomCuenta.toString()
+            Double valorCuenta = Double.parseDouble(params.valor)
 
-
-        String idDeEmpresa = params.empresa
-        getResponse = new RestBuilder().get(baseUrl + "/empresa/" + idDeEmpresa) {
-            header 'Cookie', cookie
-            contentType "application/json"
-        }
-
-        if(!getResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
-            return
-        }
-
-        Empresa empresa = bindData(new Empresa(), getResponse.getJson().empresa)
-
-
-        String nombreCuenta = params.nomCuenta.toString()
-        Double valorCuenta = Double.parseDouble(params.valor)
-
-        postResponse = new RestBuilder().post(baseUrl + "/cuenta") {
-            header 'Cookie', cookie
-            contentType "application/json"
-            json {
+            postResponse = post("/cuenta", {
                 idEmpresa = empresa.getId()
                 idPeriodo = nuevoPeriodo.getId()
                 nombre = nombreCuenta
                 valor = valorCuenta
-            }
+            })
+
+            getResponse = get(postResponse.getHeaders().getLocation().getPath() + "?" + postResponse.getHeaders().getLocation().getQuery())
+
+            Cuenta cuenta = mapearAObjeto(getResponse.getJson().cuenta, Cuenta.class)
+
+            saveCuentaText = "Cuenta ${cuenta?.tipo?.descripcion} guardada exitosamente!"
+            render(
+                view: "/agregarCuenta",
+                model: [
+                    cuenta: cuenta,
+                    saveCuentaText: saveCuentaText,
+                    empresa: empresa
+                ]
+            )
+        } catch(Exception e) {
+            renderRespuestaErrorGenericoBack(e.getMessage())
+        }
+    }
+
+    void validarParametrosSaveCuentaEmpresa(Map params) {
+        String fechaDesde = params.containsKey("fechaDesde") ? params.fechaDesde : null
+        String fechaHasta = params.containsKey("fechaHasta") ? params.fechaHasta : null
+        String empresaId = params.containsKey("empresa") ? params.empresa : null
+        String valor = params.containsKey("valor") ? params.valor : null
+
+        if(fechaDesde == null || fechaDesde.isEmpty()) {
+            throw new RequestInvalidoException("No se ingreso fecha inicio")
         }
 
-        if(!postResponse.getStatus().equals(201)) {
-            renderRespuestaErrorGenericoBack(postResponse)
-            return
+        if(fechaHasta == null || fechaHasta.isEmpty()) {
+            throw new RequestInvalidoException("No se ingreso fecha fin")
         }
 
-
-        getResponse = new RestBuilder().get(baseUrl + postResponse.getHeaders().getLocation().getPath() + "?" + postResponse.getHeaders().getLocation().getQuery()) {
-            header 'Cookie', cookie
-            contentType "application/json"
+        if(empresaId == null || empresaId.isEmpty()) {
+            throw new RequestInvalidoException("No se ingreso ninguna empresa")
         }
 
-        if(!getResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
-            return
+        if(valor == null || valor.isEmpty()) {
+            throw new RequestInvalidoException("No se ingreso ningun valor")
         }
 
-        Cuenta cuenta = bindData(new Cuenta(), getResponse.getJson().cuenta)
-
-        saveCuentaText = "Cuenta ${cuenta?.tipo?.descripcion} guardada exitosamente!"
-        render(
-            view: "/agregarCuenta",
-            model: [
-                cuenta: cuenta,
-                saveCuentaText: saveCuentaText,
-                empresa: empresa
-            ]
-        )
+        try {
+            Double.parseDouble(valor)
+        } catch(Exception e) {
+            throw new RequestInvalidoException("El valor ingresado no es un numero valido")
+        }
     }
 
     def listarCuentas() {
-        String cookie = RestHelper.getJSessionCookieFromRequest(request)
-        String idEmpresa = params.empresa
-        def getResponse = new RestBuilder().get(baseUrl + "/empresa/" + idEmpresa) {
-            header 'Cookie', cookie
-            contentType "application/json"
+        try {
+            String idEmpresa = params.empresa
+
+            def getResponse = get("/empresa/" + idEmpresa)
+
+            Empresa empresa = mapearAObjeto(getResponse.getJson().empresa, Empresa.class)
+
+            def periodos = empresa.periodos.stream().map { periodo -> [
+                inicio : periodo.fechaInicio, fin: periodo.fechaFin,
+                cuentas: periodo.cuentas.stream().map { cuenta -> [
+                    nombre: cuenta.tipo.descripcion,
+                    valor : cuenta.valor
+                ]}.collect(Collectors.toList())
+            ]}.collect(Collectors.toList())
+
+            render(
+                view: "/listarCuentas",
+                model: [
+                    periodos: periodos,
+                    empresa : empresa.getNombre()
+                ]
+            )
+        } catch(Exception e) {
+            renderRespuestaErrorGenericoBack(e.getMessage())
         }
-
-        if(!getResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
-            return
-        }
-
-        Empresa empresa = new ObjectMapper().readValue(getResponse.getJson().empresa.toString(), Empresa.class)
-
-        def periodos = empresa.periodos.stream()
-                .map{periodo -> [
-                inicio:periodo.fechaInicio, fin:periodo.fechaFin,
-                cuentas:periodo.cuentas.stream().map{cuenta -> [
-                    nombre:cuenta.tipo.descripcion,
-                    valor:cuenta.valor]}
-                .collect(Collectors.toList())]}
-        .collect(Collectors.toList())
-
-        render(
-            view: "/listarCuentas",
-            model: [
-                periodos: periodos,
-                empresa: empresa.getNombre()
-            ]
-        )
     }
 
-    void renderRespuestaErrorGenericoBack(RestResponse response) {
-        def view
-        def model
+    void validarParametrosListarCuentas(Map params) {
+        String empresaId = params.containsKey("empresa") ? params.empresa : null
 
-        view = "/errorGenericoBack"
-        model = [
-                text: response.getJson().descripcionError.toString(),
-                buttonText: "Volver"
-        ]
-        render(view: view, model: model)
-    }
-
-    void renderRespuestaError(RestResponse response) {
-        def view
-        def model
-
-        view = "/error"
-        model = [
-                exception: new Exception(response.getJson().descripcionError.toString()),
-        ]
-        render(view: view, model: model)
+        if(empresaId == null || empresaId.isEmpty()) {
+            throw new RequestInvalidoException("No se ingreso ninguna empresa")
+        }
     }
 }
