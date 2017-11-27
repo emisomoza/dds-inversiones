@@ -5,6 +5,7 @@ import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.model.Periodo
 import ar.edu.utn.dds.model.TipoCuenta
+import groovy.util.logging.Log4j
 import org.springframework.transaction.annotation.Transactional
 
 import java.time.LocalDate
@@ -13,8 +14,9 @@ import java.util.stream.Collectors
 
 import static com.xlson.groovycsv.CsvParser.parseCsv
 
+@Log4j
 class ImportadorCuentas {
-    
+
     protected static final String EMPRESA_TAG = "empresa"
     protected static final String FECHA_DESDE_TAG = "fecha_desde"
     protected static final String FECHA_HASTA_TAG = "fecha_hasta"
@@ -28,12 +30,19 @@ class ImportadorCuentas {
 
     @Transactional
     def importar(String cuentasCSV) {
+        log.info("Comenzando importacion de cuentas")
         List<Map<String, String>> mapasImportar = this.parsearImport(cuentasCSV)
 
+        log.debug("Importando empresas...")
         this.importarEmpresas(mapasImportar)
+        log.debug("Importando periodos...")
         this.importarPeriodos(mapasImportar)
+        log.debug("Importando tipos de cuentas...")
         this.importarTipoCuentas(mapasImportar)
+        log.debug("Importando cuentas...")
         this.importarCuentas(mapasImportar)
+
+        log.info("Importacion de cuentas finalizada con exito")
     }
 
     def importarEmpresas(List<Map<String, String>> mapasImportar) {
@@ -43,12 +52,12 @@ class ImportadorCuentas {
 
     def construirEmpresas(List<Map<String, String>> mapasImportar) {
         return mapasImportar.stream()
-            .map({mapa ->
-                Empresa empresa = new Empresa()
-                empresa.setNombre(mapa.get(EMPRESA_TAG))
-                return empresa
-            })
-            .collect(Collectors.toList())
+                .map({mapa ->
+            Empresa empresa = new Empresa()
+            empresa.setNombre(mapa.get(EMPRESA_TAG))
+            return empresa
+        })
+                .collect(Collectors.toList())
     }
 
     def importarPeriodos(List<Map<String, String>> mapasImportar) {
@@ -59,11 +68,11 @@ class ImportadorCuentas {
     def construirPeriodos(List<Map<String, String>> mapasImportar) {
         return mapasImportar.stream()
                 .map({mapa ->
-                    Periodo periodo = new Periodo()
-                    periodo.setFechaInicio(LocalDate.parse(mapa.get(FECHA_DESDE_TAG)))
-                    periodo.setFechaFin(LocalDate.parse(mapa.get(FECHA_HASTA_TAG)))
-                    return periodo
-                })
+            Periodo periodo = new Periodo()
+            periodo.setFechaInicio(LocalDate.parse(mapa.get(FECHA_DESDE_TAG)))
+            periodo.setFechaFin(LocalDate.parse(mapa.get(FECHA_HASTA_TAG)))
+            return periodo
+        })
                 .collect(Collectors.toList())
     }
 
@@ -75,10 +84,10 @@ class ImportadorCuentas {
     def construirTipoCuentas(List<Map<String, String>> mapasImportar) {
         return mapasImportar.stream()
                 .map({mapa ->
-                    TipoCuenta tipoCuenta = new TipoCuenta()
-                    tipoCuenta.setDescripcion(mapa.get(TIPO_TAG))
-                    return tipoCuenta
-                })
+            TipoCuenta tipoCuenta = new TipoCuenta()
+            tipoCuenta.setDescripcion(mapa.get(TIPO_TAG))
+            return tipoCuenta
+        })
                 .collect(Collectors.toList())
     }
 
@@ -94,16 +103,16 @@ class ImportadorCuentas {
 
         return mapasImportar.stream()
                 .map({mapa ->
-                    Cuenta cuenta = new Cuenta()
-                    cuenta.setTipo(tipoCuenta.find {tipo -> tipo.getDescripcion() == mapa.get(TIPO_TAG)})
-                    cuenta.setEmpresa(empresas.find {emp -> emp.getNombre() == mapa.get(EMPRESA_TAG)}.getId())
-                    cuenta.setPeriodo(periodos.find {periodo ->
-                        periodo.getFechaInicio() == LocalDate.parse(mapa.get(FECHA_DESDE_TAG)) &&
+            Cuenta cuenta = new Cuenta()
+            cuenta.setTipo(tipoCuenta.find {tipo -> tipo.getDescripcion() == mapa.get(TIPO_TAG)})
+            cuenta.setEmpresa(empresas.find {emp -> emp.getNombre() == mapa.get(EMPRESA_TAG)}.getId())
+            cuenta.setPeriodo(periodos.find {periodo ->
+                periodo.getFechaInicio() == LocalDate.parse(mapa.get(FECHA_DESDE_TAG)) &&
                         periodo.getFechaFin() == LocalDate.parse(mapa.get(FECHA_HASTA_TAG))
-                    }.getId())
-                    cuenta.setValor(Double.parseDouble(mapa.get(VALOR_TAG)))
-                    return cuenta
-                })
+            }.getId())
+            cuenta.setValor(Double.parseDouble(mapa.get(VALOR_TAG)))
+            return cuenta
+        })
                 .collect(Collectors.toList())
     }
 

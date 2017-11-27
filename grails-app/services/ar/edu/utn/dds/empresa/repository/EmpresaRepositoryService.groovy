@@ -23,6 +23,11 @@ class EmpresaRepositoryService extends DefaultJDBCRepositoryService<Empresa> {
 
     private RowMapper mapper = new EmpresaMapper()
 
+    @Override
+    String nombreEntidad() {
+        return Empresa.getName()
+    }
+
     Boolean existe(Long id) {
         QueryUtils queryUtils = this.obtenerQueryExiste(id)
         this.existe(queryUtils)
