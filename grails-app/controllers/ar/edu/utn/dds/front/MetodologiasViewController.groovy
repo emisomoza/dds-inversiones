@@ -1,117 +1,87 @@
 package ar.edu.utn.dds.front
 
+import ar.edu.utn.dds.exceptions.RequestInvalidoException
 import ar.edu.utn.dds.model.Indicador
-import ar.edu.utn.dds.utils.helper.RestHelper
-import com.fasterxml.jackson.databind.ObjectMapper
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugin.springsecurity.userdetails.GrailsUser
-import grails.plugins.rest.client.RestBuilder
-import grails.plugins.rest.client.RestResponse
 
 @Secured('ROLE_USER')
-class MetodologiasViewController {
-    private String baseUrl = "http://localhost:8080/dds-inversiones"
-
+class MetodologiasViewController extends AbstractViewController {
     def mapNormalizer
     def springSecurityService
 
     def index() { }
 
     def crear() {
-        String cookie = RestHelper.getJSessionCookieFromRequest(request)
+        try {
+            def listarResponse = get("/indicador")
 
-        def listarResponse = new RestBuilder().get(baseUrl + "/indicador") {
-            header 'Cookie', cookie
-            contentType "application/json"
+            List<Indicador> todosLosIndicadores = mapearALista(listarResponse.getJson().indicadores, Indicador.class)
+            List<String> nombresIndicadores = todosLosIndicadores.collect({ ind -> ind.nombre }).sort()
+
+            List<String> userRoles = ((GrailsUser) springSecurityService.getPrincipal()).getAuthorities().collect({ authority -> authority.getAuthority() })
+
+            def view
+            def model
+
+            view = "/metodologias"
+            model = [
+                    indicadores: nombresIndicadores,
+                    userRoles  : userRoles,
+            ]
+            render(view: view, model: model)
+        } catch(Exception e) {
+            renderRespuestaErrorGenericoBack(e.getMessage())
         }
-
-        if(!listarResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(listarResponse)
-            return
-        }
-
-        List<Indicador> todosLosIndicadores = listarResponse.getJson().indicadores.collect {it -> new ObjectMapper().readValue(it.toString(), Indicador.class)}
-        List<String> nombresIndicadores = todosLosIndicadores.collect({ind -> ind.nombre}).sort()
-
-        List<String> userRoles = ((GrailsUser) springSecurityService.getPrincipal()).getAuthorities().collect({authority -> authority.getAuthority()})
-
-        def view
-        def model
-
-        view = "/metodologias"
-        model = [
-            indicadores: nombresIndicadores,
-            userRoles: userRoles,
-        ]
-        render(view: view, model: model)
     }
 
     def save() {
-        String cookie = RestHelper.getJSessionCookieFromRequest(request)
+        try {
+            Map<String, Object> normalizedMap = mapNormalizer.normalize(params, ".")
 
-        Map<String, Object> normalizedMap = mapNormalizer.normalize(params, ".")
-        def postResponse = new RestBuilder().post(baseUrl + "/metodologia") {
-            header 'Cookie', cookie
-            contentType "application/json"
-            json {
+            validarParametrosSave(normalizedMap)
+
+            post("/metodologia", {
                 parametrosMetodologia = normalizedMap
-            }
+            })
+
+            def listarResponse = get("/indicador")
+
+            List<Indicador> todosLosIndicadores = mapearALista(listarResponse.getJson().indicadores, Indicador.class)
+            List<String> nombresIndicadores = todosLosIndicadores.collect({ ind -> ind.nombre }).sort()
+
+            List<String> userRoles = ((GrailsUser) springSecurityService.getPrincipal()).getAuthorities().collect({ authority -> authority.getAuthority() })
+
+            def view
+            def model
+
+            view = "/metodologias"
+            model = [
+                    indicadores: nombresIndicadores,
+                    userRoles  : userRoles,
+                    text       : "Metodología \"$params.nombre\" guardada con éxito."
+            ]
+            render(view: view, model: model)
+        } catch(Exception e) {
+            renderRespuestaErrorGenericoBack(e.getMessage())
         }
-
-        if(!postResponse.getStatus().equals(201)) {
-            renderRespuestaErrorGenericoBack(postResponse)
-            return
-        }
-
-
-
-        def listarResponse = new RestBuilder().get(baseUrl + "/indicador") {
-            header 'Cookie', cookie
-            contentType "application/json"
-        }
-
-        if(!listarResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(listarResponse)
-            return
-        }
-
-        List<Indicador> todosLosIndicadores = listarResponse.getJson().indicadores.collect {it -> new ObjectMapper().readValue(it.toString(), Indicador.class)}
-        List<String> nombresIndicadores = todosLosIndicadores.collect({ind -> ind.nombre}).sort()
-
-        List<String> userRoles = ((GrailsUser) springSecurityService.getPrincipal()).getAuthorities().collect({authority -> authority.getAuthority()})
-
-        def view
-        def model
-
-        view = "/metodologias"
-        model = [
-            indicadores: nombresIndicadores,
-            userRoles: userRoles,
-            text: "Metodología \"$params.nombre\" guardada con éxito."
-        ]
-        render(view: view, model: model)
     }
 
-    void renderRespuestaErrorGenericoBack(RestResponse response) {
-        def view
-        def model
+    void validarParametrosSave(Map params) {
+        String nombreString = params.containsKey("nombre") ? params.nombre : null
+        String expresionString = params.containsKey("expresion") ? params.expresion : null
+        String visibilidadString = params.containsKey("visibilidad") ? params.visibilidad : null
 
-        view = "/errorGenericoBack"
-        model = [
-                text: response.getJson().descripcionError.toString(),
-                buttonText: "Volver"
-        ]
-        render(view: view, model: model)
-    }
+        if(nombreString == null || nombreString.isEmpty()) {
+            throw new RequestInvalidoException("No se ingresó ningun nombre de indicador")
+        }
 
-    void renderRespuestaError(RestResponse response) {
-        def view
-        def model
+        if(expresionString == null || expresionString.isEmpty()) {
+            throw new RequestInvalidoException("No se ingresó ninguna expresion")
+        }
 
-        view = "/error"
-        model = [
-                exception: new Exception(response.getJson().descripcionError.toString()),
-        ]
-        render(view: view, model: model)
+        if(visibilidadString == null || visibilidadString.isEmpty()) {
+            throw new RequestInvalidoException("No se ingresó ninguna visibilidad")
+        }
     }
 }

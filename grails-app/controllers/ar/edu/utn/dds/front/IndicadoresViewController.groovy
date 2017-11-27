@@ -1,92 +1,76 @@
 package ar.edu.utn.dds.front
 
+import ar.edu.utn.dds.exceptions.RequestInvalidoException
 import ar.edu.utn.dds.model.Indicador
-import ar.edu.utn.dds.utils.helper.RestHelper
-import com.fasterxml.jackson.databind.ObjectMapper
 import grails.plugin.springsecurity.annotation.Secured
-import grails.plugins.rest.client.RestBuilder
-import grails.plugins.rest.client.RestResponse
 
 @Secured('ROLE_USER')
-class IndicadoresViewController {
-    private String baseUrl = "http://localhost:8080/dds-inversiones"
-
+class IndicadoresViewController extends AbstractViewController {
     def indicadorService
 
     def save() {
-        String nombreString = params.nombre
-        String expresionString = params.expresion
-        String visibilidadString = params.visibilidad
-        String cookie = RestHelper.getJSessionCookieFromRequest(request)
+        try {
+            validarParametrosSave(params)
 
-        def postResponse = new RestBuilder().post(baseUrl + "/indicador") {
-            header 'Cookie', cookie
-            contentType "application/json"
-            json {
+            String nombreString = params.nombre
+            String expresionString = params.expresion
+            String visibilidadString = params.visibilidad
+
+            def postResponse = post("/indicador", {
                 nombre = nombreString
                 expresion = expresionString
                 visibilidad = visibilidadString
-            }
+            })
+
+            def getResponse = get(postResponse.getHeaders().getLocation().getPath())
+
+            Indicador nuevoIndicador = mapearAObjeto(getResponse.getJson().indicador, Indicador.class)
+
+            def view
+            def model
+
+            view = "/indicadoresView/indicadorAgregado"
+            model = [
+                indicador: nuevoIndicador
+            ]
+            render(view: view, model: model)
+        } catch(Exception e) {
+            renderRespuestaErrorGenericoBack(e.getMessage())
         }
-
-        if(!postResponse.getStatus().equals(201)) {
-            renderRespuestaErrorGenericoBack(postResponse)
-            return
-        }
-
-
-        def getResponse = new RestBuilder().get(baseUrl + postResponse.getHeaders().getLocation().getPath()) {
-            header 'Cookie', cookie
-            contentType "application/json"
-        }
-
-        if(!getResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
-            return
-        }
-
-        def view
-        def model
-        Indicador nuevoIndicador = new ObjectMapper().readValue(getResponse.getJson().indicador.toString(), Indicador.class)
-
-        view = "/indicadoresView/indicadorAgregado"
-        model = [
-            indicador: nuevoIndicador
-        ]
-        render(view: view, model: model)
     }
 
-    void renderRespuestaErrorGenericoBack(RestResponse response) {
-        def view
-        def model
+    void validarParametrosSave(Map params) {
+        String nombreString = params.containsKey("nombre") ? params.nombre : null
+        String expresionString = params.containsKey("expresion") ? params.expresion : null
+        String visibilidadString = params.containsKey("visibilidad") ? params.visibilidad : null
 
-        view = "/errorGenericoBack"
-        model = [
-                text: response.getJson().descripcionError.toString(),
-                buttonText: "Volver"
-        ]
-        render(view: view, model: model)
-    }
+        if(nombreString == null || nombreString.isEmpty()) {
+            throw new RequestInvalidoException("No se ingresó ningun nombre de indicador")
+        }
 
-    void renderRespuestaError(RestResponse response) {
-        def view
-        def model
+        if(expresionString == null || expresionString.isEmpty()) {
+            throw new RequestInvalidoException("No se ingresó ninguna expresion")
+        }
 
-        view = "/error"
-        model = [
-                exception: new Exception(response.getJson().descripcionError.toString()),
-        ]
-        render(view: view, model: model)
+        if(visibilidadString == null || visibilidadString.isEmpty()) {
+            throw new RequestInvalidoException("No se ingresó ninguna visibilidad")
+        }
     }
 
     def listarIndicadores() {
-        def indicadores = indicadorService.listar().collect({ind -> [nombre:ind.nombre, expresion:ind.expresionString]}).sort()
+        try {
+            def getResponse = get("/indicador")
+            def indicadores = mapearALista(getResponse.getJson().indicadores, Indicador.class).sort()
 
-        render(
+            render(
                 view: "/listarIndicadores",
                 model: [
-                        indicadores: indicadores
+                    indicadores: indicadores
                 ]
-        )
+            )
+
+        } catch(Exception e) {
+            renderRespuestaErrorGenericoBack(e.getMessage())
+        }
     }
 }

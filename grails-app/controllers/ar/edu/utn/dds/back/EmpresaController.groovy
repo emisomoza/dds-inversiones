@@ -27,7 +27,7 @@ class EmpresaController extends RestfulController {
         try {
             def empresas = empresaService.listar()
             response.setStatus(200)
-            render([empresas: empresas] as JSON)
+            render([empresas: empresas.collect {it -> new JSONObject(new ObjectMapper().writeValueAsString(it))}] as JSON)
         } catch(Exception e) {
             response.setStatus(500)
             renderErrorGenerico(e)

@@ -5,9 +5,11 @@ import ar.edu.utn.dds.exceptions.CuentaInvalidoException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
 import ar.edu.utn.dds.model.Cuenta
 import ar.edu.utn.dds.model.TipoCuenta
+import com.fasterxml.jackson.databind.ObjectMapper
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
+import org.codehaus.groovy.grails.web.json.JSONObject
 
 @Secured('ROLE_ADMIN')
 class CuentaController extends RestfulController {
@@ -32,7 +34,7 @@ class CuentaController extends RestfulController {
         try {
             def cuentas = cuentaService.listar()
             response.setStatus(200)
-            render([cuentas: cuentas] as JSON)
+            render([cuentas: cuentas.collect {it -> new JSONObject(new ObjectMapper().writeValueAsString(it))}] as JSON)
         } catch(Exception e) {
             response.setStatus(500)
             renderErrorGenerico(e)
@@ -65,7 +67,7 @@ class CuentaController extends RestfulController {
         try {
             def cuenta = cuentaService.obtener(params.empresa as Long, params.periodo as Long, params.tipo as Long)
             response.setStatus(200)
-            render([cuenta: cuenta] as JSON)
+            render([cuenta: new JSONObject(new ObjectMapper().writeValueAsString(cuenta))] as JSON)
         } catch(RecursoNoEncontradoException e) {
             response.setStatus(404)
             renderErrorInversiones(e)
