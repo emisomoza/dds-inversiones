@@ -1,5 +1,6 @@
 package ar.edu.utn.dds
 
+import ar.edu.utn.dds.exceptions.IndicadorInvalidoException
 import ar.edu.utn.dds.model.Indicador
 import ar.edu.utn.dds.resolver.ResolvedorIndicador
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -8,9 +9,20 @@ import ar.edu.utn.dds.utils.DiffHelper
 
 class IndicadorSpec extends Specification {
 
+    void "indicador erroneo"() {
+        when:
+        Indicador.from("IndicadorTest", ecuacion, "")
+
+        then:
+        thrown(IndicadorInvalidoException)
+
+        where:
+        ecuacion << ["1+", "--1", "1+a", "a", "1+1aaa"]
+    }
+
     void "dependencias indicador"() {
         expect:
-        Indicador indicador = new Indicador("IndicadorTest", ecuacion)
+        Indicador indicador = Indicador.from("IndicadorTest", ecuacion, "")
         [indicador.getDependenciasIndicador(), indicador.getDependenciasCuenta()] == resultado
 
         where:
@@ -39,7 +51,7 @@ class IndicadorSpec extends Specification {
         HashMap<String, Object> deserializacion
         HashMap<String, Object> deserializacionEsperada
 
-        Indicador indicador = new Indicador("Ind1", "(3+4)*(20-10)")
+        Indicador indicador = Indicador.from("Ind1", "(3+4)*(20-10)", "")
 
         serializacion = objectMapper.writeValueAsString(indicador)
         deserializacion = objectMapper.readValue(serializacion, HashMap.class)

@@ -1,5 +1,6 @@
 {
   "nombre": "Ind1",
+  "expresionString": "(3+4)*(20-10)",
   "owner": null,
   "expresion": {
     "tipo": "mult",

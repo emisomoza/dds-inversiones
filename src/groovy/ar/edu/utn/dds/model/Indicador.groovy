@@ -8,8 +8,10 @@ import ar.edu.utn.dds.listener.IndicadorCustomListener
 import ar.edu.utn.dds.visitor.IndicadorCustomVisitor
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.antlr.v4.runtime.BailErrorStrategy
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
+import org.antlr.v4.runtime.misc.ParseCancellationException
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.springframework.data.mongodb.core.index.CompoundIndex
 import org.springframework.data.mongodb.core.index.CompoundIndexes
@@ -40,6 +42,17 @@ class Indicador implements Serializable {
     Indicador() {
     }
 
+    static Indicador from(String nombre, String expresion, String visibilidad) {
+        Indicador indicador = new Indicador()
+        indicador.conExpresionString(expresion)
+
+        indicador.setNombre(nombre)
+        indicador.setExpresionString(expresion)
+        indicador.setVisibilidad(visibilidad)
+
+        return indicador
+    }
+
     Indicador(String nombre, String expresion, String visibilidad) {
         this.nombre = nombre
         this.expresionString = expresion
@@ -48,7 +61,9 @@ class Indicador implements Serializable {
         IndicadorLexer lexer = new IndicadorLexer(CharStreams.fromString(expresion))
         CommonTokenStream tokens = new CommonTokenStream(lexer)
         IndicadorParser parser = new IndicadorParser(tokens)
-        IndicadorParser.ExpressionContext context = parser.expression()
+        parser.removeErrorListeners()
+        parser.setErrorHandler(new BailErrorStrategy())
+        IndicadorParser.IndicadorContext context = parser.indicador()
 
         IndicadorCustomVisitor visitor = new IndicadorCustomVisitor()
         IndicadorCustomListener listener = new IndicadorCustomListener()
@@ -91,6 +106,41 @@ class Indicador implements Serializable {
 
     void setExpresion(Expresion expresion) {
         this.expresion = expresion
+    }
+
+    void conExpresionString(String expresionString) {
+        IndicadorLexer lexer = new IndicadorLexer(CharStreams.fromString(expresionString))
+        CommonTokenStream tokens = new CommonTokenStream(lexer)
+        IndicadorParser parser = new IndicadorParser(tokens)
+        parser.removeErrorListeners()
+        parser.setErrorHandler(new BailErrorStrategy())
+
+        if(parser.getNumberOfSyntaxErrors() > 0) {
+            throw new IndicadorInvalidoException("La expresion " + expresionString + " es invalida")
+        }
+
+        try {
+            IndicadorParser.IndicadorContext context = parser.indicador()
+            IndicadorCustomVisitor visitor = new IndicadorCustomVisitor()
+            IndicadorCustomListener listener = new IndicadorCustomListener()
+
+            ParseTreeWalker walker = new ParseTreeWalker()
+            walker.walk(listener, context)
+
+            this.expresion = visitor.visit(context)
+            this.dependenciasCuenta = new ArrayList<>(listener.getDependenciasCuenta())
+            this.dependenciasIndicador = new ArrayList<>(listener.getDependenciasIndicador())
+        } catch(ParseCancellationException e) {
+            throw new IndicadorInvalidoException("La expresion " + expresionString + " es invalida")
+        }
+    }
+
+    String getExpresionString() {
+        return expresionString
+    }
+
+    void setExpresionString(String expresionString) {
+        this.expresionString = expresionString
     }
 
     List<String> getDependenciasIndicador() {

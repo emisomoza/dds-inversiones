@@ -11,6 +11,12 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface IndicadorVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link IndicadorParser#indicador}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIndicador(IndicadorParser.IndicadorContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code additive_operation}
 	 * labeled alternative in {@link IndicadorParser#expression}.
 	 * @param ctx the parse tree
@@ -32,18 +38,6 @@ public interface IndicadorVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMultiplicative_operation(IndicadorParser.Multiplicative_operationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link IndicadorParser#between_parenthesis}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBetween_parenthesis(IndicadorParser.Between_parenthesisContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link IndicadorParser#signed_termino}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSigned_termino(IndicadorParser.Signed_terminoContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link IndicadorParser#termino}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -61,6 +55,18 @@ public interface IndicadorVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRaise_operation(IndicadorParser.Raise_operationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link IndicadorParser#signed_termino}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSigned_termino(IndicadorParser.Signed_terminoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link IndicadorParser#between_parenthesis}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBetween_parenthesis(IndicadorParser.Between_parenthesisContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link IndicadorParser#function}.
 	 * @param ctx the parse tree

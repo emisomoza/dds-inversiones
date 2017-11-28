@@ -16,18 +16,14 @@
 grammar Indicador;
 
 //Rules (parser)
+indicador: expression EOF;
+
 expression
     : termino #term
     | expression MULTIPLICATIVE_OP  expression #multiplicative_operation
     | expression ADDITIVE_OP expression #additive_operation
     ;
 
-between_parenthesis: LPAR expression RPAR;
-
-signed_termino
-    : ADDITIVE_OP terminal
-    | ADDITIVE_OP raise_operation
-    ;
 termino
     : terminal
     | raise_operation
@@ -43,8 +39,14 @@ terminal
 raise_operation
     : terminal RAISE_OP terminal
     | terminal RAISE_OP raise_operation
-    | terminal RAISE_OP expression
     ;
+
+signed_termino
+    : ADDITIVE_OP terminal
+    | ADDITIVE_OP raise_operation
+    ;
+
+between_parenthesis: LPAR expression RPAR;
 
 function
     : function_static
@@ -75,14 +77,6 @@ ROOT_FUNC: 'root';
 IND: 'ind';
 CUE: 'cue';
 
-VAR: WORD ('_' WORD)? NUMBER?;
-DOUBLE: NUMBER ('.' NUMBER)?;
-
-NUMBER: DIGIT+;
-DIGIT: ('0'..'9');
-WORD: LETTER+;
-LETTER: ('a'..'z' | 'A'..'Z');
-
 ASSIGN: '=';
 LPAR: '(';
 RPAR: ')';
@@ -91,5 +85,13 @@ COMMA: ',';
 RAISE_OP: '^';
 MULTIPLICATIVE_OP: '*' | '/';
 ADDITIVE_OP: '+' | '-';
+
+VAR: WORD ('_' WORD)? NUMBER?;
+DOUBLE: NUMBER ('.' NUMBER)?;
+
+NUMBER: DIGIT+;
+DIGIT: ('0'..'9');
+WORD: LETTER+;
+LETTER: ('a'..'z' | 'A'..'Z');
 
 WS: (' ' | '\n' | '\t' | '\r')+ -> skip;
