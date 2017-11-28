@@ -1,8 +1,7 @@
 package ar.edu.utn.dds.front
 
-import ar.edu.utn.dds.exceptions.InversionesException
+import ar.edu.utn.dds.exceptions.ComparacionNulaException
 import ar.edu.utn.dds.exceptions.RequestInvalidoException
-import ar.edu.utn.dds.exceptions.RespuestaErrorHttpException
 import ar.edu.utn.dds.model.Empresa
 import grails.plugin.springsecurity.annotation.Secured
 
@@ -28,6 +27,8 @@ class ConsultasViewController extends AbstractViewController {
 
             List<Empresa> empresasOrdenadas = mapearALista(getResponse.getJson().empresasOrdenadas, Empresa.class)
 
+            validarEmpresasOrdenadas(empresasOrdenadas)
+
             def empresasIndexadas = empresasOrdenadas.indexed().collect{
                 index, item -> [indice:index + 1, nombre:item.nombre]
             }
@@ -46,7 +47,7 @@ class ConsultasViewController extends AbstractViewController {
         }
     }
 
-    void validarParametrosComparar(Map params) {
+    private void validarParametrosComparar(Map params) {
         String metodologia = params.containsKey("metodologia") ? params.metodologia : null
         List<Long> empresas = params.containsKey("empresas") ? empIdMapper.mapear(params) : null
 
@@ -60,6 +61,12 @@ class ConsultasViewController extends AbstractViewController {
 
         if(!(empresas.size() > 1)) {
             throw new RequestInvalidoException("Deben ingresarse 2 empresas por lo menos")
+        }
+    }
+
+    private void validarEmpresasOrdenadas(List<Empresa> empresas) {
+        if( empresas.size() == 0 ) {
+            throw new ComparacionNulaException("Todas las empresas fueron filtradas por el indicador de filtro.")
         }
     }
 }
