@@ -1,6 +1,7 @@
 import grails.plugin.springsecurity.SecurityConfigType
 import org.apache.log4j.DailyRollingFileAppender
 import org.apache.log4j.Level
+import org.apache.log4j.PatternLayout
 
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
@@ -137,17 +138,45 @@ imprt.counts.file.dir = "import/counts/"
 // log4j configuration
 log4j = {
 
-    error "grails.app"
-
-    appender new DailyRollingFileAppender(
-            name: "logFile",
-            file: "logs/ddsinversiones.log",
-            datePattern: "'.'yyyy-MM-dd")
-
     environments {
         development {
-            info "grails.app"
-            info logFile: "grails.app"
+            info "grails.app", 'ar.edu.utn.dds'
+
+            error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+                    'org.codehaus.groovy.grails.web.pages',          // GSP
+                    'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+                    'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+                    'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+                    'org.codehaus.groovy.grails.commons',            // core / classloading
+                    'org.codehaus.groovy.grails.plugins',            // plugins
+                    'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+                    'org.springframework',
+                    'org.hibernate',
+                    'net.sf.ehcache.hibernate'
+        }
+
+        production {
+            appender new DailyRollingFileAppender(
+                    name: "logFile",
+                    file: "logs/ddsinversiones.log",
+                    datePattern: "'.'yyyy-MM-dd",
+                    layout: new PatternLayout("%d{yyyy-MM-dd/HH:mm:ss.SSS} [%t] %x %-5p %c{2} - %m%n"))
+
+            info additivity: false, logFile: [
+                    'grails.app',
+                    'org.codehaus.groovy.grails.web.servlet',
+                    'org.codehaus.groovy.grails.web.pages',
+                    'org.codehaus.groovy.grails.web.sitemesh',
+                    'org.codehaus.groovy.grails.web.mapping.filter',
+                    'org.codehaus.groovy.grails.web.mapping',
+                    'org.codehaus.groovy.grails.commons',
+                    'org.codehaus.groovy.grails.plugins',
+                    'org.codehaus.groovy.grails.orm.hibernate',
+                    'org.springframework',
+                    'org.hibernate',
+                    'net.sf.ehcache.hibernate',
+                    'ar.edu.utn.dds'
+            ]
         }
     }
 }
