@@ -74,10 +74,10 @@
         <div>
             <h2 class="panel-title">Carga batch de cuentas:</h2></br>
         </div>
-        <label for="uploadFile" class="col-sm-3 control-label">Subir archivo (csv/txt)</label>
+        <label for="uploadFile" class="col-sm-3 control-label">Subir archivo (csv)</label>
         <g:uploadForm id="uploadFile" value="sarasa">
             <fieldset class="col-sm-4 btn">
-                <input type="file" name="file" accept=".txt, .csv" multiple="accept"/>
+                <input type="file" name="file" accept=".csv" multiple="accept"/>
             </fieldset>
             <g:actionSubmit class="btn btn-primary" value="Upload"/>
         </g:uploadForm>

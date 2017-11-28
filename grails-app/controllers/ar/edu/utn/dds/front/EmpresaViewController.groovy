@@ -1,86 +1,67 @@
 package ar.edu.utn.dds.front
 
+import ar.edu.utn.dds.exceptions.RequestInvalidoException
 import ar.edu.utn.dds.model.Empresa
 import ar.edu.utn.dds.utils.helper.RestHelper
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.rest.client.RestBuilder
-import grails.plugins.rest.client.RestResponse
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 @Secured('ROLE_ADMIN')
-class EmpresaViewController {
-    private String baseUrl = "http://localhost:8080/dds-inversiones"
+class EmpresaViewController extends AbstractViewController {
 
     def index() { }
 
     def save() {
-        String nombreEmpresa = params.nomEmpresa
+        try {
+            validarParametrosSave(params)
 
-        String cookie = RestHelper.getJSessionCookieFromRequest(request)
+            String nombreEmpresa = params.nomEmpresa
+            def postResponse = post("/empresa", {nombre = nombreEmpresa})
 
-        def postResponse = new RestBuilder().post(baseUrl + "/empresa") {
-            header 'Cookie', cookie
-            contentType "application/json"
-            json {
-                nombre = nombreEmpresa
-            }
+            def getResponse = get(postResponse.getHeaders().getLocation().getPath())
+
+            def listarResponse = get("/empresa")
+
+            def view
+            def model
+            Empresa nuevaEmpresa = mapearAObjeto(getResponse.getJson().empresa, Empresa.class)
+            List<Empresa> todasLasEmpresas = mapearALista(listarResponse.getJson().empresas, Empresa.class)
+
+            view = "/empresas"
+            model = [
+                empresas: todasLasEmpresas,
+                text: "Empresa \"$nuevaEmpresa.nombre\" guardada con éxito."
+            ]
+
+            render(view: view, model: model)
+        } catch(Exception e) {
+            renderRespuestaErrorGenericoBack(e.getMessage())
         }
+    }
 
-        if(!postResponse.getStatus().equals(201)) {
-            renderRespuestaErrorGenericoBack(postResponse)
-            return
+    void validarParametrosSave(Map params) {
+        String nombreEmpresa = params.containsKey("nomEmpresa") ? params.nomEmpresa : null
+
+        if(nombreEmpresa == null || nombreEmpresa.isEmpty()) {
+            throw new RequestInvalidoException("No se ingresó ninguna empresa")
         }
-
-
-        def getResponse = new RestBuilder().get(baseUrl + postResponse.getHeaders().getLocation().getPath()) {
-            header 'Cookie', cookie
-            contentType "application/json"
-        }
-
-        if(!getResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(getResponse)
-            return
-        }
-
-
-        def listarResponse = new RestBuilder().get(baseUrl + "/empresa") {
-            header 'Cookie', cookie
-            contentType "application/json"
-        }
-
-        if(!listarResponse.getStatus().equals(200)) {
-            renderRespuestaErrorGenericoBack(listarResponse)
-            return
-        }
-
-        def view
-        def model
-        Empresa nuevaEmpresa = bindData(new Empresa(), getResponse.getJson().empresa)
-        List<Empresa> todasLasEmpresas = listarResponse.getJson().empresas.collect {it -> bindData(new Empresa(), it)}
-
-        view = "/empresas"
-        model = [
-            empresas: todasLasEmpresas,
-            text: "Empresa \"$nuevaEmpresa.nombre\" guardada con éxito."
-        ]
-
-        render(view: view, model: model)
     }
 
     def upload() {
-        def view
-        def model
-        String textoSalida
-
         String cookie = RestHelper.getJSessionCookieFromRequest(request)
+
+        validarParametrosUpload(params)
 
         MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
         CommonsMultipartFile file = (CommonsMultipartFile) mpr.getFile("file");
 
+        String textoSalida
+
         if(!file?.empty) {
             if(file.contentType.equals("text/plain") | file.contentType.equals("text/csv")) {
-                def postResponse = new RestBuilder().post(baseUrl + "/empresa/from-csv") {
+                def postResponse = new RestBuilder().post(getBaseUrl() + "/empresa/from-csv") {
                     header 'Cookie', cookie
                     contentType "application/json"
                     json {
@@ -100,7 +81,7 @@ class EmpresaViewController {
             textoSalida = "El archivo no puede estar vacío."
         }
 
-        def listarResponse = new RestBuilder().get(baseUrl + "/empresa") {
+        def listarResponse = new RestBuilder().get(getBaseUrl() + "/empresa") {
             header 'Cookie', cookie
             contentType "application/json"
         }
@@ -110,8 +91,10 @@ class EmpresaViewController {
             return
         }
 
-        List<Empresa> todasLasEmpresas = listarResponse.getJson().empresas.collect {it -> bindData(new Empresa(), it)}
+        List<Empresa> todasLasEmpresas = mapearALista(listarResponse.getJson().empresas, Empresa.class)
 
+        def view
+        def model
         view = "/empresas"
         model = [
             empresas: todasLasEmpresas,
@@ -121,26 +104,7 @@ class EmpresaViewController {
         render(view: view, model: model)
     }
 
-    void renderRespuestaErrorGenericoBack(RestResponse response) {
-        def view
-        def model
-
-        view = "/errorGenericoBack"
-        model = [
-            text: response.getJson().descripcionError.toString(),
-            buttonText: "Volver"
-        ]
-        render(view: view, model: model)
-    }
-
-    void renderRespuestaError(RestResponse response) {
-        def view
-        def model
-
-        view = "/error"
-        model = [
-            exception: new Exception(response.getJson().descripcionError.toString()),
-        ]
-        render(view: view, model: model)
+    void validarParametrosUpload(Map params) {
+        //No valida nada
     }
 }

@@ -27,7 +27,7 @@ class EmpresaController extends RestfulController {
         try {
             def empresas = empresaService.listar()
             response.setStatus(200)
-            render([empresas: empresas] as JSON)
+            render([empresas: empresas.collect {it -> new JSONObject(new ObjectMapper().writeValueAsString(it))}] as JSON)
         } catch(Exception e) {
             response.setStatus(500)
             renderErrorGenerico(e)
@@ -38,6 +38,7 @@ class EmpresaController extends RestfulController {
         def jsonObject = request.getJSON()
 
         try {
+            verificarExistencia(jsonObject.nombre)
             Long id = empresaService.guardar(new Empresa(jsonObject.nombre))
             response.addHeader("Location", "/empresa/" + id.toString())
             response.setStatus(201)
@@ -118,5 +119,11 @@ class EmpresaController extends RestfulController {
     void renderErrorGenerico(Exception e, String mensaje) {
         log.error(e.getMessage(), e)
         render([descripcionError: mensaje] as JSON)
+    }
+
+    private void verificarExistencia(String nomEmpresa) {
+        if( empresaService.existe(nomEmpresa) ) {
+            throw new EmpresaInvalidoException("Error: La empresa ${nomEmpresa} ya se encuentra creada.")
+        }
     }
 }

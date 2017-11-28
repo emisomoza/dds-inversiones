@@ -4,9 +4,11 @@ import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.PeriodoInvalidoException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
 import ar.edu.utn.dds.model.Periodo
+import com.fasterxml.jackson.databind.ObjectMapper
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
+import org.codehaus.groovy.grails.web.json.JSONObject
 
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -25,7 +27,7 @@ class PeriodoController extends RestfulController {
         try {
             def periodos = periodoService.listar()
             response.setStatus(200)
-            render([periodos: periodos] as JSON)
+            render([periodos: periodos.collect {it -> new JSONObject(new ObjectMapper().writeValueAsString(it))}] as JSON)
         } catch(Exception e) {
             response.setStatus(500)
             renderErrorGenerico(e)
@@ -60,7 +62,7 @@ class PeriodoController extends RestfulController {
         try {
             def periodo = periodoService.obtener(params.id as Long)
             response.setStatus(200)
-            render([periodo: periodo] as JSON)
+            render([periodo: new JSONObject(new ObjectMapper().writeValueAsString(periodo))] as JSON)
         } catch(RecursoNoEncontradoException e) {
             response.setStatus(404)
             renderErrorInversiones(e)

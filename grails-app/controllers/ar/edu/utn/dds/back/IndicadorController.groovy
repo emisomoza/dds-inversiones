@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.back
 
+import ar.edu.utn.dds.exceptions.IndicadorExistenteException
 import ar.edu.utn.dds.exceptions.IndicadorInvalidoException
 import ar.edu.utn.dds.exceptions.InversionesException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
@@ -43,6 +44,9 @@ class IndicadorController extends RestfulController {
             response.addHeader("Location", URLEncoder.encode("/indicador/" + nuevoIndicador.getNombre(), "UTF-8"))
             response.setStatus(201)
             render ""
+        } catch(IndicadorExistenteException e) {
+            response.setStatus(400)
+            renderErrorInversiones(e)
         } catch(IndicadorInvalidoException e) {
             response.setStatus(400)
             renderErrorInversiones(e)
