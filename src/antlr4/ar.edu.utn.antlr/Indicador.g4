@@ -16,6 +16,8 @@
 grammar Indicador;
 
 //Rules (parser)
+indicador: expression EOF;
+
 expression
     : termino #term
     | expression MULTIPLICATIVE_OP  expression #multiplicative_operation
@@ -75,14 +77,6 @@ ROOT_FUNC: 'root';
 IND: 'ind';
 CUE: 'cue';
 
-VAR: WORD ('_' WORD)? NUMBER?;
-DOUBLE: NUMBER ('.' NUMBER)?;
-
-NUMBER: DIGIT+;
-DIGIT: ('0'..'9');
-WORD: LETTER+;
-LETTER: ('a'..'z' | 'A'..'Z');
-
 ASSIGN: '=';
 LPAR: '(';
 RPAR: ')';
@@ -91,5 +85,13 @@ COMMA: ',';
 RAISE_OP: '^';
 MULTIPLICATIVE_OP: '*' | '/';
 ADDITIVE_OP: '+' | '-';
+
+VAR: WORD ('_' WORD)? NUMBER?;
+DOUBLE: NUMBER ('.' NUMBER)?;
+
+NUMBER: DIGIT+;
+DIGIT: ('0'..'9');
+WORD: LETTER+;
+LETTER: ('a'..'z' | 'A'..'Z');
 
 WS: (' ' | '\n' | '\t' | '\r')+ -> skip;

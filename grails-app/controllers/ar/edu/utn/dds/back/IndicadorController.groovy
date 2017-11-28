@@ -39,7 +39,7 @@ class IndicadorController extends RestfulController {
         String visibilidad = jsonObject.visibilidad
 
         try {
-            Indicador nuevoIndicador = new Indicador(nombre, expresion, visibilidad)
+            Indicador nuevoIndicador = Indicador.from(nombre, expresion, visibilidad)
             indicadorService.guardar(nuevoIndicador)
             response.addHeader("Location", URLEncoder.encode("/indicador/" + nuevoIndicador.getNombre(), "UTF-8"))
             response.setStatus(201)

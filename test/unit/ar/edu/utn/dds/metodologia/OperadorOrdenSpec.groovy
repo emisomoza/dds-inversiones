@@ -29,9 +29,9 @@ class OperadorOrdenSpec extends Specification {
     }
 
     def setupIndicadores() {
-        indicador1 = new Indicador("indicador1", "cue(Cuenta1) * ind(indicador2)")
-        indicador2 = new Indicador("indicador2", "4^2-5" )
-        indicador3 = new Indicador("indicador3", "4*5+ind(indicador1)" )
+        indicador1 = Indicador.from("indicador1", "cue(Cuenta1) * ind(indicador2)", "")
+        indicador2 = Indicador.from("indicador2", "4^2-5", "" )
+        indicador3 = Indicador.from("indicador3", "4*5+ind(indicador1)", "" )
     }
 
     def setupIndicadorService() {

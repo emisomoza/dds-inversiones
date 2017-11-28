@@ -16,6 +16,18 @@ public class IndicadorBaseListener implements IndicadorListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIndicador(IndicadorParser.IndicadorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIndicador(IndicadorParser.IndicadorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAdditive_operation(IndicadorParser.Additive_operationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -52,30 +64,6 @@ public class IndicadorBaseListener implements IndicadorListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBetween_parenthesis(IndicadorParser.Between_parenthesisContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBetween_parenthesis(IndicadorParser.Between_parenthesisContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSigned_termino(IndicadorParser.Signed_terminoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSigned_termino(IndicadorParser.Signed_terminoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterTermino(IndicadorParser.TerminoContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -107,6 +95,30 @@ public class IndicadorBaseListener implements IndicadorListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRaise_operation(IndicadorParser.Raise_operationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSigned_termino(IndicadorParser.Signed_terminoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSigned_termino(IndicadorParser.Signed_terminoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBetween_parenthesis(IndicadorParser.Between_parenthesisContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBetween_parenthesis(IndicadorParser.Between_parenthesisContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

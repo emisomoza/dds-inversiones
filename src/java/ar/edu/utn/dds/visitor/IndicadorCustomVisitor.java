@@ -20,15 +20,20 @@ import ar.edu.utn.dds.expresion.PrimariaNumero;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.RuleNode;
 
-public class IndicadorCustomVisitor extends IndicadorBaseVisitor {
+public class IndicadorCustomVisitor extends IndicadorBaseVisitor<Expresion> {
     @Override
     public Expresion visit(ParseTree tree) {
-        return (Expresion) super.visit(tree);
+        return super.visit(tree);
     }
 
     @Override
     public Expresion visitChildren(RuleNode node) {
-        return (Expresion) super.visitChildren(node);
+        return super.visitChildren(node);
+    }
+
+    @Override
+    public Expresion visitIndicador(IndicadorParser.IndicadorContext ctx) {
+		return visit(ctx.expression());
     }
 
     @Override
