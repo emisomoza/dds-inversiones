@@ -22,12 +22,6 @@ expression
     | expression ADDITIVE_OP expression #additive_operation
     ;
 
-between_parenthesis: LPAR expression RPAR;
-
-signed_termino
-    : ADDITIVE_OP terminal
-    | ADDITIVE_OP raise_operation
-    ;
 termino
     : terminal
     | raise_operation
@@ -43,8 +37,14 @@ terminal
 raise_operation
     : terminal RAISE_OP terminal
     | terminal RAISE_OP raise_operation
-    | terminal RAISE_OP expression
     ;
+
+signed_termino
+    : ADDITIVE_OP terminal
+    | ADDITIVE_OP raise_operation
+    ;
+
+between_parenthesis: LPAR expression RPAR;
 
 function
     : function_static
