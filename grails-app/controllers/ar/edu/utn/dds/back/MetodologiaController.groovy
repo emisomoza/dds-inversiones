@@ -1,7 +1,8 @@
 package ar.edu.utn.dds.back
 
-import ar.edu.utn.dds.exceptions.MetodologiaInvalidoException
+import ar.edu.utn.dds.exceptions.EmpresaInvalidoException
 import ar.edu.utn.dds.exceptions.InversionesException
+import ar.edu.utn.dds.exceptions.MetodologiaInvalidoException
 import ar.edu.utn.dds.exceptions.RecursoNoEncontradoException
 import ar.edu.utn.dds.mappers.metodologia.MetodologiaMapper
 import ar.edu.utn.dds.model.Empresa
@@ -73,10 +74,14 @@ class MetodologiaController extends RestfulController {
             Metodologia metodologia = metodologiaService.obtener(params.metodologia)
             List<String> idsEmpresas = params.empresa
             List<Empresa> empresas = idsEmpresas.collect {it -> empresaService.obtenerPopulado(Long.valueOf(it))}
+            validarEmpresas(empresas)
             List<Empresa> empresasComparadas = metodologiaService.comparar(metodologia, empresas)
             response.setStatus(200)
             render([empresasOrdenadas: empresasComparadas.collect {it -> new JSONObject(new ObjectMapper().writeValueAsString(it))}] as JSON)
         } catch(RecursoNoEncontradoException e) {
+            response.setStatus(404)
+            renderErrorInversiones(e)
+        } catch(EmpresaInvalidoException e) {
             response.setStatus(404)
             renderErrorInversiones(e)
         } catch(Exception e) {
@@ -99,4 +104,15 @@ class MetodologiaController extends RestfulController {
         log.error(e.getMessage(), e)
         render([descripcionError: mensaje] as JSON)
     }
+
+    void validarEmpresas( List<Empresa> empresas ) {
+        for( empresa in empresas ) {
+            if( empresa.periodos.size() == 0 ) {
+                throw new EmpresaInvalidoException("La empresa ${empresa.nombre} no posee períodos.")
+            } else if ( empresa.periodos?.cuentas.size() == 0 ) {
+                throw new EmpresaInvalidoException("La empresa ${empresa.nombre} posee períodos sin cuentas.")
+            }
+        }
+    }
+
 }
