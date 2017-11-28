@@ -123,7 +123,7 @@ class EmpresaController extends RestfulController {
 
     private void verificarExistencia(String nomEmpresa) {
         if( empresaService.existe(nomEmpresa) ) {
-            throw new EmpresaInvalidoException("La empresa ingresada ya se encuentra creada.")
+            throw new EmpresaInvalidoException("Error: La empresa ${nomEmpresa} ya se encuentra creada.")
         }
     }
 }
