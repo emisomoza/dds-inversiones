@@ -76,10 +76,6 @@ class MetodologiasViewController extends AbstractViewController {
             throw new RequestInvalidoException("No se ingresó ningun nombre de indicador")
         }
 
-        if(expresionString == null || expresionString.isEmpty()) {
-            throw new RequestInvalidoException("No se ingresó ninguna expresion")
-        }
-
         if(visibilidadString == null || visibilidadString.isEmpty()) {
             throw new RequestInvalidoException("No se ingresó ninguna visibilidad")
         }
